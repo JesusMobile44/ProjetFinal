@@ -25,7 +25,7 @@ public class Main extends Application {
         getScenes()[2] = aventure;
         getScenes()[3] = guide;
 
-        primaryStage = getStage();    //fuckmyass==true; xd
+        primaryStage = getStage();
         primaryStage.setTitle("Minecraft Redstone");
 
         primaryStage.setScene(getScenes()[0]);
