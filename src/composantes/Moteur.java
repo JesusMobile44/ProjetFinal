@@ -1,4 +1,4 @@
 package composantes;
 
-public class Moteur  extends Composante{
+public class Moteur  extends ComposanteActivable{
 }

@@ -1,4 +1,4 @@
 package composantes;
 
-public class Ampoule  extends Composante{
+public class Ampoule  extends ComposanteActivable{
 }
