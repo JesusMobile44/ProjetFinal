@@ -1,4 +1,4 @@
 package composantes;
 
-public class Interrupteur {
+public class Interrupteur  extends Composante{
 }

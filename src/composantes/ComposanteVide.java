@@ -1,4 +1,4 @@
 package composantes;
 
-public class ComposanteVide {
+public class ComposanteVide extends Composante{
 }

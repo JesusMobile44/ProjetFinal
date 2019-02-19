@@ -1,4 +1,4 @@
 package composantes;
 
-public class Resistance {
+public class Resistance  extends Composante{
 }

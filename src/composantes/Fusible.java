@@ -1,4 +1,4 @@
 package composantes;
 
-public class Fusible {
+public class Fusible  extends Composante{
 }

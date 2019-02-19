@@ -1,4 +1,4 @@
 package composantes;
 
-public class MiseAterre {
+public class MiseAterre  extends Composante{
 }

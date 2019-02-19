@@ -1,4 +1,4 @@
 package composantes;
 
-public class Voltmetre {
+public class Voltmetre extends Composante {
 }

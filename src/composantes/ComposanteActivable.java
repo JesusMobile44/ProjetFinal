@@ -1,4 +1,4 @@
 package composantes;
 
-public class ComposanteActivable {
+public class ComposanteActivable  extends Composante{
 }

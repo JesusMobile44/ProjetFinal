@@ -1,4 +1,4 @@
 package composantes;
 
-public class Diode {
+public class Diode  extends Composante{
 }
