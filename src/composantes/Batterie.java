@@ -1,4 +1,4 @@
 package composantes;
 
-public class Batterie  extends Composante{
+public class Batterie  extends ComposanteActivable{
 }

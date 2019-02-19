@@ -10,7 +10,10 @@ public class MenuController {
         stage.setScene(Main.getScenes()[1]);
         stage.setResizable(true);
 
+
         stage.hide();
         stage.show();
+
+
     }
 }
