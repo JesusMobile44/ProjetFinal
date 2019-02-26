@@ -2,45 +2,105 @@ package controllers;
 
 import composantes.Composante;
 import composantes.ComposanteVide;
-import composantes.Fil;
+import composantes.*;
 import javafx.fxml.FXML;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.RowConstraints;
 import main.Main;
+
 
 
 public class SandboxController {
 
+    public static GridPane gridPaneSandBox = new GridPane();
+
     @FXML
-    private GridPane myGridPane;
+    private SplitPane mySplitPane;
+
+    @FXML
+    private ScrollPane scroll;
+
+    @FXML
+    private ScrollPane myScrollPane;
 
     @FXML
     public void initialize(){
-        for (int i=0; i<myGridPane.getRowConstraints().size(); i++){
-            for (int j=0; j<myGridPane.getColumnConstraints().size(); j++){
+        scroll.setContent(gridPaneSandBox);
+
+        gridPaneSandBox.setPrefSize(376, 414);
+        //initializeGridPane(gridPaneSandBox);
+
+        for (int i=0; i<10; i++){
+            for (int j=0; j<10; j++){
                 ComposanteVide vide = new ComposanteVide();
-                vide.setImage(vide.getTabVariante()[0]);
-                myGridPane.add(vide,i,j);
+                vide.fitHeightProperty().set(100);
+                vide.fitWidthProperty().set(100);
+                vide.setRow(j);
+                vide.setCol(i);
+                gridPaneSandBox.add(vide, i, j);
             }
         }
+
+        HBox rootScrollPane = new HBox();
+        rootScrollPane.getChildren().add(new Fil());
+        rootScrollPane.getChildren().add(new Amperemetre());
+        rootScrollPane.getChildren().add(new Ampoule());
+        rootScrollPane.getChildren().add(new Batterie());
+        rootScrollPane.getChildren().add(new Diode());
+        rootScrollPane.getChildren().add(new Fusible());
+        rootScrollPane.getChildren().add(new Interrupteur());
+        rootScrollPane.getChildren().add(new MiseAterre());
+        rootScrollPane.getChildren().add(new Moteur());
+        rootScrollPane.getChildren().add(new Ohmetre());
+        rootScrollPane.getChildren().add(new Resistance());
+        rootScrollPane.getChildren().add(new Voltmetre());
+        rootScrollPane.setPadding(new Insets(16));
+
+        myScrollPane.setContent(rootScrollPane);
     }
-
-    public void test(){
-        System.out.println("gggg");
-        Fil fil = new Fil();
-        fil.setImage(fil.getTabVariante()[0]);
-        myGridPane.add(fil,0,0);
-    }
-
-
 
     /*
+    public void initializeGridPane(GridPane gridPane){
+        final int numCols = 10 ;
+        final int numRows = 10 ;
+        for (int i = 0; i < numCols; i++) {
+            ColumnConstraints colConst = new ColumnConstraints();
+            colConst.setPrefWidth(20);
+            gridPane.getColumnConstraints().add(colConst);
+        }
+        for (int i = 0; i < numRows; i++) {
+            RowConstraints rowConst = new RowConstraints();
+            rowConst.setPrefHeight(20);
+            gridPane.getRowConstraints().add(rowConst);
+        }
+    }
+*/
+    public static void echangerComposantes(int[] posSource, int[] posTarget, Composante source, Composante target) {
+        source.setRow(posTarget[0]);
+        source.setCol(posTarget[1]);
+
+        target.setRow(posSource[0]);
+        target.setCol(posSource[1]);
+
+        gridPaneSandBox.add(source, posTarget[1], posTarget[0]);
+        gridPaneSandBox.add(target, posSource[1], posSource[0]);
+    }
+
+    public static void placerComposantes(Composante source, Composante target){
+        gridPaneSandBox.getChildren().remove(target.getCol(),target.getRow());
+        gridPaneSandBox.add(source, target.getCol(), target.getRow());
+    }
+/*
+
     public void dragAndDrop(Composante imageView){
 
         imageView.setOnDragDetected(event -> {
@@ -69,7 +129,9 @@ public class SandboxController {
         });
 
     }
+    */
 
+    /*
     private void creerMenuContext(){
         MenuItem itemSupprimer = new MenuItem("Supprimer");
         Menu menuVariante = new Menu("Variantes");
@@ -89,4 +151,33 @@ public class SandboxController {
     */
 
 
+    /*
+                        <GridPane fx:id="myGridPane" alignment="CENTER" prefHeight="376.0" prefWidth="414.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                        </GridPane>
+*/
+
 }
+
+

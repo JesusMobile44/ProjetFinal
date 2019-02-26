@@ -9,9 +9,8 @@ public class ComposanteVide extends Composante{
         tabNomVariante[0]="vide";
         tabVariante = new Image[tabNomVariante.length];
         nom="vide";
-            tabVariante[0]=new Image("composantes/images/vide.png");
+        tabVariante[0]=new Image("composantes/images/vide.png");
+        this.setImage(tabVariante[0]);
 
     }
-
-
 }

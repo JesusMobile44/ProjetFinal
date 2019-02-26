@@ -1,7 +1,12 @@
 package composantes;
 
+import controllers.SandboxController;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
+
 
 public class Fil extends Composante {
 
@@ -26,9 +31,11 @@ public class Fil extends Composante {
         for (int i = 0; i < tabNomVariante.length; i++) {
             tabVariante[i]=new Image("composantes/images/" + nom.toLowerCase() + " (" +(i + 1) + ").png");
         }
+        this.setImage(tabVariante[0]);
+        this.setFitHeight(64);
+        this.setFitWidth(64);
 
 
-        //setImage(tabVariante[0]);
     }
 
 }

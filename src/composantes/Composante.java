@@ -1,8 +1,12 @@
 package composantes;
 
+import controllers.SandboxController;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 
 public class Composante extends ImageView{
     protected Image[] tabVariante;
@@ -17,6 +21,8 @@ public class Composante extends ImageView{
     protected Composante[] tabAutour;
     protected Image realImage;
     protected boolean enPlace;
+    protected int row=0;
+    protected int col=0;
 
     public Composante() {
         this.direction = 0;
@@ -25,6 +31,38 @@ public class Composante extends ImageView{
         this.resistance = 0;
         this.tabAutour = new Composante[4];
         this.enPlace = false;
+
+        this.setOnDragDetected(event -> {
+            Dragboard dragboard = this.startDragAndDrop(TransferMode.MOVE);
+            ClipboardContent contenu = new ClipboardContent();
+            contenu.putImage(this.getImage());
+            dragboard.setContent(contenu);
+        });
+        this.setOnDragOver(event ->
+                event.acceptTransferModes(TransferMode.MOVE)
+        );
+        this.setOnDragDropped(event -> {
+            if(this.isEnPlace()){
+                Composante source = (Composante) event.getGestureSource();
+                Composante target = (Composante) event.getGestureTarget();
+
+                int[] posSource = {source.getRow(), source.getCol()};
+                int[] posTarget = {target.getRow(), target.getCol()};
+
+
+                SandboxController.echangerComposantes(posSource, posTarget, source, target);
+
+                event.setDropCompleted(true);
+
+            } else{
+                Composante source = (Composante) event.getGestureSource();
+                Composante target = (Composante) event.getGestureTarget();
+
+                SandboxController.placerComposantes(source, target);
+
+                event.setDropCompleted(true);
+            }
+        });
     }
 
     public Image[] getTabVariante() {
@@ -121,5 +159,21 @@ public class Composante extends ImageView{
 
     public void setEnPlace(boolean enPlace) {
         this.enPlace = enPlace;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
     }
 }
