@@ -4,6 +4,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 
 public class Moteur  extends ComposanteActivable{
+    /*
     public Moteur() {
         tabNomVariante=new String[2];
         tabNomVariante[0]="NS";
@@ -18,4 +19,5 @@ public class Moteur  extends ComposanteActivable{
         }
         this.setImage(tabVariante[0]);
     }
+    */
 }

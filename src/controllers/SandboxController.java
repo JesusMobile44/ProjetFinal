@@ -59,7 +59,7 @@ public class SandboxController {
         rootScrollPane.getChildren().add(new Fusible());
         rootScrollPane.getChildren().add(new Interrupteur());
         rootScrollPane.getChildren().add(new MiseAterre());
-        rootScrollPane.getChildren().add(new Moteur());
+        //rootScrollPane.getChildren().add(new Moteur());
         rootScrollPane.getChildren().add(new Ohmetre());
         rootScrollPane.getChildren().add(new Resistance());
         rootScrollPane.getChildren().add(new Voltmetre());

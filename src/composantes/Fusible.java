@@ -5,11 +5,9 @@ import javafx.scene.image.Image;
 
 public class Fusible  extends Composante{
     public Fusible() {
-        tabNomVariante=new String[4];
+        tabNomVariante=new String[2];
         tabNomVariante[0]="NS";
         tabNomVariante[1]="OE";
-        tabNomVariante[2]="SN";
-        tabNomVariante[3]="EO";
         tabVariante = new Image[tabNomVariante.length];
         description="Description Fusible";
         tooltip=new Tooltip("Tooltip Fusible");

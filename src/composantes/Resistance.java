@@ -11,7 +11,7 @@ public class Resistance  extends Composante{
         tabVariante = new Image[tabNomVariante.length];
         description="Description Résisteur";
         tooltip=new Tooltip("Tooltip Résisteur");
-        nom="Résisteur";
+        nom="Resisteur";
         realImage=new Image("file:images/" + nom.toLowerCase() + ".jpg");
         for (int i = 0; i < tabNomVariante.length; i++) {
             tabVariante[i]=new Image("composantes/images/" + nom.toLowerCase() + " (" +(i + 1) + ").png");
