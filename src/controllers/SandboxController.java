@@ -96,8 +96,11 @@ public class SandboxController {
     }
 
     public static void placerComposantes(Composante source, Composante target){
-        gridPaneSandBox.getChildren().remove(target.getCol(),target.getRow());
-        gridPaneSandBox.add(source, target.getCol(), target.getRow());
+        int i =target.getCol();
+        int j=target.getRow();
+        gridPaneSandBox.getChildren().remove(target);
+        gridPaneSandBox.add(source, i, j);
+
     }
 /*
 
@@ -177,7 +180,20 @@ public class SandboxController {
                           </rowConstraints>
                         </GridPane>
 */
+    /*
+    public Node getNodeByRowColumnIndex (final int row, final int column, GridPane gridPane) {
+        Node result = null;
+        ObservableList<Node> childrens = gridPane.getChildren();
 
+        for (Node node : childrens) {
+            if(gridPane.getRowIndex(node) == row && gridPane.getColumnIndex(node) == column) {
+                result = node;
+                break;
+            }
+        }
+
+        return result;
+    }*/
 }
 
 

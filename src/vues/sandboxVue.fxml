@@ -35,7 +35,7 @@
                      </children></FlowPane>
 
 
-                                    <ScrollPane fx:id="myScrollPane" prefHeight="200.0" prefWidth="200.0">
+                                    <ScrollPane fx:id="myScrollPane" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0">
                                       <content>
                                                 <FlowPane prefHeight="200.0" prefWidth="200.0" />
 

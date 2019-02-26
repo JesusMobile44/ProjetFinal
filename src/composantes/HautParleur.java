@@ -20,5 +20,8 @@ public class HautParleur extends ComposanteActivable {
             tabVariante[i]=new Image("composantes/images/" + nom.toLowerCase() + " (" +(i + 1) + ").png");
         }
         this.setImage(tabVariante[0]);
+
+        this.setFitHeight(100);
+        this.setFitWidth(100);
     }
 }
