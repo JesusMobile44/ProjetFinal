@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    public static int numeroMode;
+
     private static Scene[] scenes = new Scene[4];
 
     private static Stage stage= new Stage();
@@ -28,6 +30,8 @@ public class Main extends Application {
         getScenes()[2] = aventure;
         getScenes()[3] = guide;
 
+        numeroMode = 0;
+
         primaryStage = getStage();
         primaryStage.setTitle("Minecraft Redstone");
 
@@ -38,6 +42,15 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    public static void changerDeMode(int mode){
+        stage.setScene(Main.getScenes()[mode]);
+        stage.setResizable(true);
+
+        numeroMode = mode;
+
+        stage.hide();
+        stage.show();
+    }
 
     public static Scene[] getScenes() {
         return scenes;
@@ -54,5 +67,4 @@ public class Main extends Application {
     public static void setPrimaryStage(Stage stage) {
         Main.stage = stage;
     }
-
 }

@@ -10,7 +10,7 @@ public class Amperemetre  extends Composante{
         tabNomVariante[1]="OE";
         tabVariante = new Image[tabNomVariante.length];
         description="Description Ampèremètre";
-        tooltip=new Tooltip("Tooltip Ampèremètre");
+        tooltip=new Tooltip(" Appareil de mesure de l'intensité d'un courant électrique dans un circuit");
         nom="Amperemètre";
         realImage=new Image("file:images/" + nom.toLowerCase() + ".jpg");
         for (int i = 0; i < tabNomVariante.length; i++) {

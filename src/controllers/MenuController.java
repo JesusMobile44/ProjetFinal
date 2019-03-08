@@ -5,15 +5,19 @@ import main.Main;
 
 public class MenuController {
 
-    public void startJeu(){
-        Stage stage = Main.getStage();
-        stage.setScene(Main.getScenes()[1]);
-        stage.setResizable(true);
+    public void setSandbox(){
+        Main.changerDeMode(1);
+    }
 
+    public void setAventure(){
+        Main.changerDeMode(2);
+    }
 
-        stage.hide();
-        stage.show();
+    public void setGuide(){
+        Main.changerDeMode(3);
+    }
 
-
+    public void setMenu(){
+        Main.changerDeMode(0);
     }
 }

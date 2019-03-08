@@ -11,7 +11,7 @@ public class ComposanteVide extends Composante{
         nom="vide";
         tabVariante[0]=new Image("composantes/images/vide.png");
         this.setImage(tabVariante[0]);
-
+        enPlace = true;
 
     }
 }

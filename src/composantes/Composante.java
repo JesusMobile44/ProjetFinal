@@ -1,12 +1,14 @@
 package composantes;
 
 import controllers.SandboxController;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import main.Main;
 
 public class Composante extends ImageView{
     protected Image[] tabVariante;
@@ -32,6 +34,15 @@ public class Composante extends ImageView{
         this.tabAutour = new Composante[4];
         this.enPlace = false;
 
+        this.setOnMouseEntered(event -> {
+            switch (Main.numeroMode){
+                case 1:
+                    Label label = new Label(this.getDescription());
+
+                    break;
+            }
+        });
+
         this.setOnDragDetected(event -> {
             Dragboard dragboard = this.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent contenu = new ClipboardContent();
@@ -42,26 +53,36 @@ public class Composante extends ImageView{
                 event.acceptTransferModes(TransferMode.MOVE)
         );
         this.setOnDragDropped(event -> {
-            if(this.isEnPlace()){
-                Composante source = (Composante) event.getGestureSource();
-                Composante target = (Composante) event.getGestureTarget();
+            Composante source = (Composante) event.getGestureSource();
+            Composante target = (Composante) event.getGestureTarget();
 
-                int[] posSource = {source.getRow(), source.getCol()};
-                int[] posTarget = {target.getRow(), target.getCol()};
+            int[] posSource = {source.getRow(), source.getCol()};
+            int[] posTarget = {target.getRow(), target.getCol()};
 
 
-                SandboxController.echangerComposantes(posSource, posTarget, source, target);
+            if (source != target){
+                if(source.isEnPlace() && target.isEnPlace()){
 
-                event.setDropCompleted(true);
+                    switch (Main.numeroMode){
+                        case 1: SandboxController.echangerComposantes(posSource, posTarget, source, target);
+                        break;
+                    }
 
-            } else{
-                Composante source = (Composante) event.getGestureSource();
-                Composante target = (Composante) event.getGestureTarget();
+                    source.enPlace = true;
+                    event.setDropCompleted(true);
 
-                SandboxController.placerComposantes(source, target);
+                } else if(target.isEnPlace()){
+                    switch (Main.numeroMode){
+                        case 1: SandboxController.remettreComposante(source.getNom());
+                            SandboxController.placerComposantes(source, target);
+                            break;
+                    }
 
-                event.setDropCompleted(true);
+                    source.enPlace = true;
+                    event.setDropCompleted(true);
+                }
             }
+
         });
     }
 

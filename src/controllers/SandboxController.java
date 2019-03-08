@@ -11,10 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.*;
 import main.Main;
 
 
@@ -22,15 +19,22 @@ import main.Main;
 public class SandboxController {
 
     public static GridPane gridPaneSandBox = new GridPane();
+    public static FlowPane rootDescription = new FlowPane();
+    private static FlowPane rootScrollPane = new FlowPane();
 
     @FXML
     private SplitPane mySplitPane;
+
+    @FXML
+    private SplitPane affichageDescription;
 
     @FXML
     private ScrollPane scroll;
 
     @FXML
     private ScrollPane myScrollPane;
+
+
 
     @FXML
     public void initialize(){
@@ -39,8 +43,8 @@ public class SandboxController {
         gridPaneSandBox.setPrefSize(376, 414);
         //initializeGridPane(gridPaneSandBox);
 
-        for (int i=0; i<10; i++){
-            for (int j=0; j<10; j++){
+        for (int i=0; i<20; i++){
+            for (int j=0; j<20; j++){
                 ComposanteVide vide = new ComposanteVide();
                 vide.fitHeightProperty().set(100);
                 vide.fitWidthProperty().set(100);
@@ -50,7 +54,7 @@ public class SandboxController {
             }
         }
 
-        HBox rootScrollPane = new HBox();
+
         rootScrollPane.getChildren().add(new Fil());
         rootScrollPane.getChildren().add(new Amperemetre());
         rootScrollPane.getChildren().add(new Ampoule());
@@ -59,31 +63,37 @@ public class SandboxController {
         rootScrollPane.getChildren().add(new Fusible());
         rootScrollPane.getChildren().add(new Interrupteur());
         rootScrollPane.getChildren().add(new MiseAterre());
-        //rootScrollPane.getChildren().add(new Moteur());
         rootScrollPane.getChildren().add(new Ohmetre());
         rootScrollPane.getChildren().add(new Resistance());
         rootScrollPane.getChildren().add(new Voltmetre());
+        //rootScrollPane.getChildren().add(new Moteur());
+        //rootScrollPane.getChildren().add(new HautParleur());
         rootScrollPane.setPadding(new Insets(16));
+        rootScrollPane.setVgap(16);
+        rootScrollPane.setHgap(16);
+
+
 
         myScrollPane.setContent(rootScrollPane);
     }
 
-    /*
-    public void initializeGridPane(GridPane gridPane){
-        final int numCols = 10 ;
-        final int numRows = 10 ;
-        for (int i = 0; i < numCols; i++) {
-            ColumnConstraints colConst = new ColumnConstraints();
-            colConst.setPrefWidth(20);
-            gridPane.getColumnConstraints().add(colConst);
-        }
-        for (int i = 0; i < numRows; i++) {
-            RowConstraints rowConst = new RowConstraints();
-            rowConst.setPrefHeight(20);
-            gridPane.getRowConstraints().add(rowConst);
-        }
+    public void setSandbox(){
+        Main.changerDeMode(1);
     }
-*/
+
+    public void setAventure(){
+        Main.changerDeMode(2);
+    }
+
+    public void setGuide(){
+        Main.changerDeMode(3);
+    }
+
+    public void setMenu(){
+        Main.changerDeMode(0);
+    }
+
+
     public static void echangerComposantes(int[] posSource, int[] posTarget, Composante source, Composante target) {
         source.setRow(posTarget[0]);
         source.setCol(posTarget[1]);
@@ -91,6 +101,8 @@ public class SandboxController {
         target.setRow(posSource[0]);
         target.setCol(posSource[1]);
 
+        gridPaneSandBox.getChildren().remove(target);
+        gridPaneSandBox.getChildren().remove(source);
         gridPaneSandBox.add(source, posTarget[1], posTarget[0]);
         gridPaneSandBox.add(target, posSource[1], posSource[0]);
     }
@@ -99,40 +111,60 @@ public class SandboxController {
         int i =target.getCol();
         int j=target.getRow();
         gridPaneSandBox.getChildren().remove(target);
+        source.setCol(i);
+        source.setRow(j);
         gridPaneSandBox.add(source, i, j);
 
     }
-/*
 
-    public void dragAndDrop(Composante imageView){
+    public static void remettreComposante(String nom){
 
-        imageView.setOnDragDetected(event -> {
-            Dragboard dragboard = imageView.startDragAndDrop(TransferMode.MOVE);
-            ClipboardContent contenu = new ClipboardContent();
-            contenu.putImage(imageView.getImage());
-            dragboard.setContent(contenu);
-        });
-        imageView.setOnDragOver(event -> {
-            event.acceptTransferModes(TransferMode.MOVE);
-        });
-        imageView.setOnDragDropped(event -> {
-            if(imageView.getEnPlace){
-                Composante imageViewSource = (Composante) event.getGestureSource();
-                Composante imageViewTarget = (Composante) event.getGestureTarget();
-                Image imageTempSource = imageViewSource.getImage();
-                imageViewSource.setImage(imageViewTarget.getImage());
-                imageViewTarget.setImage(imageTempSource);
-                event.setDropCompleted(true);
-            } else{
-                Composante imageViewSource = (Composante) event.getGestureSource();
-                Composante imageViewTarget = (Composante) event.getGestureTarget();
-                imageViewTarget.setImage(imageViewSource.getImage());
-                event.setDropCompleted(true);
-            }
-        });
+        switch (nom.toUpperCase()){
 
+
+            case "AMPEREMÈTRE":
+                rootScrollPane.getChildren().add(1, new Amperemetre());
+                break;
+            case "AMPOULE":
+                rootScrollPane.getChildren().add(2, new Ampoule());
+                break;
+            case "BATTERIE":
+                rootScrollPane.getChildren().add(3, new Batterie());
+                break;
+            case "DIODE":
+                rootScrollPane.getChildren().add(4, new Diode());
+                break;
+            case "FIL":
+                rootScrollPane.getChildren().add(0, new Fil());
+                break;
+            case "FUSIBLE":
+                rootScrollPane.getChildren().add(5, new Fusible());
+                break;
+            case "HAUT-PARLEUR":
+                break;
+            case "INTERRUPTEUR":
+                rootScrollPane.getChildren().add(6, new Interrupteur());
+                break;
+            case "MISE À TERRE":
+                rootScrollPane.getChildren().add(7, new MiseAterre());
+                break;
+            case "MOTEUR":
+                rootScrollPane.getChildren().add(0, new Fil());
+                break;
+            case "OHMÈTRE":
+                rootScrollPane.getChildren().add(8, new Ohmetre());
+                break;
+            case "RESISTEUR":
+                rootScrollPane.getChildren().add(9, new Resistance());
+                break;
+            case "VOLTMÈTRE":
+                rootScrollPane.getChildren().add(10, new Voltmetre());
+
+        }
     }
-    */
+
+
+
 
     /*
     private void creerMenuContext(){
@@ -154,46 +186,6 @@ public class SandboxController {
     */
 
 
-    /*
-                        <GridPane fx:id="myGridPane" alignment="CENTER" prefHeight="376.0" prefWidth="414.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                        </GridPane>
-*/
-    /*
-    public Node getNodeByRowColumnIndex (final int row, final int column, GridPane gridPane) {
-        Node result = null;
-        ObservableList<Node> childrens = gridPane.getChildren();
-
-        for (Node node : childrens) {
-            if(gridPane.getRowIndex(node) == row && gridPane.getColumnIndex(node) == column) {
-                result = node;
-                break;
-            }
-        }
-
-        return result;
-    }*/
 }
 
 
