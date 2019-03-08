@@ -1,7 +1,7 @@
 package composantes;
 
-import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
+        import javafx.scene.control.Tooltip;
+        import javafx.scene.image.Image;
 
 public class Resistance  extends Composante{
     public Resistance() {
