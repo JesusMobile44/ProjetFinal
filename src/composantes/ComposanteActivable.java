@@ -1,6 +1,6 @@
 package composantes;
 
-public class ComposanteActivable  extends Composante{
+public class ComposanteActivable extends Composante {
 
     private boolean active;
 

@@ -1,8 +1,7 @@
 package composantes;
 
 import controllers.SandboxController;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -10,7 +9,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import main.Main;
 
-public class Composante extends ImageView{
+public class Composante extends ImageView {
     protected Image[] tabVariante;
     protected String[] tabNomVariante;
     protected int direction;
@@ -23,8 +22,8 @@ public class Composante extends ImageView{
     protected Composante[] tabAutour;
     protected Image realImage;
     protected boolean enPlace;
-    protected int row=0;
-    protected int col=0;
+    protected int row = 0;
+    protected int col = 0;
 
     public Composante() {
         this.direction = 0;
@@ -35,10 +34,9 @@ public class Composante extends ImageView{
         this.enPlace = false;
 
         this.setOnMouseEntered(event -> {
-            switch (Main.numeroMode){
+            switch (Main.numeroMode) {
                 case 1:
                     Label label = new Label(this.getDescription());
-
                     break;
             }
         });
@@ -60,20 +58,22 @@ public class Composante extends ImageView{
             int[] posTarget = {target.getRow(), target.getCol()};
 
 
-            if (source != target){
-                if(source.isEnPlace() && target.isEnPlace()){
+            if (source != target) {
+                if (source.isEnPlace() && target.isEnPlace()) {
 
-                    switch (Main.numeroMode){
-                        case 1: SandboxController.echangerComposantes(posSource, posTarget, source, target);
-                        break;
+                    switch (Main.numeroMode) {
+                        case 1:
+                            SandboxController.echangerComposantes(posSource, posTarget, source, target);
+                            break;
                     }
 
                     source.enPlace = true;
                     event.setDropCompleted(true);
 
-                } else if(target.isEnPlace()){
-                    switch (Main.numeroMode){
-                        case 1: SandboxController.remettreComposante(source.getNom());
+                } else if (target.isEnPlace()) {
+                    switch (Main.numeroMode) {
+                        case 1:
+                            SandboxController.remettreComposante(source.getNom());
                             SandboxController.placerComposantes(source, target);
                             break;
                     }

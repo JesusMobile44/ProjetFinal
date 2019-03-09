@@ -25,6 +25,10 @@ public class Main extends Application {
         Scene sandBox = new Scene(FXMLLoader.load(getClass().getResource("../vues/sandboxVue.fxml")));
         Scene aventure = new Scene(FXMLLoader.load(getClass().getResource("../vues/aventureVue.fxml")));
         Scene guide = new Scene(FXMLLoader.load(getClass().getResource("../vues/guideVue.fxml")));
+        menu.getStylesheets().add("modena_dark.css"); //Dark Theme: https://github.com/joffrey-bion/javafx-themes
+        sandBox.getStylesheets().add("modena_dark.css"); //Dark Theme: https://github.com/joffrey-bion/javafx-themes
+        aventure.getStylesheets().add("modena_dark.css"); //Dark Theme: https://github.com/joffrey-bion/javafx-themes
+        guide.getStylesheets().add("modena_dark.css"); //Dark Theme: https://github.com/joffrey-bion/javafx-themes
         getScenes()[0] = menu;
         getScenes()[1] = sandBox;
         getScenes()[2] = aventure;

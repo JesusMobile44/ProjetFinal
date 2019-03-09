@@ -3,7 +3,7 @@ package composantes;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 
-public class Moteur  extends ComposanteActivable{
+public class Moteur extends ComposanteActivable {
     /*
     public Moteur() {
         tabNomVariante=new String[2];
@@ -12,6 +12,7 @@ public class Moteur  extends ComposanteActivable{
         tabVariante = new Image[tabNomVariante.length];
         description="Description Moteur";
         tooltip=new Tooltip("Tooltip Moteur");
+        Tooltip.install(this,tooltip);
         nom="Moteur";
         realImage=new Image("file:images/" + nom.toLowerCase() + ".jpg");
         for (int i = 0; i < tabNomVariante.length; i++) {

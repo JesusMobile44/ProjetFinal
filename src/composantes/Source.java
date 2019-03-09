@@ -3,18 +3,18 @@ package composantes;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 
-public class MiseAterre extends Composante {
-    public MiseAterre() {
+public class Source extends ComposanteActivable {
+    public Source() {
         tabNomVariante = new String[4];
         tabNomVariante[0] = "NS";
         tabNomVariante[1] = "OE";
         tabNomVariante[2] = "SN";
         tabNomVariante[3] = "EO";
         tabVariante = new Image[tabNomVariante.length];
-        description = "Description Mise à Terre";
-        tooltip = new Tooltip("Tooltip Mise à Terre");
+        description = "Description Source";
+        tooltip = new Tooltip("Tooltip Source");
         Tooltip.install(this,tooltip);
-        nom = "Mise à Terre";
+        nom = "Source";
         realImage = new Image("file:images/" + nom.toLowerCase() + ".jpg");
         for (int i = 0; i < tabNomVariante.length; i++) {
             tabVariante[i] = new Image("composantes/images/" + nom.toLowerCase() + " (" + (i + 1) + ").png");
