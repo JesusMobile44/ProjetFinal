@@ -40,7 +40,6 @@ public class SandboxController {
         scroll.setContent(gridPaneSandBox);
 
         gridPaneSandBox.setPrefSize(376, 414);
-        //initializeGridPane(gridPaneSandBox);
 
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
@@ -106,6 +105,7 @@ public class SandboxController {
     }
 
     public static void placerComposantes(Composante source, Composante target) {
+
         int i = target.getCol();
         int j = target.getRow();
         gridPaneSandBox.getChildren().remove(target);
@@ -115,6 +115,7 @@ public class SandboxController {
         MenuItem itemSupprimer = new MenuItem("Supprimer");
         Menu menuVariante = new Menu("Variantes");
         MenuItem itemVariante[] = new MenuItem[source.getTabNomVariante().length];
+        
         for (int k = 0; k < itemVariante.length; k++) {
             itemVariante[k] = new MenuItem(source.getTabNomVariante()[k]);
             menuVariante.getItems().add(itemVariante[k]);
@@ -122,21 +123,43 @@ public class SandboxController {
             itemVariante[k].setOnAction(event -> {
                 source.setImage(source.getTabVariante()[temp]);
                 source.setDirection(temp);
+                calculDesProprietes();
             });
+
         }
         ContextMenu contextMenu = new ContextMenu(menuVariante);
+
         if (source.getNom().toUpperCase().equals("SOURCE")) {
             MenuItem itemIntensite = new MenuItem("Modifier l'intensité");
             MenuItem itemTension = new MenuItem("Modifier la tension");
-            itemIntensite.setOnAction(event -> changerValeur(source, "l'intensité"));
-            itemTension.setOnAction(event -> changerValeur(source, "la tension"));
+            itemIntensite.setOnAction(event -> {
+                changerValeur(source, "l'intensité");
+                calculDesProprietes();
+            });
+            itemTension.setOnAction(event -> {
+                changerValeur(source, "la tension");
+                calculDesProprietes();
+            });
             contextMenu.getItems().addAll(itemIntensite, itemTension);
         }
+
         if (source.getNom().toUpperCase().equals("RESISTEUR")) {
             MenuItem itemResistance = new MenuItem("Modifier la résistance");
-            itemResistance.setOnAction(event -> changerValeur(source, "la résistance"));
+            itemResistance.setOnAction(event -> {
+                changerValeur(source, "la résistance");
+                calculDesProprietes();
+            });
             contextMenu.getItems().add(itemResistance);
         }
+        itemSupprimer.setOnAction(event -> {
+            gridPaneSandBox.getChildren().remove(source);
+            ComposanteVide vide = new ComposanteVide();
+            vide.fitHeightProperty().set(100);
+            vide.fitWidthProperty().set(100);
+            vide.setRow(source.getRow());
+            vide.setCol(source.getCol());
+            gridPaneSandBox.add(vide, source.getCol(), source.getRow());
+        });
         contextMenu.getItems().add(itemSupprimer);
         source.setOnContextMenuRequested(event -> contextMenu.show(source, event.getScreenX(), event.getScreenY()));
         gridPaneSandBox.add(source, i, j);
@@ -195,7 +218,7 @@ public class SandboxController {
         return null;
     }
 
-    public void verification() {
+    public static void calculDesProprietes() {
         boolean sourceFound = false;
         Source source = null;
 
@@ -212,6 +235,7 @@ public class SandboxController {
             String dir = null;
             boolean finished = false;
             boolean error = false;
+
             switch (source.getDirection()) {
                 case 0:
                     dir = "up";
@@ -230,6 +254,7 @@ public class SandboxController {
                     dir = "left";
                     col--;
                     break;
+
             }
             while (!finished && !error) {
                 if (!((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("SOURCE")) {
@@ -420,5 +445,3 @@ public class SandboxController {
 
 
 }
-
-

@@ -20,5 +20,6 @@ public class Resisteur extends Composante {
         this.setImage(tabVariante[0]);
         this.setFitHeight(100);
         this.setFitWidth(100);
+        this.setResistance(100);
     }
 }

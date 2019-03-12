@@ -51,6 +51,7 @@ public class Composante extends ImageView {
                 event.acceptTransferModes(TransferMode.MOVE)
         );
         this.setOnDragDropped(event -> {
+
             Composante source = (Composante) event.getGestureSource();
             Composante target = (Composante) event.getGestureTarget();
 
@@ -83,6 +84,10 @@ public class Composante extends ImageView {
                 }
             }
 
+
+        });
+        this.setOnDragDone(event -> {
+            SandboxController.calculDesProprietes();
         });
     }
 

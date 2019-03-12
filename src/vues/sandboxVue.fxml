@@ -34,7 +34,7 @@
                     <items>
                         <FlowPane fx:id="affichageDescription" prefHeight="200.0" prefWidth="200.0">
                             <children>
-                                <Button mnemonicParsing="false" onAction="#verification" text="Button"/>
+                                <Button mnemonicParsing="false"  text="Button"/>
                             </children>
                         </FlowPane>
                         <ScrollPane fx:id="myScrollPane" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0">

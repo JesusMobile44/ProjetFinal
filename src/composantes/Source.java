@@ -23,5 +23,7 @@ public class Source extends ComposanteActivable {
 
         this.setFitHeight(100);
         this.setFitWidth(100);
+        this.setVolt(10);
+        this.setAmperage(1);
     }
 }
