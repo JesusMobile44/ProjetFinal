@@ -33,6 +33,10 @@ public class Composante extends ImageView {
         this.tabAutour = new Composante[4];
         this.enPlace = false;
 
+        this.setOnMouseClicked(event -> {
+            SandboxController.textDescription.setText(this.getDescription());
+        });
+
         this.setOnMouseEntered(event -> {
             switch (Main.numeroMode) {
                 case 1:

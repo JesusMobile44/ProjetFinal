@@ -10,6 +10,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import main.Main;
 
 import java.text.DecimalFormat;
@@ -18,15 +20,19 @@ import java.text.DecimalFormat;
 public class SandboxController {
 
     public static GridPane gridPaneSandBox = new GridPane();
-    public static FlowPane rootDescription = new FlowPane();
+
     private static FlowPane rootScrollPane = new FlowPane();
     public static DecimalFormat df = new DecimalFormat("#.##");
+    public static Text textDescription = new Text();
+
 
     @FXML
     private SplitPane mySplitPane;
 
     @FXML
-    private FlowPane affichageDescription;
+    private HBox myHBox;
+
+
 
     @FXML
     private ScrollPane scroll;
@@ -35,10 +41,12 @@ public class SandboxController {
     private ScrollPane myScrollPane;
 
 
+
+
     @FXML
     public void initialize() {
         scroll.setContent(gridPaneSandBox);
-
+        myHBox.getChildren().add(textDescription);
         gridPaneSandBox.setPrefSize(376, 414);
         //initializeGridPane(gridPaneSandBox);
 
@@ -65,6 +73,7 @@ public class SandboxController {
         rootScrollPane.getChildren().add(new Ohmetre());
         rootScrollPane.getChildren().add(new Resisteur());
         rootScrollPane.getChildren().add(new Voltmetre());
+        rootScrollPane.getChildren().add(new Switch());
         //rootScrollPane.getChildren().add(new Moteur());
         //rootScrollPane.getChildren().add(new HautParleur());
         rootScrollPane.setPadding(new Insets(16));
@@ -164,6 +173,7 @@ public class SandboxController {
                 rootScrollPane.getChildren().add(5, new Fusible());
                 break;
             case "HAUT-PARLEUR":
+                rootScrollPane.getChildren().add(12, new HautParleur());
                 break;
             case "INTERRUPTEUR":
                 rootScrollPane.getChildren().add(6, new Interrupteur());
@@ -182,6 +192,10 @@ public class SandboxController {
                 break;
             case "VOLTMÈTRE":
                 rootScrollPane.getChildren().add(10, new Voltmetre());
+                break;
+            case "SWITCH":
+                rootScrollPane.getChildren().add(11,new Switch());
+                break;
 
         }
     }
