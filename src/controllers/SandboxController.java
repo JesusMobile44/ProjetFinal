@@ -3,8 +3,8 @@ package controllers;
 import composantes.Composante;
 import composantes.ComposanteVide;
 import composantes.*;
-import concepts.Coordonnée;
-import concepts.Maille;
+import concepts.Branche;
+import concepts.Circuit;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -21,6 +21,7 @@ public class SandboxController {
     public static FlowPane rootDescription = new FlowPane();
     private static FlowPane rootScrollPane = new FlowPane();
     public static DecimalFormat df = new DecimalFormat("#.##");
+    public static Circuit circuit1= new Circuit();
 
     @FXML
     private SplitPane mySplitPane;
@@ -33,6 +34,8 @@ public class SandboxController {
 
     @FXML
     private ScrollPane myScrollPane;
+
+    private Circuit circuit = new Circuit();
 
 
     @FXML
@@ -72,11 +75,9 @@ public class SandboxController {
 
 
         myScrollPane.setContent(rootScrollPane);
+
     }
 
-    public void setSandbox() {
-        Main.changerDeMode(1);
-    }
 
     public void setAventure() {
         Main.changerDeMode(2);
@@ -123,7 +124,7 @@ public class SandboxController {
             itemVariante[k].setOnAction(event -> {
                 source.setImage(source.getTabVariante()[temp]);
                 source.setDirection(temp);
-                calculDesProprietes();
+                updateCircuit();
             });
 
         }
@@ -134,11 +135,11 @@ public class SandboxController {
             MenuItem itemTension = new MenuItem("Modifier la tension");
             itemIntensite.setOnAction(event -> {
                 changerValeur(source, "l'intensité");
-                calculDesProprietes();
+                updateCircuit();
             });
             itemTension.setOnAction(event -> {
                 changerValeur(source, "la tension");
-                calculDesProprietes();
+                updateCircuit();
             });
             contextMenu.getItems().addAll(itemIntensite, itemTension);
         }
@@ -147,7 +148,7 @@ public class SandboxController {
             MenuItem itemResistance = new MenuItem("Modifier la résistance");
             itemResistance.setOnAction(event -> {
                 changerValeur(source, "la résistance");
-                calculDesProprietes();
+                updateCircuit();
             });
             contextMenu.getItems().add(itemResistance);
         }
@@ -218,6 +219,297 @@ public class SandboxController {
         return null;
     }
 
+    public static void updateCircuit(){
+        circuit1 = new Circuit();
+        if (circuit1.isEnSerie()){
+            creerSerie();
+        }
+        if (!circuit1.isEnSerie()){
+            circuit1 = new Circuit();
+            circuit1.setEnSerie(false);
+            creerBranches();
+            creerMailles();
+            creerNoeuds();
+        }
+        remplirCircuit();
+
+        if (!circuit1.isIncomplet())
+            circuit1.calculVariables();
+    }
+
+
+    public static void creerMailles(){
+
+    }
+
+    public static void creerNoeuds(){
+
+    }
+
+    public static void creerBranches(){
+
+    }
+
+    public static void creerSerie(){
+
+        boolean debutFound = false;
+        Composante composanteInitiale = null;
+        Branche brancheTemporaire = new Branche();
+
+        //Au début, s'il y a pas de noeuds, le circuit cherche un source pour commencer
+        if (circuit1.isEnSerie()){
+            for (int i = 0; i < 20 && !debutFound; i++)
+                for (int j = 0; j < 20 && !debutFound; j++)
+                    if (((Composante) getNodeFromGridPane(gridPaneSandBox, i, j)).getNom().toUpperCase().equals("SOURCE")) {
+                        debutFound = true;
+                        composanteInitiale = (Composante) getNodeFromGridPane(gridPaneSandBox, i, j);
+                        brancheTemporaire.getComposantesBranche().add(composanteInitiale);
+                        brancheTemporaire.getSources().add((Source)composanteInitiale);
+                    }
+        }
+
+
+        if (debutFound) {
+            int row = composanteInitiale.getRow();
+            int col = composanteInitiale.getCol();
+            String dir = null;
+            boolean finished = false;
+            boolean error = false;
+
+            switch (composanteInitiale.getDirection()) {
+                case 0:
+                    dir = "up";
+                    row--;
+                    break;
+                case 1:
+                    dir = "right";
+                    col++;
+                    break;
+                case 2:
+                    dir = "down";
+                    row++;
+                    break;
+                case 3:
+                    dir = "left";
+                    col--;
+                    break;
+
+            }
+
+
+            while (!finished && !error) {
+
+                if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)) != composanteInitiale) {
+
+                    brancheTemporaire.getComposantesBranche().add((Composante) (getNodeFromGridPane(gridPaneSandBox, col, row)));
+
+                    //Check si cest une source
+                    if (((Composante) (getNodeFromGridPane(gridPaneSandBox, col, row))).getNom().toUpperCase().equals("SOURCE")){
+                        brancheTemporaire.getSources().add(((Source) (getNodeFromGridPane(gridPaneSandBox, col, row))));
+                    }
+
+                    //Check si c'est un résisteur
+                    if (((Composante) (getNodeFromGridPane(gridPaneSandBox, col, row))).getNom().toUpperCase().equals("RESISTEUR")){
+                        brancheTemporaire.getResisteurs().add(((Resisteur) (getNodeFromGridPane(gridPaneSandBox, col, row))));
+                    }
+
+                    //Cherche si la composante suivante est rattachée à la précédente et check la prochaine direction
+                    switch (dir) {
+                        case "up":
+                            switch (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getTabNomVariante()[((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getDirection()]) {
+                                case "NS":
+                                    dir = "up";
+                                    row--;
+                                    break;
+                                case "SN":
+                                    dir = "up";
+                                    row--;
+                                    break;
+                                case "SE":
+                                    dir = "right";
+                                    col++;
+                                    break;
+                                case "SO":
+                                    dir = "left";
+                                    col--;
+                                    break;
+                                case "NSE":
+                                    circuit1.setEnSerie(false);
+                                    finished=true;
+                                    break;
+                                case "NSO":
+                                    circuit1.setEnSerie(false);
+                                    finished=true;
+                                    break;
+                                case "SOE":
+                                    circuit1.setEnSerie(false);
+                                    finished=true;
+                                    break;
+                                case "NSEO":
+                                    circuit1.setEnSerie(false);
+                                    finished=true;
+                                    break;
+                                default:
+                                    error = true;
+                                    break;
+                            }
+                            break;
+                        case "right":
+                            switch (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getTabNomVariante()[((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getDirection()]) {
+                                case "NO":
+                                    dir = "up";
+                                    row--;
+                                    break;
+                                case "SO":
+                                    dir = "down";
+                                    row++;
+                                    break;
+                                case "OE":
+                                    dir = "right";
+                                    col++;
+                                    break;
+                                case "EO":
+                                    dir = "right";
+                                    col++;
+                                    break;
+                                case "NSO":
+                                    circuit1.setEnSerie(false);
+                                    finished=true;
+                                    break;
+                                case "SOE":
+                                    circuit1.setEnSerie(false);
+                                    finished=true;
+                                    break;
+                                case "NEO":
+                                    circuit1.setEnSerie(false);
+                                    finished=true;
+                                    break;
+                                case "NSEO":
+                                    circuit1.setEnSerie(false);
+                                    finished=true;
+                                    break;
+                                default:
+                                    error = true;
+                                    break;
+                            }
+                            break;
+                        case "down":
+                            switch (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getTabNomVariante()[((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getDirection()]) {
+                                case "NS":
+                                    dir = "down";
+                                    row++;
+                                    break;
+                                case "SN":
+                                    dir = "down";
+                                    row++;
+                                    break;
+                                case "NE":
+                                    dir = "right";
+                                    col++;
+                                    break;
+                                case "NO":
+                                    dir = "left";
+                                    col--;
+                                    break;
+                                case "NSE":
+                                    circuit1.setEnSerie(false);
+                                    finished=true;
+                                    break;
+                                case "NSO":
+                                    circuit1.setEnSerie(false);
+                                    finished=true;
+                                    break;
+                                case "NEO":
+                                    circuit1.setEnSerie(false);
+                                    finished=true;
+                                    break;
+                                case "NSEO":
+                                    circuit1.setEnSerie(false);
+                                    finished=true;
+                                    break;
+                                default:
+                                    error = true;
+                                    break;
+                            }
+                            break;
+                        case "left":
+                            switch (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getTabNomVariante()[((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getDirection()]) {
+                                case "NE":
+                                    dir = "up";
+                                    row--;
+                                    break;
+                                case "SE":
+                                    dir = "down";
+                                    row++;
+                                    System.out.println("fil down");
+                                    break;
+                                case "OE":
+                                    dir = "left";
+                                    col--;
+                                    break;
+                                case "EO":
+                                    dir = "left";
+                                    col--;
+                                    break;
+                                case "NSE":
+                                    circuit1.setEnSerie(false);
+                                    finished=true;
+                                    break;
+                                case "SOE":
+                                    circuit1.setEnSerie(false);
+                                    finished=true;
+                                    break;
+                                case "NEO":
+                                    circuit1.setEnSerie(false);
+                                    finished=true;
+                                    break;
+                                case "NSEO":
+                                    circuit1.setEnSerie(false);
+                                    finished=true;
+                                    break;
+                                default:
+                                    error = true;
+                                    break;
+                            }
+                            break;
+                    }
+                } else
+                    finished = true;
+            }
+
+            //if (!error)
+            //    mailleInitiale.calculer(gridPaneSandBox);
+
+            if (!error){
+                circuit1.getBranches().add(brancheTemporaire);
+                circuit1.setIncomplet(false);
+                System.out.println("Added");
+            }
+
+            else {
+                System.out.println("ERROR");
+            }
+
+        } else
+            System.out.println("ERROR: PAS DE SOURCE");
+    }
+
+    public static void remplirCircuit(){
+        for (int i=0; i<circuit1.getBranches().size(); i++){
+            for (int j=0; j<circuit1.getBranches().get(i).getComposantesBranche().size(); j++){
+                circuit1.getComposantes().add(circuit1.getBranches().get(i).getComposantesBranche().get(j));
+                if (circuit1.getBranches().get(i).getComposantesBranche().get(j).getNom().toUpperCase().equals("SOURCE")){
+                    circuit1.getSources().add((Source)circuit1.getBranches().get(i).getComposantesBranche().get(j));
+                }
+                if (circuit1.getBranches().get(i).getComposantesBranche().get(j).getNom().toUpperCase().equals("RESISTEUR")){
+                    circuit1.getResisteurs().add((Resisteur) circuit1.getBranches().get(i).getComposantesBranche().get(j));
+                }
+            }
+        }
+    }
+
+
+    /*
     public static void calculDesProprietes() {
         boolean sourceFound = false;
         Source source = null;
@@ -401,6 +693,7 @@ public class SandboxController {
         } else
             System.out.print("ERROR: PAS DE SOURCE");
     }
+    */
 
     public static void changerValeur(Composante composante, String string) {
         TextInputDialog alerteValeur = new TextInputDialog("Entrez ici");
@@ -423,25 +716,4 @@ public class SandboxController {
             changerValeur(composante, string);
         }
     }
-
-    /*
-    private void creerMenuContext(){
-        MenuItem itemSupprimer = new MenuItem("Supprimer");
-        Menu menuVariante = new Menu("Variantes");
-        MenuItem itemVariante[] = new MenuItem[tabNomVariante.length];
-        for(int i=0;i<itemVariante.length;i++){
-            itemVariante[i]= new MenuItem(tabNomVariante[i]);
-            menuVariante.getItems().add(itemVariante[i]);
-            int temp[]={i};
-            itemVariante[i].setOnAction(event -> {composante.setImage(tabVariante[temp[0]]);});
-        }
-        ContextMenu contextMenu = new ContextMenu(itemSupprimer, menuVariante);
-        composante.setOnContextMenuRequested(event -> contextMenu.show(composante, event.getScreenX(), event.getScreenY()));
-
-        itemSupprimer.setOnAction(event -> {composante=new ComposanteVide();});
-        return itemReinitialiser;
-    }
-    */
-
-
 }

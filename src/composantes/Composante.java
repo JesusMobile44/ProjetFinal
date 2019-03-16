@@ -87,7 +87,7 @@ public class Composante extends ImageView {
 
         });
         this.setOnDragDone(event -> {
-            SandboxController.calculDesProprietes();
+            SandboxController.updateCircuit();
         });
     }
 

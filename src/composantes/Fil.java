@@ -10,6 +10,8 @@ import javafx.scene.input.TransferMode;
 
 public class Fil extends Composante {
 
+    private boolean noeud;
+
     public Fil() {
         tabNomVariante = new String[11];
         tabNomVariante[0] = "NS";
@@ -35,8 +37,16 @@ public class Fil extends Composante {
         this.setImage(tabVariante[0]);
         this.setFitHeight(100);
         this.setFitWidth(100);
+        this.noeud = false;
 
 
     }
 
+    public boolean isNoeud() {
+        return noeud;
+    }
+
+    public void setNoeud(boolean noeud) {
+        this.noeud = noeud;
+    }
 }
