@@ -9,11 +9,19 @@ public class Noeud {
     private boolean analyseComplete;
     private Composante composante;
 
-    public Noeud(String[] directions, boolean[] directionsAnalysees, Composante composante1) {
-        this.directions = directions;
-        this.directionsAnalysees = directionsAnalysees;
-        this.analyseComplete = false;
+    public Noeud(Composante composante1) {
         this.composante = composante1;
+        this.analyseComplete = false;
+        this.directionsAnalysees = new boolean[this.composante.getTabNomVariante()[this.composante.getDirection()].length()];
+        this.directions = new String[this.composante.getTabNomVariante()[this.composante.getDirection()].length()];
+
+        for (int i = 0; i<this.composante.getTabNomVariante()[this.composante.getDirection()].length(); i++){
+            this.directions[i] = this.composante.getTabNomVariante()[this.composante.getDirection()].substring(i,i+1);
+        }
+
+        for (int i = 0; i<this.getDirections().length; i++){
+            this.directionsAnalysees[i] = false;
+        }
     }
 
     public String[] getDirections() {
