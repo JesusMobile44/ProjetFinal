@@ -1,5 +1,6 @@
 package controllers;
 
+import com.sun.org.apache.regexp.internal.RE;
 import composantes.Composante;
 import composantes.ComposanteVide;
 import composantes.*;
@@ -445,36 +446,8 @@ public class SandboxController {
                         if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)) == actuel.getComposanteNoeud()) {
                             System.out.println("Revenu au départ");
 
-                            switch (dir) {
-                                case "up":
-                                    for (int k = 0; i < actuel.getDirections().length; i++) {
-                                        if (actuel.getDirections()[k].equals("S")) {
-                                            actuel.getDirectionsAnalysees()[k] = true;
-                                        }
-                                    }
-                                    break;
-                                case "down":
-                                    for (int k = 0; i < actuel.getDirections().length; i++) {
-                                        if (actuel.getDirections()[k].equals("N")) {
-                                            actuel.getDirectionsAnalysees()[k] = true;
-                                        }
-                                    }
-                                    break;
-                                case "left":
-                                    for (int k = 0; i < actuel.getDirections().length; i++) {
-                                        if (actuel.getDirections()[k].equals("E")) {
-                                            actuel.getDirectionsAnalysees()[k] = true;
-                                        }
-                                    }
-                                    break;
-                                case "right":
-                                    for (int k = 0; i < actuel.getDirections().length; i++) {
-                                        if (actuel.getDirections()[k].equals("O")) {
-                                            actuel.getDirectionsAnalysees()[k] = true;
-                                        }
-                                    }
-                                    break;
-                            }
+                            changerDirectionsAnalysees(actuel, dir);
+
                         } else {
                             if (((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).isNoeud()) {
                                 System.out.println("Rencontre un noeud existant");
@@ -486,70 +459,14 @@ public class SandboxController {
                                     }
                                 }
 
-                                switch (dir) {
-                                    case "up":
-                                        for (int k = 0; i < rencontre.getDirections().length; i++) {
-                                            if (rencontre.getDirections()[k].equals("S")) {
-                                                rencontre.getDirectionsAnalysees()[k] = true;
-                                            }
-                                        }
-                                        break;
-                                    case "down":
-                                        for (int k = 0; i < rencontre.getDirections().length; i++) {
-                                            if (rencontre.getDirections()[k].equals("N")) {
-                                                rencontre.getDirectionsAnalysees()[k] = true;
-                                            }
-                                        }
-                                        break;
-                                    case "left":
-                                        for (int k = 0; i < rencontre.getDirections().length; i++) {
-                                            if (rencontre.getDirections()[k].equals("E")) {
-                                                rencontre.getDirectionsAnalysees()[k] = true;
-                                            }
-                                        }
-                                        break;
-                                    case "right":
-                                        for (int k = 0; i < rencontre.getDirections().length; i++) {
-                                            if (rencontre.getDirections()[k].equals("O")) {
-                                                rencontre.getDirectionsAnalysees()[k] = true;
-                                            }
-                                        }
-                                        break;
-                                }
+                                changerDirectionsAnalysees(rencontre, dir);
+
+
                             } else {
                                 System.out.println("Nouveau noeud!");
                                 Noeud tempo = new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row));
 
-                                switch (dir) {
-                                    case "up":
-                                        for (int k = 0; i < tempo.getDirections().length; i++) {
-                                            if (tempo.getDirections()[k].equals("S")) {
-                                                tempo.getDirectionsAnalysees()[k] = true;
-                                            }
-                                        }
-                                        break;
-                                    case "down":
-                                        for (int k = 0; i < tempo.getDirections().length; i++) {
-                                            if (tempo.getDirections()[k].equals("N")) {
-                                                tempo.getDirectionsAnalysees()[k] = true;
-                                            }
-                                        }
-                                        break;
-                                    case "left":
-                                        for (int k = 0; i < tempo.getDirections().length; i++) {
-                                            if (tempo.getDirections()[k].equals("E")) {
-                                                tempo.getDirectionsAnalysees()[k] = true;
-                                            }
-                                        }
-                                        break;
-                                    case "right":
-                                        for (int k = 0; i < tempo.getDirections().length; i++) {
-                                            if (tempo.getDirections()[k].equals("O")) {
-                                                tempo.getDirectionsAnalysees()[k] = true;
-                                            }
-                                        }
-                                        break;
-                                }
+                                changerDirectionsAnalysees(tempo, dir);
 
                                 ((Fil)tempo.getComposanteNoeud()).setNoeud(true);
                                 circuit1.getNoeuds().add(tempo);
@@ -567,12 +484,278 @@ public class SandboxController {
                 }
             }
         }
-        System.out.println("wwwww");
+        System.out.println(" ");
+    }
+
+    public static void changerDirectionsAnalysees(Noeud noeud, String dir){
+        switch (dir) {
+            case "up":
+                for (int k = 0; k < noeud.getDirections().length; k++) {
+                    if (noeud.getDirections()[k].equals("S")) {
+                        noeud.getDirectionsAnalysees()[k] = true;
+                    }
+                }
+                break;
+            case "down":
+                for (int k = 0; k < noeud.getDirections().length; k++) {
+                    if (noeud.getDirections()[k].equals("N")) {
+                        noeud.getDirectionsAnalysees()[k] = true;
+                    }
+                }
+                break;
+            case "left":
+                for (int k = 0; k < noeud.getDirections().length; k++) {
+                    if (noeud.getDirections()[k].equals("E")) {
+                        noeud.getDirectionsAnalysees()[k] = true;
+                    }
+                }
+                break;
+            case "right":
+                for (int k = 0; k < noeud.getDirections().length; k++) {
+                    if (noeud.getDirections()[k].equals("O")) {
+                        noeud.getDirectionsAnalysees()[k] = true;
+                    }
+                }
+                break;
+        }
     }
 
     public static void creerBranches(){
 
+        for (int i=0; i<circuit1.getNoeuds().size(); i++){
+            for (int j=0; j<circuit1.getNoeuds().get(i).getDirectionsAnalysees().length; j++){
+                circuit1.getNoeuds().get(i).getDirectionsAnalysees()[j]= false;
+            }
+        }
+
+        boolean error = false;
+
+        for (int i=0; i<circuit1.getNoeuds().size(); i++){
+
+            Noeud actuel = circuit1.getNoeuds().get(i);
+
+            for (int j=0; j<actuel.getDirectionsAnalysees().length; j++) {
+
+                int row = actuel.getComposanteNoeud().getRow();
+                int col = actuel.getComposanteNoeud().getCol();
+                String dir = null;
+
+                if (!actuel.getDirectionsAnalysees()[j]) {
+
+                    switch (actuel.getDirections()[j]) {
+                        case "N":
+                            dir = "up";
+                            row--;
+                            break;
+                        case "E":
+                            dir = "right";
+                            col++;
+                            break;
+                        case "S":
+                            dir = "down";
+                            row++;
+                            break;
+                        case "O":
+                            dir = "left";
+                            col--;
+                            break;
+
+                    }
+
+                    boolean finished = false;
+                    Branche brancheTemporaire = new Branche();
+
+
+                    while (!finished && !error) {
+
+                        if (!finished && !error){
+                            brancheTemporaire.getComposantesBranche().add((Composante) getNodeFromGridPane(gridPaneSandBox, col, row));
+
+                            if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("SOURCE")){
+                                brancheTemporaire.getSources().add(((Source) getNodeFromGridPane(gridPaneSandBox, col, row)));
+                            }
+                            if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("RESISTEUR")){
+                                brancheTemporaire.getResisteurs().add(((Resisteur) getNodeFromGridPane(gridPaneSandBox, col, row)));
+                            }
+                        }
+
+
+                        switch (dir) {
+                            case "up":
+                                switch (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getTabNomVariante()[((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getDirection()]) {
+                                    case "NS":
+                                        dir = "up";
+                                        row--;
+                                        break;
+                                    case "SN":
+                                        dir = "up";
+                                        row--;
+                                        break;
+                                    case "SE":
+                                        dir = "right";
+                                        col++;
+                                        break;
+                                    case "SO":
+                                        dir = "left";
+                                        col--;
+                                        break;
+                                    case "NSE":
+                                        finished = true;
+                                        break;
+                                    case "NSO":
+                                        finished = true;
+                                        break;
+                                    case "SOE":
+                                        finished = true;
+                                        break;
+                                    case "NSEO":
+                                        finished = true;
+                                        break;
+                                    default:
+                                        error = true;
+                                        break;
+                                }
+                                break;
+                            case "right":
+                                switch (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getTabNomVariante()[((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getDirection()]) {
+                                    case "NO":
+                                        dir = "up";
+                                        row--;
+                                        break;
+                                    case "SO":
+                                        dir = "down";
+                                        row++;
+                                        break;
+                                    case "OE":
+                                        dir = "right";
+                                        col++;
+                                        break;
+                                    case "EO":
+                                        dir = "right";
+                                        col++;
+                                        break;
+                                    case "NSO":
+                                        finished = true;
+                                        break;
+                                    case "SOE":
+                                        finished = true;
+                                        break;
+                                    case "NEO":
+                                        finished = true;
+                                        break;
+                                    case "NSEO":
+                                        finished = true;
+                                        break;
+                                    default:
+                                        error = true;
+                                        break;
+                                }
+                                break;
+                            case "down":
+                                switch (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getTabNomVariante()[((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getDirection()]) {
+                                    case "NS":
+                                        dir = "down";
+                                        row++;
+                                        break;
+                                    case "SN":
+                                        dir = "down";
+                                        row++;
+                                        break;
+                                    case "NE":
+                                        dir = "right";
+                                        col++;
+                                        break;
+                                    case "NO":
+                                        dir = "left";
+                                        col--;
+                                        break;
+                                    case "NSE":
+                                        finished = true;
+                                        break;
+                                    case "NSO":
+                                        finished = true;
+                                        break;
+                                    case "NEO":
+                                        finished = true;
+                                        break;
+                                    case "NSEO":
+                                        finished = true;
+                                        break;
+                                    default:
+                                        error = true;
+                                        break;
+                                }
+                                break;
+                            case "left":
+                                switch (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getTabNomVariante()[((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getDirection()]) {
+                                    case "NE":
+                                        dir = "up";
+                                        row--;
+                                        break;
+                                    case "SE":
+                                        dir = "down";
+                                        row++;
+                                        System.out.println("fil down");
+                                        break;
+                                    case "OE":
+                                        dir = "left";
+                                        col--;
+                                        break;
+                                    case "EO":
+                                        dir = "left";
+                                        col--;
+                                        break;
+                                    case "NSE":
+                                        finished = true;
+                                        break;
+                                    case "SOE":
+                                        finished = true;
+                                        break;
+                                    case "NEO":
+                                        finished = true;
+                                        break;
+                                    case "NSEO":
+                                        finished = true;
+                                        break;
+                                    default:
+                                        error = true;
+                                        break;
+                                }
+
+                                break;
+
+                        }
+
+                        if (finished){
+                            brancheTemporaire.getComposantesBranche().remove(brancheTemporaire.getComposantesBranche().size()-1);
+                        }
+
+                    }
+
+                    if (!error){
+                        circuit1.getBranches().add(brancheTemporaire);
+                        System.out.println("Branche créée!");
+                        System.out.println(" ");
+
+                        Noeud tempo = null;
+
+                        for (int k=0; k< circuit1.getNoeuds().size(); k++){
+                            if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)) == circuit1.getNoeuds().get(k).getComposanteNoeud()) {
+                                tempo = circuit1.getNoeuds().get(k);
+                            }
+                        }
+
+                        changerDirectionsAnalysees(tempo, dir);
+
+                        actuel.getDirectionsAnalysees()[j] = true;
+                    }
+
+                }
+            }
+        }
+        System.out.println(" ");
     }
+
 
     public static void creerSerie(){
 
@@ -839,12 +1022,15 @@ public class SandboxController {
                 System.out.println("Added");
             }
 
+            /*
             else {
                 System.out.println("ERROR");
             }
+            */
 
-        } else
-            System.out.println("ERROR: PAS DE SOURCE");
+        } else{
+            //System.out.println("ERROR: PAS DE SOURCE");
+        }
     }
 
     public static void remplirCircuit(){
