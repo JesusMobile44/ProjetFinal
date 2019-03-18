@@ -35,6 +35,8 @@ public class Composante extends ImageView {
 
         this.setOnMouseClicked(event -> {
             SandboxController.textDescription.setText(this.getDescription());
+            SandboxController.changerMenuComposante(this);
+
         });
 
         this.setOnMouseEntered(event -> {
@@ -77,7 +79,7 @@ public class Composante extends ImageView {
                 } else if (target.isEnPlace()) {
                     switch (Main.numeroMode) {
                         case 1:
-                            SandboxController.remettreComposante(source.getNom());
+                            SandboxController.remettreComposante(source);
                             SandboxController.placerComposantes(source, target);
                             break;
                     }
