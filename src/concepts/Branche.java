@@ -10,6 +10,7 @@ public class Branche {
     private ArrayList<Composante> composantesBranche = new ArrayList<>();
     private ArrayList<Resisteur> resisteurs = new ArrayList<>();
     private ArrayList<Source> sources = new ArrayList<>();
+    private ArrayList<Noeud> noeudsAdjacents = new ArrayList<>();
     private float intensité;
 
     public ArrayList<Composante> getComposantesBranche() {
@@ -42,5 +43,13 @@ public class Branche {
 
     public void setIntensité(float intensité) {
         this.intensité = intensité;
+    }
+
+    public ArrayList<Noeud> getNoeudsAdjacents() {
+        return noeudsAdjacents;
+    }
+
+    public void setNoeudsAdjacents(ArrayList<Noeud> noeudsAdjacents) {
+        this.noeudsAdjacents = noeudsAdjacents;
     }
 }

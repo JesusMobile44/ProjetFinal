@@ -9,7 +9,20 @@ import java.util.ArrayList;
 public class NouvelleMaille {
     private ArrayList<Composante> composantesMaille = new ArrayList<>();
     private ArrayList<Resisteur> resisteurs = new ArrayList<>();
+    private ArrayList<Noeud> noeudsMaille = new ArrayList<>();
+    private ArrayList<Branche> branchesMaille = new ArrayList<>();
     private ArrayList<Source> sources = new ArrayList<>();
+
+    public NouvelleMaille(ArrayList<Composante> composantesMaille, ArrayList<Resisteur> resisteurs, ArrayList<Noeud> noeudsMaille, ArrayList<Branche> branchesMaille, ArrayList<Source> sources) {
+        this.composantesMaille = composantesMaille;
+        this.resisteurs = resisteurs;
+        this.noeudsMaille = noeudsMaille;
+        this.branchesMaille = branchesMaille;
+        this.sources = sources;
+    }
+
+    public NouvelleMaille() {
+    }
 
     public ArrayList<Composante> getComposantesMaille() {
         return composantesMaille;
@@ -33,5 +46,21 @@ public class NouvelleMaille {
 
     public void setSources(ArrayList<Source> sources) {
         this.sources = sources;
+    }
+
+    public ArrayList<Noeud> getNoeudsMaille() {
+        return noeudsMaille;
+    }
+
+    public void setNoeudsMaille(ArrayList<Noeud> noeudsMaille) {
+        this.noeudsMaille = noeudsMaille;
+    }
+
+    public ArrayList<Branche> getBranchesMaille() {
+        return branchesMaille;
+    }
+
+    public void setBranchesMaille(ArrayList<Branche> branchesMaille) {
+        this.branchesMaille = branchesMaille;
     }
 }

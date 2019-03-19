@@ -2,12 +2,16 @@ package concepts;
 
 import composantes.Composante;
 
+import java.util.ArrayList;
+
 public class Noeud {
 
     private String[] directions;
     private boolean[] directionsAnalysees;
     private boolean analyseComplete;
     private Composante composante;
+    private ArrayList<Branche> branchesAdjacentes = new ArrayList<>();
+    private boolean[] branchesAnalysees;
 
     public Noeud(Composante composante1) {
         this.composante = composante1;
@@ -54,5 +58,41 @@ public class Noeud {
 
     public void setComposanteNoeud(Composante composante) {
         this.composante = composante;
+    }
+
+    public Composante getComposante() {
+        return composante;
+    }
+
+    public void setComposante(Composante composante) {
+        this.composante = composante;
+    }
+
+    public ArrayList<Branche> getBranchesAdjacentes() {
+        return branchesAdjacentes;
+    }
+
+    public void setBranchesAdjacentes(ArrayList<Branche> branchesAdjacentes) {
+        this.branchesAdjacentes = branchesAdjacentes;
+    }
+
+    public boolean[] getBranchesAnalysees() {
+        return branchesAnalysees;
+    }
+
+    public void setBranchesAnalysees(boolean[] branchesAnalysees) {
+        this.branchesAnalysees = branchesAnalysees;
+    }
+
+    public void updateBranchesAnalysees(){
+        this.branchesAnalysees = new boolean[branchesAdjacentes.size()];
+
+        resetBranchesAnalysees();
+    }
+
+    public void resetBranchesAnalysees(){
+        for (int i = 0; i<this.getBranchesAnalysees().length; i++){
+            this.branchesAnalysees[i] = false;
+        }
     }
 }
