@@ -2,6 +2,7 @@ package composantes;
 
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
+import main.Main;
 
 public class Voltmetre extends Composante {
     public Voltmetre() {
@@ -15,7 +16,7 @@ public class Voltmetre extends Composante {
         nom = "Voltmètre";
         realImage = new Image("file:images/" + nom.toLowerCase() + ".jpg");
         for (int i = 0; i < tabNomVariante.length; i++) {
-            tabVariante[i] = new Image("composantes/images/" + nom.toLowerCase() + " (" + (i + 1) + ").png");
+            tabVariante[i] = Main.getImagesContainer().getHashMapImage().get(nom.toLowerCase() + " (" + (i + 1) + ").png");
         }
         this.setImage(tabVariante[0]);
         this.setFitHeight(100);

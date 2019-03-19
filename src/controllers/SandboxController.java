@@ -1,6 +1,5 @@
 package controllers;
 
-import com.sun.org.apache.regexp.internal.RE;
 import composantes.Composante;
 import composantes.ComposanteVide;
 import composantes.*;
@@ -12,25 +11,31 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import main.Main;
 
 import java.text.DecimalFormat;
+import java.util.stream.IntStream;
 
 
 public class SandboxController {
 
     public static GridPane gridPaneSandBox = new GridPane();
-    public static FlowPane rootDescription = new FlowPane();
+    public static  Button backButtonStatic = new Button();
     private static FlowPane rootScrollPane = new FlowPane();
     public static DecimalFormat df = new DecimalFormat("#.##");
     public static Circuit circuit1= new Circuit();
+    public static Text textDescription = new Text();
+
 
     @FXML
     private SplitPane mySplitPane;
 
-    @FXML
-    private FlowPane affichageDescription;
+     @FXML
+    private HBox myHBox;
 
     @FXML
     private ScrollPane scroll;
@@ -38,14 +43,24 @@ public class SandboxController {
     @FXML
     private ScrollPane myScrollPane;
 
+    @FXML
+    private Button backButton;
+
+
     private Circuit circuit = new Circuit();
 
 
     @FXML
     public void initialize() {
         scroll.setContent(gridPaneSandBox);
-
+        textDescription.setText("Cliquer sur une composante pour afficher sa description");
+        myHBox.getChildren().add(textDescription);
         gridPaneSandBox.setPrefSize(376, 414);
+        backButtonStatic = backButton;
+        backButtonStatic.setDisable(true);
+        backButtonStatic.setOpacity(0);
+        backButtonStatic.setOnAction(event -> goBack());
+        //initializeGridPane(gridPaneSandBox);
 
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
@@ -59,6 +74,20 @@ public class SandboxController {
         }
 
 
+        goBack();
+        //rootScrollPane.getChildren().add(new Moteur());
+        //rootScrollPane.getChildren().add(new HautParleur());
+        rootScrollPane.setPadding(new Insets(16));
+        rootScrollPane.setVgap(16);
+        rootScrollPane.setHgap(16);
+
+
+        myScrollPane.setContent(rootScrollPane);
+    }
+    public static void goBack(){
+        backButtonStatic.setOpacity(0);
+        backButtonStatic.setDisable(true);
+        rootScrollPane.getChildren().clear();
         rootScrollPane.getChildren().add(new Fil());
         rootScrollPane.getChildren().add(new Amperemetre());
         rootScrollPane.getChildren().add(new Ampoule());
@@ -70,17 +99,172 @@ public class SandboxController {
         rootScrollPane.getChildren().add(new Ohmetre());
         rootScrollPane.getChildren().add(new Resisteur());
         rootScrollPane.getChildren().add(new Voltmetre());
-        //rootScrollPane.getChildren().add(new Moteur());
-        //rootScrollPane.getChildren().add(new HautParleur());
-        rootScrollPane.setPadding(new Insets(16));
-        rootScrollPane.setVgap(16);
-        rootScrollPane.setHgap(16);
-
-
-        myScrollPane.setContent(rootScrollPane);
-
+        rootScrollPane.getChildren().add(new Switch());
     }
-
+    public static void changerMenuComposante(Composante composante){
+        String nom  = composante.getNom();
+        rootScrollPane.getChildren().clear();
+        backButtonStatic.setDisable(false);
+        backButtonStatic.setOpacity(100);
+        Image back = new Image("autre/images/back (1).png");
+        backButtonStatic.setGraphic(new ImageView(back));
+        switch (nom.toUpperCase()) {
+            case "AMPEREMÈTRE":
+                rootScrollPane.getChildren().add(0, new Amperemetre());
+                Amperemetre amperemetre1 = new Amperemetre();
+                amperemetre1.setImage(amperemetre1.getTabVariante()[1]);
+                amperemetre1.setDirection(1);
+                rootScrollPane.getChildren().add(1, amperemetre1);
+                break;
+            case "AMPOULE":
+                rootScrollPane.getChildren().add(0, new Ampoule());
+                Ampoule ampoule1 = new Ampoule();
+                ampoule1.setImage(ampoule1.getTabVariante()[1]);
+                ampoule1.setDirection(1);
+                rootScrollPane.getChildren().add(1,ampoule1);
+                break;
+            case "SOURCE":
+                rootScrollPane.getChildren().add(0, new Source());
+                Source source = new Source();
+                source.setImage(source.getTabVariante()[1]);
+                source.setDirection(1);
+                rootScrollPane.getChildren().add(1,source);
+                Source source1 = new Source();
+                source1.setImage(source.getTabVariante()[2]);
+                source1.setDirection(2);
+                rootScrollPane.getChildren().add(2,source1);
+                Source source2 = new Source();
+                source2.setImage(source.getTabVariante()[3]);
+                source2.setDirection(3);
+                rootScrollPane.getChildren().add(3,source2);
+                break;
+            case "DIODE":
+                rootScrollPane.getChildren().add(0, new Diode());
+                Diode diode = new Diode();
+                diode.setImage(diode.getTabVariante()[1]);
+                diode.setDirection(1);
+                rootScrollPane.getChildren().add(1,diode);
+                Diode diode1 = new Diode();
+                diode1.setImage(diode.getTabVariante()[2]);
+                diode1.setDirection(2);
+                rootScrollPane.getChildren().add(1,diode1);
+                Diode diode2 = new Diode();
+                diode2.setImage(diode.getTabVariante()[3]);
+                diode2.setDirection(3);
+                rootScrollPane.getChildren().add(1,diode2);
+                break;
+            case "FIL":
+                rootScrollPane.getChildren().add(0, new Fil());
+                Fil fil = new Fil();
+                fil.setImage(fil.getTabVariante()[1]);
+                fil.setDirection(1);
+                rootScrollPane.getChildren().add(1,fil);
+                Fil fil1 = new Fil();
+                fil1.setImage(fil.getTabVariante()[2]);
+                fil1.setDirection(2);
+                rootScrollPane.getChildren().add(2,fil1);
+                Fil fil2 = new Fil();
+                fil2.setImage(fil.getTabVariante()[3]);
+                fil2.setDirection(3);
+                rootScrollPane.getChildren().add(3,fil2);
+                Fil fil3 = new Fil();
+                fil3.setImage(fil.getTabVariante()[4]);
+                fil.setDirection(4);
+                rootScrollPane.getChildren().add(4,fil3);
+                Fil fil4 = new Fil();
+                fil4.setImage(fil.getTabVariante()[5]);
+                fil4.setDirection(5);
+                rootScrollPane.getChildren().add(5,fil4);
+                Fil fil5 = new Fil();
+                fil5.setImage(fil.getTabVariante()[6]);
+                fil5.setDirection(6);
+                rootScrollPane.getChildren().add(6,fil5);
+                Fil fil6 = new Fil();
+                fil6.setImage(fil.getTabVariante()[7]);
+                fil6.setDirection(7);
+                rootScrollPane.getChildren().add(7,fil6);
+                Fil fil7 = new Fil();
+                fil7.setImage(fil.getTabVariante()[8]);
+                fil7.setDirection(8);
+                rootScrollPane.getChildren().add(8,fil7);
+                Fil fil8 = new Fil();
+                fil8.setImage(fil.getTabVariante()[9]);
+                fil8.setDirection(9);
+                rootScrollPane.getChildren().add(9,fil8);
+                Fil fil9 = new Fil();
+                fil9.setImage(fil.getTabVariante()[10]);
+                fil9.setDirection(10);
+                rootScrollPane.getChildren().add(10,fil9);
+                break;
+            case "FUSIBLE":
+                rootScrollPane.getChildren().add(0, new Fusible());
+                Fusible fusible = new Fusible();
+                fusible.setImage(fusible.getTabVariante()[1]);
+                fusible.setDirection(1);
+                rootScrollPane.getChildren().add(1,fusible);
+                break;
+            case "HAUT-PARLEUR":
+                rootScrollPane.getChildren().add(0, new HautParleur());
+                HautParleur hautParleur = new HautParleur();
+                hautParleur.setImage(hautParleur.getTabVariante()[1]);
+                hautParleur.setDirection(1);
+                rootScrollPane.getChildren().add(1,hautParleur);
+                break;
+            case "INTERRUPTEUR":
+                rootScrollPane.getChildren().add(0, new Interrupteur());
+                Interrupteur interrupteur = new Interrupteur();
+                interrupteur.setImage(interrupteur.getTabVariante()[1]);
+                interrupteur.setDirection(1);
+                rootScrollPane.getChildren().add(1,interrupteur);
+                break;
+            case "MISE À TERRE":
+                rootScrollPane.getChildren().add(0, new MiseAterre());
+                MiseAterre miseAterre = new MiseAterre();
+                miseAterre.setImage(miseAterre.getTabVariante()[1]);
+                miseAterre.setDirection(1);
+                rootScrollPane.getChildren().add(1,miseAterre);
+                MiseAterre miseAterre1 = new MiseAterre();
+                miseAterre1.setImage(miseAterre1.getTabVariante()[2]);
+                miseAterre1.setDirection(2);
+                rootScrollPane.getChildren().add(2,miseAterre1);
+                MiseAterre miseAterre2 = new MiseAterre();
+                miseAterre2.setImage(miseAterre2.getTabVariante()[3]);
+                miseAterre2.setDirection(3);
+                rootScrollPane.getChildren().add(3,miseAterre2);
+                break;
+            case "MOTEUR":
+                //rootScrollPane.getChildren().add(0, new Fil());
+                break;
+            case "OHMÈTRE":
+                rootScrollPane.getChildren().add(0, new Ohmetre());
+                Ohmetre ohmetre = new Ohmetre();
+                ohmetre.setImage(ohmetre.getTabVariante()[1]);
+                ohmetre.setDirection(1);
+                rootScrollPane.getChildren().add(1,ohmetre);
+                break;
+            case "RESISTEUR":
+                rootScrollPane.getChildren().add(0, new Resisteur());
+                Resisteur resisteur = new Resisteur();
+                resisteur.setImage(resisteur.getTabVariante()[1]);
+                resisteur.setDirection(1);
+                rootScrollPane.getChildren().add(1,resisteur);
+                break;
+            case "VOLTMÈTRE":
+                rootScrollPane.getChildren().add(0, new Voltmetre());
+                Voltmetre voltmetre = new Voltmetre();
+                voltmetre.setImage(voltmetre.getTabVariante()[1]);
+                voltmetre.setDirection(1);
+                rootScrollPane.getChildren().add(1, voltmetre);
+                break;
+            case "SWITCH":
+                rootScrollPane.getChildren().add(0,new Switch());
+                Switch aSwitch = new Switch();
+                aSwitch.setImage(aSwitch.getTabVariante()[1]);
+                aSwitch.setDirection(1);
+                rootScrollPane.getChildren().add(1,aSwitch);
+                break;
+        }
+    }
 
     public void setAventure() {
         Main.changerDeMode(2);
@@ -119,7 +303,7 @@ public class SandboxController {
         MenuItem itemSupprimer = new MenuItem("Supprimer");
         Menu menuVariante = new Menu("Variantes");
         MenuItem itemVariante[] = new MenuItem[source.getTabNomVariante().length];
-        
+
         for (int k = 0; k < itemVariante.length; k++) {
             itemVariante[k] = new MenuItem(source.getTabNomVariante()[k]);
             menuVariante.getItems().add(itemVariante[k]);
@@ -163,53 +347,92 @@ public class SandboxController {
             vide.setRow(source.getRow());
             vide.setCol(source.getCol());
             gridPaneSandBox.add(vide, source.getCol(), source.getRow());
+            updateCircuit();
         });
         contextMenu.getItems().add(itemSupprimer);
         source.setOnContextMenuRequested(event -> contextMenu.show(source, event.getScreenX(), event.getScreenY()));
         gridPaneSandBox.add(source, i, j);
     }
 
-    public static void remettreComposante(String nom) {
+    // Generic function to find the index of an element in an object array in Java
+    public static<T> int find(T[] tableau, T target)
+    {
+        return IntStream.range(0, tableau.length).filter(i -> target.equals(tableau[i])).findFirst().orElse(-1);
+    }
 
-        switch (nom.toUpperCase()) {
+    public static void remettreComposante(Composante composante) {
+        String nom = composante.getNom().toUpperCase();
+        switch (nom) {
+            case "FIL":
+                Fil fil = new Fil();
+                fil.setImage(fil.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
+                rootScrollPane.getChildren().add(0, fil);
+                break;
             case "AMPEREMÈTRE":
-                rootScrollPane.getChildren().add(1, new Amperemetre());
+                Amperemetre amperemetre = new Amperemetre();
+                amperemetre.setImage(amperemetre.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
+                rootScrollPane.getChildren().add(1, amperemetre);
                 break;
             case "AMPOULE":
-                rootScrollPane.getChildren().add(2, new Ampoule());
+                Ampoule ampoule = new Ampoule();
+                ampoule.setImage(ampoule.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
+                rootScrollPane.getChildren().add(2, ampoule);
                 break;
             case "SOURCE":
-                rootScrollPane.getChildren().add(3, new Source());
+                Source source = new Source();
+                source.setImage(source.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
+                rootScrollPane.getChildren().add(3, source);
                 break;
             case "DIODE":
-                rootScrollPane.getChildren().add(4, new Diode());
-                break;
-            case "FIL":
-                rootScrollPane.getChildren().add(0, new Fil());
+                Diode diode = new Diode();
+                diode.setImage(diode.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
+                rootScrollPane.getChildren().add(4, diode);
                 break;
             case "FUSIBLE":
-                rootScrollPane.getChildren().add(5, new Fusible());
-                break;
-            case "HAUT-PARLEUR":
+                Fusible fusible = new Fusible();
+                fusible.setImage(fusible.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
+                rootScrollPane.getChildren().add(5, fusible);
                 break;
             case "INTERRUPTEUR":
-                rootScrollPane.getChildren().add(6, new Interrupteur());
+                Interrupteur interrupteur = new Interrupteur();
+                interrupteur.setImage(interrupteur.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
+                rootScrollPane.getChildren().add(6, interrupteur);
                 break;
             case "MISE À TERRE":
-                rootScrollPane.getChildren().add(7, new MiseAterre());
-                break;
-            case "MOTEUR":
-                rootScrollPane.getChildren().add(0, new Fil());
+                MiseAterre miseAterre = new MiseAterre();
+                miseAterre.setImage(miseAterre.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
+                rootScrollPane.getChildren().add(7, miseAterre);
                 break;
             case "OHMÈTRE":
-                rootScrollPane.getChildren().add(8, new Ohmetre());
+                Ohmetre ohmetre = new Ohmetre();
+                ohmetre.setImage(ohmetre.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
+                rootScrollPane.getChildren().add(8, ohmetre);
                 break;
             case "RESISTEUR":
-                rootScrollPane.getChildren().add(9, new Resisteur());
+                Resisteur resisteur = new Resisteur();
+                resisteur.setImage(resisteur.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
+                rootScrollPane.getChildren().add(9, resisteur);
                 break;
             case "VOLTMÈTRE":
-                rootScrollPane.getChildren().add(10, new Voltmetre());
-
+                Voltmetre voltmetre = new Voltmetre();
+                voltmetre.setImage(voltmetre.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
+                rootScrollPane.getChildren().add(10, voltmetre);
+                break;
+            case "SWITCH":
+                Switch aSwitch = new Switch();
+                aSwitch.setImage(aSwitch.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
+                rootScrollPane.getChildren().add(11, aSwitch);
+                break;
+            case "HAUT-PARLEUR":
+                HautParleur hautParleur = new HautParleur();
+                hautParleur.setImage(hautParleur.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
+                rootScrollPane.getChildren().add(12, hautParleur);
+                break;
+            case "MOTEUR":
+                Moteur moteur = new Moteur();
+                moteur.setImage(moteur.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
+                rootScrollPane.getChildren().add(13, moteur);
+                break;
         }
     }
 
