@@ -486,60 +486,90 @@ public class SandboxController {
             Branche brancheInitiale = brancheTemporaire;
             mailleTemporaire.getNoeudsMaille().add(noeudTemporaire);
             mailleTemporaire.getBranchesMaille().add(circuit1.getBranches().get(i));
+            int monoBranche = 0;
 
-            for (int j=0; j<circuit1.getNoeuds().size(); j++){
+            for (int j = 0; j < circuit1.getNoeuds().size(); j++) {
                 circuit1.getNoeuds().get(j).resetBranchesAnalysees();
             }
 
-                for (int j = 0; j < noeudTemporaire.getBranchesAdjacentes().size(); j++) {
 
-                    if (noeudTemporaire.getBranchesAdjacentes().get(j) != brancheTemporaire){
+            for (int j = 0; j < noeudTemporaire.getBranchesAdjacentes().size(); j++) {
 
-                        if (!noeudTemporaire.getBranchesAnalysees()[j]) {
+                if (noeudTemporaire.getBranchesAdjacentes().get(j) != brancheTemporaire) {
 
-                            brancheTemporaire = noeudTemporaire.getBranchesAdjacentes().get(j);
-                            noeudTemporaire.getBranchesAnalysees()[j] = true;
+                    if (!noeudTemporaire.getBranchesAnalysees()[j]) {
 
-                            if (brancheTemporaire.getNoeudsAdjacents().get(0) == noeudTemporaire) {
-                                noeudTemporaire = brancheInitiale.getNoeudsAdjacents().get(1);
-                            } else {
-                                noeudTemporaire = brancheInitiale.getNoeudsAdjacents().get(0);
-                            }
-
-                            mailleTemporaire.getBranchesMaille().add(brancheTemporaire);
-                            mailleTemporaire.getNoeudsMaille().add(noeudTemporaire);
-
-                            for (int k = 0; k < noeudTemporaire.getBranchesAdjacentes().size(); k++) {
-                                if (noeudTemporaire.getBranchesAdjacentes().get(k) == brancheInitiale
-                                        && noeudTemporaire.getBranchesAdjacentes().get(k) != noeudTemporaire.getBranchesAdjacentes().get(j)) {
-                                    finished = true;
+                        //ICI
+                            /*
+                            monoBranche=0;
+                            for (int k = 0; k < noeudTemporaire.getBranchesAdjacentes().size(); k++){
+                                if (noeudTemporaire.getBranchesAdjacentes().get(k) == brancheTemporaire){
+                                    monoBranche++;
                                 }
                             }
 
-                            if (!finished) {
-                                for (int k = 0; k < noeudTemporaire.getBranchesAdjacentes().size(); k++) {
-                                    for (int l = 0; l < mailleTemporaire.getBranchesMaille().size(); l++) {
-                                        if (noeudTemporaire.getBranchesAdjacentes().get(k) == mailleTemporaire.getBranchesMaille().get(l)
-                                                && noeudTemporaire.getBranchesAdjacentes().get(k) != noeudTemporaire.getBranchesAdjacentes().get(j)) {
-                                            error = true;
-                                        }
+
+                            if (monoBranche>=2){
+                                finished=true;
+                            }
+
+                            if (!finished){
+                            */
+                        //A ICI
+
+                        brancheTemporaire = noeudTemporaire.getBranchesAdjacentes().get(j);
+                        noeudTemporaire.getBranchesAnalysees()[j] = true;
+
+                        if (brancheTemporaire.getNoeudsAdjacents().get(0) == noeudTemporaire) {
+                            noeudTemporaire = brancheInitiale.getNoeudsAdjacents().get(1);
+                        } else {
+                            noeudTemporaire = brancheInitiale.getNoeudsAdjacents().get(0);
+                        }
+
+                        mailleTemporaire.getBranchesMaille().add(brancheTemporaire);
+                        mailleTemporaire.getNoeudsMaille().add(noeudTemporaire);
+
+                        for (int k = 0; k < noeudTemporaire.getBranchesAdjacentes().size(); k++) {
+                            if (noeudTemporaire.getBranchesAdjacentes().get(k) == brancheInitiale
+                                    && noeudTemporaire.getBranchesAdjacentes().get(k) != noeudTemporaire.getBranchesAdjacentes().get(j)) {
+                                finished = true;
+                            }
+                        }
+
+                        //CA AUSSI
+                        //}
+                        //
+
+
+                        if (!finished) {
+                            for (int k = 0; k < noeudTemporaire.getBranchesAdjacentes().size(); k++) {
+                                for (int l = 0; l < mailleTemporaire.getBranchesMaille().size(); l++) {
+                                    if (noeudTemporaire.getBranchesAdjacentes().get(k) == mailleTemporaire.getBranchesMaille().get(l)
+                                            && noeudTemporaire.getBranchesAdjacentes().get(k) != noeudTemporaire.getBranchesAdjacentes().get(j)) {
+                                        error = true;
                                     }
                                 }
                             }
+                        }
 
-                            if (finished) {
-                                boolean allTheSame = false;
-                                boolean[] allTheSame2 = new boolean[circuit1.getMailles().size()];
-                                for (int k = 0; k <allTheSame2.length; k++) {
+                        if (finished) {
+                            boolean allTheSame = false;
+                            boolean[] allTheSame2 = new boolean[circuit1.getMailles().size()];
+                            for (int k = 0; k < allTheSame2.length; k++) {
+                                allTheSame2[k] = false;
+                            }
+
+                            if (circuit1.getMailles().size() != 0) {
+                                for (int k = 0; k < allTheSame2.length; k++) {
                                     allTheSame2[k] = true;
                                 }
 
                                 for (int l = 0; l < circuit1.getMailles().size(); l++) {
-                                    allTheSame = true;
+
                                     if (circuit1.getMailles().get(l).getBranchesMaille().size() == mailleTemporaire.getBranchesMaille().size()) {
                                         boolean[] same = new boolean[mailleTemporaire.getBranchesMaille().size()];
 
-                                        for (int k = 0; k <same.length; k++) {
+                                        for (int k = 0; k < same.length; k++) {
                                             same[k] = false;
                                         }
 
@@ -560,44 +590,54 @@ public class SandboxController {
 
                                     }
                                 }
-
-
-                                for (int k = 0; k < allTheSame2.length; k++) {
-                                    if (!allTheSame2[k]) {
-                                        allTheSame = false;
-                                    }
-                                }
-
-                                if (!allTheSame) {
-                                    circuit1.getMailles().add(new NouvelleMaille(
-                                            mailleTemporaire.getComposantesMaille(),
-                                            mailleTemporaire.getResisteurs(),
-                                            mailleTemporaire.getNoeudsMaille(),
-                                            mailleTemporaire.getBranchesMaille(),
-                                            mailleTemporaire.getSources()
-                                    ));
-                                }
-
-                                noeudTemporaire.resetBranchesAnalysees();
-                                mailleTemporaire.getNoeudsMaille().remove(mailleTemporaire.getNoeudsMaille().size() - 1);
-                                noeudTemporaire = mailleTemporaire.getNoeudsMaille().get(mailleTemporaire.getNoeudsMaille().size() - 1);
-                                mailleTemporaire.getBranchesMaille().remove(mailleTemporaire.getBranchesMaille().size() - 1);
-                                j = 0;
-                            } else if (error) {
-                                noeudTemporaire.resetBranchesAnalysees();
-                                mailleTemporaire.getNoeudsMaille().remove(mailleTemporaire.getNoeudsMaille().size() - 1);
-                                noeudTemporaire = mailleTemporaire.getNoeudsMaille().get(mailleTemporaire.getNoeudsMaille().size() - 2);
-                                mailleTemporaire.getBranchesMaille().remove(mailleTemporaire.getBranchesMaille().size() - 1);
-                                j = 0;
                             }
+
+                            for (int k = 0; k < allTheSame2.length; k++) {
+                                if (allTheSame2[k]) {
+                                    allTheSame = true;
+                                }
+                            }
+
+                            if (!allTheSame) {
+                                circuit1.getMailles().add(new NouvelleMaille(
+                                        mailleTemporaire.getComposantesMaille(),
+                                        mailleTemporaire.getResisteurs(),
+                                        mailleTemporaire.getNoeudsMaille(),
+                                        mailleTemporaire.getBranchesMaille(),
+                                        mailleTemporaire.getSources()
+                                ));
+                            }
+
+                            //ET CA
+                            //if (monoBranche<2){
+                            noeudTemporaire.resetBranchesAnalysees();
+                            mailleTemporaire.getNoeudsMaille().remove(mailleTemporaire.getNoeudsMaille().size() - 1);
+                            noeudTemporaire = mailleTemporaire.getNoeudsMaille().get(mailleTemporaire.getNoeudsMaille().size() - 1);
+                            mailleTemporaire.getBranchesMaille().remove(mailleTemporaire.getBranchesMaille().size() - 1);
+                            brancheTemporaire = mailleTemporaire.getBranchesMaille().get(mailleTemporaire.getBranchesMaille().size() - 1);
+                            j = 0;
+                            //}
+
+
+                        } else if (error) {
+                            //ET CA
+                            //if (monoBranche<2){
+                            noeudTemporaire.resetBranchesAnalysees();
+                            mailleTemporaire.getNoeudsMaille().remove(mailleTemporaire.getNoeudsMaille().size() - 1);
+                            noeudTemporaire = mailleTemporaire.getNoeudsMaille().get(mailleTemporaire.getNoeudsMaille().size() - 2);
+                            mailleTemporaire.getBranchesMaille().remove(mailleTemporaire.getBranchesMaille().size() - 1);
+                            brancheTemporaire = mailleTemporaire.getBranchesMaille().get(mailleTemporaire.getBranchesMaille().size() - 1);
+                            j = 0;
+                            //}
                         }
+                    }
                 }
 
-                    }
             }
+        }
 
-            System.out.println("Mailles Complètes");
-            System.out.println("");
+        System.out.println("Mailles Complètes");
+        System.out.println("");
         }
 
 
@@ -1079,8 +1119,8 @@ public class SandboxController {
 
                         if (finished){
                             brancheTemporaire.getComposantesBranche().remove(brancheTemporaire.getComposantesBranche().size()-1);
-                            actuel.getBranchesAdjacentes().add(brancheTemporaire);
-                            brancheTemporaire.getNoeudsAdjacents().add(actuel);
+                                actuel.getBranchesAdjacentes().add(brancheTemporaire);
+                                brancheTemporaire.getNoeudsAdjacents().add(actuel);
                         }
 
                     }
@@ -1106,6 +1146,13 @@ public class SandboxController {
                     }
 
                 }
+            }
+        }
+
+        for (int i=0; i<circuit1.getBranches().size(); i++){
+            if (circuit1.getBranches().get(i).getComposantesBranche().size()==0){
+                circuit1.getBranches().remove(i);
+                i=0;
             }
         }
         System.out.println(" ");
