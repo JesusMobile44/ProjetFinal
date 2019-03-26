@@ -12,6 +12,7 @@ public class NouvelleMaille {
     private ArrayList<Noeud> noeudsMaille = new ArrayList<>();
     private ArrayList<Branche> branchesMaille = new ArrayList<>();
     private ArrayList<Source> sources = new ArrayList<>();
+    int sensDuCourant;
 
     public NouvelleMaille(ArrayList<Composante> composantesMaille, ArrayList<Resisteur> resisteurs, ArrayList<Noeud> noeudsMaille, ArrayList<Branche> branchesMaille, ArrayList<Source> sources) {
         for (int i=0; i<composantesMaille.size();i++){
