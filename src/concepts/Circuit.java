@@ -37,7 +37,7 @@ public class Circuit {
     }
 
     public void calculParallele(){
-        
+
     }
 
     public void calculSerie(){
