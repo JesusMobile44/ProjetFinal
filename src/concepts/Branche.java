@@ -12,6 +12,9 @@ public class Branche {
     private ArrayList<Source> sources = new ArrayList<>();
     private ArrayList<Noeud> noeudsAdjacents = new ArrayList<>();
     private float intensité;
+    private boolean intensiteTrouvee;
+    private Noeud noeudDirectionnel;
+    private double diviseur;
 
     public ArrayList<Composante> getComposantesBranche() {
         return composantesBranche;
@@ -19,6 +22,7 @@ public class Branche {
 
     public void setComposantesBranche(ArrayList<Composante> composantesBranche) {
         this.composantesBranche = composantesBranche;
+        this.intensiteTrouvee = false;
     }
 
     public ArrayList<Resisteur> getResisteurs() {
@@ -51,5 +55,29 @@ public class Branche {
 
     public void setNoeudsAdjacents(ArrayList<Noeud> noeudsAdjacents) {
         this.noeudsAdjacents = noeudsAdjacents;
+    }
+
+    public boolean isIntensiteTrouvee() {
+        return intensiteTrouvee;
+    }
+
+    public void setIntensiteTrouvee(boolean intensiteTrouvee) {
+        this.intensiteTrouvee = intensiteTrouvee;
+    }
+
+    public Noeud getNoeudDirectionnel() {
+        return noeudDirectionnel;
+    }
+
+    public void setNoeudDirectionnel(Noeud noeudDirectionnel) {
+        this.noeudDirectionnel = noeudDirectionnel;
+    }
+
+    public double getDiviseur() {
+        return diviseur;
+    }
+
+    public void setDiviseur(double diviseur) {
+        this.diviseur = diviseur;
     }
 }

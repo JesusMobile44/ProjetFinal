@@ -1,10 +1,14 @@
 package composantes;
 
+import concepts.Noeud;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import main.Main;
 
 public class Source extends ComposanteActivable {
+
+    private Noeud noeudDirectionnel;
+
     public Source() {
         tabNomVariante = new String[4];
         tabNomVariante[0] = "NS";
@@ -26,5 +30,14 @@ public class Source extends ComposanteActivable {
         this.setFitWidth(100);
         this.setVolt(10);
         this.setAmperage(1);
+        noeudDirectionnel=null;
+    }
+
+    public Noeud getNoeudDirectionnel() {
+        return noeudDirectionnel;
+    }
+
+    public void setNoeudDirectionnel(Noeud noeudDirectionnel) {
+        this.noeudDirectionnel = noeudDirectionnel;
     }
 }

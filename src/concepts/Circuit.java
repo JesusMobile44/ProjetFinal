@@ -27,6 +27,8 @@ public class Circuit {
     }
 
     public void calculVariables(){
+
+
         if (this.enSerie){
             calculSerie();
         }
@@ -37,6 +39,118 @@ public class Circuit {
     }
 
     public void calculParallele(){
+        updateNoeudsDirectionnels();
+
+        double[][] matrice = new double[this.getBranches().size() - (this.getNoeuds().size() - 1) +this.getNoeuds().size() - 1][this.getBranches().size()+1];
+        Noeud[] noeuds = new Noeud[this.getNoeuds().size()-1];
+        NouvelleMaille[] mailles = new NouvelleMaille[this.getBranches().size() - (this.getNoeuds().size() - 1)];
+
+        for (int i=0; i<matrice.length; i++){
+            for (int j=0; j<matrice[i].length; j++){
+                matrice[i][j] = 0;
+            }
+        }
+
+        for (int i=0; i<noeuds.length; i++){
+            noeuds[i] = this.getNoeuds().get(i);
+        }
+
+        boolean maillesOK = false;
+        int[] numeroMailles = new int[mailles.length];
+
+        while (!maillesOK){
+
+            maillesOK = true;
+            boolean[] brancheFound = new boolean[this.getBranches().size()];
+            for (int i=0; i<brancheFound.length; i++){
+                brancheFound[i] = false;
+            }
+
+            int number = 0;
+
+            for (int i=0; i<numeroMailles.length; i++){
+
+                boolean sameNumber = true;
+                while (sameNumber){
+                    sameNumber=false;
+
+                    number = (int)(Math.random()*this.getMailles().size());
+                    for (int j=0; j<i; j++){
+                        if (number == numeroMailles[j]){
+                            sameNumber = true;
+                        }
+                    }
+                }
+                numeroMailles[i] = number;
+            }
+
+            for (int i=0; i<mailles.length; i++){
+                mailles[i] = this.getMailles().get(numeroMailles[i]);
+            }
+
+            for (int i=0; i<mailles.length; i++){
+                for (int j=0; j<mailles[i].getBranchesMaille().size(); j++){
+                    for (int k=0; k<this.getBranches().size(); k++){
+                        if (mailles[i].getBranchesMaille().get(j) == this.getBranches().get(k)){
+                            brancheFound[k] = true;
+                        }
+                    }
+                }
+            }
+
+            for (int i=0; i<brancheFound.length; i++){
+                if (!brancheFound[i]){
+                    maillesOK = false;
+                }
+            }
+        }
+
+        for (int i=0; i<noeuds.length; i++){
+            for (int j=0; j<matrice[i].length-1; j++){
+                for (int k=0; k<noeuds[i].getBranchesAdjacentes().size(); k++){
+                    if (noeuds[i].getBranchesAdjacentes().get(k) == this.getBranches().get(j)){
+                        if (noeuds[i].getBranchesAdjacentes().get(k).getNoeudDirectionnel() == noeuds[i]){
+                            matrice[i][j] = 1;
+                        }else {
+                            matrice[i][j] = -1;
+                        }
+                    }
+                }
+            }
+        }
+
+        for (int i=noeuds.length; i<matrice.length; i++){
+            NouvelleMaille mailleTempo = mailles[i - noeuds.length];
+
+            for (int j=0; j<mailleTempo.getBranchesMaille().size(); j++){
+                Branche brancheTempo = mailleTempo.getBranchesMaille().get(j);
+                Noeud noeudTempo = mailleTempo.getNoeudsMaille().get(j);
+                int posBranche = 0;
+
+                for (int k=0; k<this.getBranches().size(); k++){
+                    if (brancheTempo == this.getBranches().get(k)){
+                        posBranche = k;
+                    }
+                }
+
+                for (int k = 0; k<brancheTempo.getResisteurs().size(); k++){
+                    if (brancheTempo.getNoeudDirectionnel() == noeudTempo){
+                        matrice[i][posBranche] -= brancheTempo.getResisteurs().get(k).getResistance();
+                    }else {
+                        matrice[i][posBranche] += brancheTempo.getResisteurs().get(k).getResistance();
+                    }
+                }
+
+                for (int k = 0; k<brancheTempo.getSources().size(); k++){
+                    if (brancheTempo.getSources().get(k).getNoeudDirectionnel() == noeudTempo){
+                        matrice[i][matrice[i].length-1] -= brancheTempo.getSources().get(k).getVolt();
+                    }else {
+                        matrice[i][matrice[i].length-1] += brancheTempo.getSources().get(k).getVolt();
+                    }
+                }
+            }
+        }
+
 
     }
 
@@ -66,6 +180,13 @@ public class Circuit {
         for (int i = 0; i < this.getComposantes().size(); i++){
             Composante composante = this.getComposantes().get(i);
             composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nTension: " + SandboxController.df.format(composante.getVolt()) + "\nRésistance: " + SandboxController.df.format(composante.getResistance()));
+        }
+    }
+
+
+    public void updateNoeudsDirectionnels(){
+        for (int i=0; i<this.getBranches().size(); i++){
+            this.getBranches().get(i).setNoeudDirectionnel(this.getBranches().get(i).getNoeudsAdjacents().get(0));
         }
     }
 

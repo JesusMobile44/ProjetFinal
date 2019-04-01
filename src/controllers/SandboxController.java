@@ -993,6 +993,7 @@ public class SandboxController {
                 int row = actuel.getComposanteNoeud().getRow();
                 int col = actuel.getComposanteNoeud().getCol();
                 String dir = null;
+                ArrayList<Source> sourcesSeules = new ArrayList<>();
 
                 if (!actuel.getDirectionsAnalysees()[j]) {
 
@@ -1038,10 +1039,16 @@ public class SandboxController {
                             case "up":
                                 switch (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getTabNomVariante()[((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getDirection()]) {
                                     case "NS":
+                                        if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("SOURCE")){
+                                            ((Source)getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeudDirectionnel(actuel);
+                                        }
                                         dir = "up";
                                         row--;
                                         break;
                                     case "SN":
+                                        if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("SOURCE")){
+                                            sourcesSeules.add((Source)getNodeFromGridPane(gridPaneSandBox, col, row));
+                                        }
                                         dir = "up";
                                         row--;
                                         break;
@@ -1081,10 +1088,16 @@ public class SandboxController {
                                         row++;
                                         break;
                                     case "OE":
+                                        if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("SOURCE")){
+                                            sourcesSeules.add((Source)getNodeFromGridPane(gridPaneSandBox, col, row));
+                                        }
                                         dir = "right";
                                         col++;
                                         break;
                                     case "EO":
+                                        if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("SOURCE")){
+                                            ((Source)getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeudDirectionnel(actuel);
+                                        }
                                         dir = "right";
                                         col++;
                                         break;
@@ -1108,10 +1121,16 @@ public class SandboxController {
                             case "down":
                                 switch (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getTabNomVariante()[((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getDirection()]) {
                                     case "NS":
+                                        if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("SOURCE")){
+                                            sourcesSeules.add((Source)getNodeFromGridPane(gridPaneSandBox, col, row));
+                                        }
                                         dir = "down";
                                         row++;
                                         break;
                                     case "SN":
+                                        if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("SOURCE")){
+                                            ((Source)getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeudDirectionnel(actuel);
+                                        }
                                         dir = "down";
                                         row++;
                                         break;
@@ -1152,10 +1171,16 @@ public class SandboxController {
                                         System.out.println("fil down");
                                         break;
                                     case "OE":
+                                        if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("SOURCE")){
+                                            ((Source)getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeudDirectionnel(actuel);
+                                        }
                                         dir = "left";
                                         col--;
                                         break;
                                     case "EO":
+                                        if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("SOURCE")){
+                                            sourcesSeules.add((Source)getNodeFromGridPane(gridPaneSandBox, col, row));
+                                        }
                                         dir = "left";
                                         col--;
                                         break;
@@ -1200,9 +1225,13 @@ public class SandboxController {
                                 tempo = circuit1.getNoeuds().get(k);
                                 circuit1.getNoeuds().get(k).getBranchesAdjacentes().add(brancheTemporaire);
                                 brancheTemporaire.getNoeudsAdjacents().add(circuit1.getNoeuds().get(k));
+                                for (Source source : sourcesSeules) {
+                                    source.setNoeudDirectionnel(tempo);
+                                }
                             }
                         }
 
+                        sourcesSeules.clear();
                         changerDirectionsAnalysees(tempo, dir);
                         circuit1.getBranches().add(brancheTemporaire);
                         actuel.getDirectionsAnalysees()[j] = true;
