@@ -32,8 +32,12 @@ public class Circuit {
         }
 
         else {
-
+            calculParallele();
         }
+    }
+
+    public void calculParallele(){
+
     }
 
     public void calculSerie(){
