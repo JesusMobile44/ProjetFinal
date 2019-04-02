@@ -121,6 +121,7 @@ public class SandboxController {
                 amperemetre1.setImage(amperemetre1.getTabVariante()[1]);
                 amperemetre1.setDirection(1);
                 rootScrollPane.getChildren().add(1, amperemetre1);
+                updateCircuit();
                 break;
             case "AMPOULE":
                 rootScrollPane.getChildren().add(0, new Ampoule());
@@ -128,6 +129,7 @@ public class SandboxController {
                 ampoule1.setImage(ampoule1.getTabVariante()[1]);
                 ampoule1.setDirection(1);
                 rootScrollPane.getChildren().add(1,ampoule1);
+                updateCircuit();
                 break;
             case "SOURCE":
                 rootScrollPane.getChildren().add(0, new Source());
@@ -143,6 +145,7 @@ public class SandboxController {
                 source2.setImage(source.getTabVariante()[3]);
                 source2.setDirection(3);
                 rootScrollPane.getChildren().add(3,source2);
+                updateCircuit();
                 break;
             case "DIODE":
                 rootScrollPane.getChildren().add(0, new Diode());
@@ -158,6 +161,7 @@ public class SandboxController {
                 diode2.setImage(diode.getTabVariante()[3]);
                 diode2.setDirection(3);
                 rootScrollPane.getChildren().add(1,diode2);
+                updateCircuit();
                 break;
             case "FIL":
                 rootScrollPane.getChildren().add(0, new Fil());
@@ -166,41 +170,42 @@ public class SandboxController {
                 fil.setDirection(1);
                 rootScrollPane.getChildren().add(1,fil);
                 Fil fil1 = new Fil();
-                fil1.setImage(fil.getTabVariante()[2]);
+                fil1.setImage(fil1.getTabVariante()[2]);
                 fil1.setDirection(2);
                 rootScrollPane.getChildren().add(2,fil1);
                 Fil fil2 = new Fil();
-                fil2.setImage(fil.getTabVariante()[3]);
+                fil2.setImage(fil2.getTabVariante()[3]);
                 fil2.setDirection(3);
                 rootScrollPane.getChildren().add(3,fil2);
                 Fil fil3 = new Fil();
-                fil3.setImage(fil.getTabVariante()[4]);
-                fil.setDirection(4);
+                fil3.setImage(fil3.getTabVariante()[4]);
+                fil3.setDirection(4);
                 rootScrollPane.getChildren().add(4,fil3);
                 Fil fil4 = new Fil();
-                fil4.setImage(fil.getTabVariante()[5]);
+                fil4.setImage(fil4.getTabVariante()[5]);
                 fil4.setDirection(5);
                 rootScrollPane.getChildren().add(5,fil4);
                 Fil fil5 = new Fil();
-                fil5.setImage(fil.getTabVariante()[6]);
+                fil5.setImage(fil5.getTabVariante()[6]);
                 fil5.setDirection(6);
                 rootScrollPane.getChildren().add(6,fil5);
                 Fil fil6 = new Fil();
-                fil6.setImage(fil.getTabVariante()[7]);
+                fil6.setImage(fil6.getTabVariante()[7]);
                 fil6.setDirection(7);
                 rootScrollPane.getChildren().add(7,fil6);
                 Fil fil7 = new Fil();
-                fil7.setImage(fil.getTabVariante()[8]);
+                fil7.setImage(fil7.getTabVariante()[8]);
                 fil7.setDirection(8);
                 rootScrollPane.getChildren().add(8,fil7);
                 Fil fil8 = new Fil();
-                fil8.setImage(fil.getTabVariante()[9]);
+                fil8.setImage(fil8.getTabVariante()[9]);
                 fil8.setDirection(9);
                 rootScrollPane.getChildren().add(9,fil8);
                 Fil fil9 = new Fil();
-                fil9.setImage(fil.getTabVariante()[10]);
+                fil9.setImage(fil9.getTabVariante()[10]);
                 fil9.setDirection(10);
                 rootScrollPane.getChildren().add(10,fil9);
+                updateCircuit();
                 break;
             case "FUSIBLE":
                 rootScrollPane.getChildren().add(0, new Fusible());
@@ -208,6 +213,7 @@ public class SandboxController {
                 fusible.setImage(fusible.getTabVariante()[1]);
                 fusible.setDirection(1);
                 rootScrollPane.getChildren().add(1,fusible);
+                updateCircuit();
                 break;
             case "HAUT-PARLEUR":
                 rootScrollPane.getChildren().add(0, new HautParleur());
@@ -215,6 +221,7 @@ public class SandboxController {
                 hautParleur.setImage(hautParleur.getTabVariante()[1]);
                 hautParleur.setDirection(1);
                 rootScrollPane.getChildren().add(1,hautParleur);
+                updateCircuit();
                 break;
             case "INTERRUPTEUR":
                 rootScrollPane.getChildren().add(0, new Interrupteur());
@@ -222,6 +229,7 @@ public class SandboxController {
                 interrupteur.setImage(interrupteur.getTabVariante()[1]);
                 interrupteur.setDirection(1);
                 rootScrollPane.getChildren().add(1,interrupteur);
+                updateCircuit();
                 break;
             case "MISE À TERRE":
                 rootScrollPane.getChildren().add(0, new MiseAterre());
@@ -237,6 +245,7 @@ public class SandboxController {
                 miseAterre2.setImage(miseAterre2.getTabVariante()[3]);
                 miseAterre2.setDirection(3);
                 rootScrollPane.getChildren().add(3,miseAterre2);
+                updateCircuit();
                 break;
             case "MOTEUR":
                 //rootScrollPane.getChildren().add(0, new Fil());
@@ -247,6 +256,7 @@ public class SandboxController {
                 ohmetre.setImage(ohmetre.getTabVariante()[1]);
                 ohmetre.setDirection(1);
                 rootScrollPane.getChildren().add(1,ohmetre);
+                updateCircuit();
                 break;
             case "RESISTEUR":
                 rootScrollPane.getChildren().add(0, new Resisteur());
@@ -254,6 +264,7 @@ public class SandboxController {
                 resisteur.setImage(resisteur.getTabVariante()[1]);
                 resisteur.setDirection(1);
                 rootScrollPane.getChildren().add(1,resisteur);
+                updateCircuit();
                 break;
             case "VOLTMÈTRE":
                 rootScrollPane.getChildren().add(0, new Voltmetre());
@@ -261,6 +272,7 @@ public class SandboxController {
                 voltmetre.setImage(voltmetre.getTabVariante()[1]);
                 voltmetre.setDirection(1);
                 rootScrollPane.getChildren().add(1, voltmetre);
+                updateCircuit();
                 break;
             case "SWITCH":
                 rootScrollPane.getChildren().add(0,new Switch());
@@ -268,6 +280,7 @@ public class SandboxController {
                 aSwitch.setImage(aSwitch.getTabVariante()[1]);
                 aSwitch.setDirection(1);
                 rootScrollPane.getChildren().add(1,aSwitch);
+                updateCircuit();
                 break;
         }
     }
@@ -1358,6 +1371,8 @@ public class SandboxController {
                     if (((Composante) (getNodeFromGridPane(gridPaneSandBox, col, row))).getNom().toUpperCase().equals("RESISTEUR")){
                         brancheTemporaire.getResisteurs().add(((Resisteur) (getNodeFromGridPane(gridPaneSandBox, col, row))));
                     }
+
+                    Composante debug = ((Composante) (getNodeFromGridPane(gridPaneSandBox, col, row)));
 
                     //Cherche si la composante suivante est rattachée à la précédente et check la prochaine direction
                     switch (dir) {
