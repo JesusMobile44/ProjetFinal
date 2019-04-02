@@ -29,7 +29,7 @@ public class SandboxController {
     public static DecimalFormat df = new DecimalFormat("#.##");
     public static Circuit circuit1= new Circuit();
     public static Text textDescription = new Text();
-
+    public static boolean menuTouteComposantes = true;
 
     @FXML
     private SplitPane mySplitPane;
@@ -38,7 +38,7 @@ public class SandboxController {
     private HBox myHBox;
 
     @FXML
-    private ScrollPane scroll;
+    private ScrollPane scroll; 
 
     @FXML
     private ScrollPane myScrollPane;
@@ -100,9 +100,11 @@ public class SandboxController {
         rootScrollPane.getChildren().add(new Resisteur());
         rootScrollPane.getChildren().add(new Voltmetre());
         rootScrollPane.getChildren().add(new Switch());
+        menuTouteComposantes = true;
     }
     public static void changerMenuComposante(Composante composante){
         String nom  = composante.getNom();
+        menuTouteComposantes = false;
         rootScrollPane.getChildren().clear();
         backButtonStatic.setDisable(false);
         backButtonStatic.setOpacity(100);
@@ -364,74 +366,116 @@ public class SandboxController {
         String nom = composante.getNom().toUpperCase();
         switch (nom) {
             case "FIL":
-                Fil fil = new Fil();
-                fil.setImage(fil.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
-                rootScrollPane.getChildren().add(0, fil);
+                if (menuTouteComposantes == false){
+                    changerMenuComposante(new Fil());
+                }
+                else {
+                    goBack();
+                }
                 break;
             case "AMPEREMÈTRE":
-                Amperemetre amperemetre = new Amperemetre();
-                amperemetre.setImage(amperemetre.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
-                rootScrollPane.getChildren().add(1, amperemetre);
+                if (menuTouteComposantes == false){
+                    changerMenuComposante(new Amperemetre());
+                }
+                else {
+                    goBack();
+                }
                 break;
             case "AMPOULE":
-                Ampoule ampoule = new Ampoule();
-                ampoule.setImage(ampoule.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
-                rootScrollPane.getChildren().add(2, ampoule);
+                if (menuTouteComposantes == false){
+                    changerMenuComposante(new Ampoule());
+                }
+                else {
+                    goBack();
+                }
                 break;
             case "SOURCE":
-                Source source = new Source();
-                source.setImage(source.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
-                rootScrollPane.getChildren().add(3, source);
+                if (menuTouteComposantes == false){
+                    changerMenuComposante(new Source());
+                }
+                else {
+                    goBack();
+                }
                 break;
             case "DIODE":
-                Diode diode = new Diode();
-                diode.setImage(diode.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
-                rootScrollPane.getChildren().add(4, diode);
+                if (menuTouteComposantes == false){
+                    changerMenuComposante(new Diode());
+                }
+                else {
+                    goBack();
+                }
                 break;
             case "FUSIBLE":
-                Fusible fusible = new Fusible();
-                fusible.setImage(fusible.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
-                rootScrollPane.getChildren().add(5, fusible);
+                if (menuTouteComposantes == false){
+                    changerMenuComposante(new Fusible());
+                }
+                else {
+                    goBack();
+                }
                 break;
             case "INTERRUPTEUR":
-                Interrupteur interrupteur = new Interrupteur();
-                interrupteur.setImage(interrupteur.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
-                rootScrollPane.getChildren().add(6, interrupteur);
+                if (menuTouteComposantes == false){
+                    changerMenuComposante(new Interrupteur());
+                }
+                else {
+                    goBack();
+                }
                 break;
             case "MISE À TERRE":
-                MiseAterre miseAterre = new MiseAterre();
-                miseAterre.setImage(miseAterre.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
-                rootScrollPane.getChildren().add(7, miseAterre);
+                if (menuTouteComposantes == false){
+                    changerMenuComposante(new MiseAterre());
+                }
+                else {
+                    goBack();
+                }
                 break;
             case "OHMÈTRE":
-                Ohmetre ohmetre = new Ohmetre();
-                ohmetre.setImage(ohmetre.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
-                rootScrollPane.getChildren().add(8, ohmetre);
+                if (menuTouteComposantes == false){
+                    changerMenuComposante(new Ohmetre());
+                }
+                else {
+                    goBack();
+                }
                 break;
             case "RESISTEUR":
-                Resisteur resisteur = new Resisteur();
-                resisteur.setImage(resisteur.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
-                rootScrollPane.getChildren().add(9, resisteur);
+                if (menuTouteComposantes == false){
+                    changerMenuComposante(new Resisteur());
+                }
+                else {
+                    goBack();
+                }
                 break;
             case "VOLTMÈTRE":
-                Voltmetre voltmetre = new Voltmetre();
-                voltmetre.setImage(voltmetre.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
-                rootScrollPane.getChildren().add(10, voltmetre);
+                if (menuTouteComposantes == false){
+                    changerMenuComposante(new Voltmetre());
+                }
+                else {
+                    goBack();
+                }
                 break;
             case "SWITCH":
-                Switch aSwitch = new Switch();
-                aSwitch.setImage(aSwitch.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
-                rootScrollPane.getChildren().add(11, aSwitch);
+                if (menuTouteComposantes == false){
+                    changerMenuComposante(new Switch());
+                }
+                else {
+                    goBack();
+                };
                 break;
             case "HAUT-PARLEUR":
-                HautParleur hautParleur = new HautParleur();
-                hautParleur.setImage(hautParleur.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
-                rootScrollPane.getChildren().add(12, hautParleur);
+                if (menuTouteComposantes == false){
+                    changerMenuComposante(new HautParleur());
+                }
+                else {
+                    goBack();
+                }
                 break;
             case "MOTEUR":
-                Moteur moteur = new Moteur();
-                moteur.setImage(moteur.getTabVariante()[find(composante.getTabVariante(),composante.getImage())]);
-                rootScrollPane.getChildren().add(13, moteur);
+                if (menuTouteComposantes == false){
+                    changerMenuComposante(new Moteur());
+                }
+                else {
+                    goBack();
+                }
                 break;
         }
     }
