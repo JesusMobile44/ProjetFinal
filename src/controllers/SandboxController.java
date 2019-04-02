@@ -669,6 +669,7 @@ public class SandboxController {
         }
 
         arrangerMailles();
+        circuit1.setIncomplet(false);
         System.out.println("Mailles Complètes");
         System.out.println("");
     }

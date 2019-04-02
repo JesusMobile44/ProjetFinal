@@ -151,7 +151,21 @@ public class Circuit {
             }
         }
 
+        Matrice matrice1 = new Matrice(matrice.length,matrice[0].length,matrice);
+        matrice1.triangleSuperieur();
+        matrice=matrice1.getMatrice();
+        System.out.println(matrice);
+        double[] pivot = matrice1.calculPivot();
+        System.out.println(pivot);
 
+        for (int i=0; i<this.getBranches().size(); i++){
+            this.getBranches().get(i).setIntensité(pivot[i]);
+            for (int j=0; j<this.getBranches().get(i).getComposantesBranche().size(); j++){
+                this.getBranches().get(i).getComposantesBranche().get(j).setAmperage(this.getBranches().get(i).getIntensité());
+            }
+        }
+
+        reloadTooltip();
     }
 
     public void calculSerie(){
