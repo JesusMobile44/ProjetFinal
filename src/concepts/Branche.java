@@ -11,7 +11,7 @@ public class Branche {
     private ArrayList<Resisteur> resisteurs = new ArrayList<>();
     private ArrayList<Source> sources = new ArrayList<>();
     private ArrayList<Noeud> noeudsAdjacents = new ArrayList<>();
-    private float intensité;
+    private double intensité;
     private boolean intensiteTrouvee;
     private Noeud noeudDirectionnel;
     private double diviseur;
@@ -41,11 +41,11 @@ public class Branche {
         this.sources = sources;
     }
 
-    public float getIntensité() {
+    public double getIntensité() {
         return intensité;
     }
 
-    public void setIntensité(float intensité) {
+    public void setIntensité(double intensité) {
         this.intensité = intensité;
     }
 
