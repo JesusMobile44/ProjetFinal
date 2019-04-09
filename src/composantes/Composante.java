@@ -24,6 +24,7 @@ public class Composante extends ImageView {
     protected boolean enPlace;
     protected int row = 0;
     protected int col = 0;
+    protected String sensCourant;
 
     public Composante() {
         this.direction = 0;
@@ -32,6 +33,7 @@ public class Composante extends ImageView {
         this.resistance = 0;
         this.tabAutour = new Composante[4];
         this.enPlace = false;
+        this.sensCourant = "∅";
 
         this.setOnMouseClicked(event -> {
             SandboxController.textDescription.setText(this.getDescription());
@@ -207,5 +209,13 @@ public class Composante extends ImageView {
 
     public void setCol(int col) {
         this.col = col;
+    }
+
+    public String getSensCourant() {
+        return sensCourant;
+    }
+
+    public void setSensCourant(String sensCourant) {
+        this.sensCourant = sensCourant;
     }
 }
