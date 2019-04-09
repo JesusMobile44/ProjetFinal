@@ -12,7 +12,7 @@ public class Interrupteur extends ComposanteActivable {
         tabNomVariante[2] = "SN";
         tabNomVariante[3] = "EO";
         tabVariante = new Image[tabNomVariante.length];
-        description = "Description Interrupteur";
+        description = "";
         tooltip = new Tooltip("Tooltip Interrupteur");
         Tooltip.install(this,tooltip);
         nom = "Interrupteur";

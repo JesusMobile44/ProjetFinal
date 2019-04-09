@@ -12,7 +12,7 @@ public class Diode extends Composante {
         tabNomVariante[2] = "SN";
         tabNomVariante[3] = "EO";
         tabVariante = new Image[tabNomVariante.length];
-        description = "Description Diode";
+        description = "Une diode est un dîpole qui ne laisse passer le courant électrique que dans un sens.";
         tooltip = new Tooltip("Tooltip Diode");
         Tooltip.install(this,tooltip);
         nom = "Diode";

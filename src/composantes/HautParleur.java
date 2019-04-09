@@ -12,7 +12,7 @@ public class HautParleur extends ComposanteActivable {
         tabNomVariante[1] = "OE";
 
         tabVariante = new Image[tabNomVariante.length];
-        description = "Description Haut-Parleur";
+        description = "Un haut-parleur produit des sons à partir d'un signal électrique.";
         tooltip = new Tooltip("Tooltip Haut-Parleur");
         Tooltip.install(this,tooltip);
         nom = "Haut-Parleur";

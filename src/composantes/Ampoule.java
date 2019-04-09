@@ -10,7 +10,7 @@ public class Ampoule extends ComposanteActivable {
         tabNomVariante[0] = "NS";
         tabNomVariante[1] = "OE";
         tabVariante = new Image[tabNomVariante.length+2];
-        description = "Description Ampoule";
+        description = "La lampe incandescente est constituée d'un filament électrique enfermé dans une ampoule en verre.\nLorsque l'électricité passe dans le filament électrique, il est porté à incandescence.";
         tooltip = new Tooltip("Tooltip Ampoule");
         Tooltip.install(this,tooltip);
         nom = "Ampoule";

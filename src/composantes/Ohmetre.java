@@ -10,7 +10,8 @@ public class Ohmetre extends Composante {
         tabNomVariante[0] = "NS";
         tabNomVariante[1] = "OE";
         tabVariante = new Image[tabNomVariante.length];
-        description = "Description Ohmètre";
+        description = "Un Ohmmètre est un instrument de mesure qui permet de mesurer la résistance électrique\n" +
+                "d'un composant ou d'un circuit électrique";
         tooltip = new Tooltip("Tooltip Ohmètre");
         Tooltip.install(this,tooltip);
         nom = "Ohmètre";

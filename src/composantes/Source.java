@@ -16,7 +16,8 @@ public class Source extends ComposanteActivable {
         tabNomVariante[2] = "SN";
         tabNomVariante[3] = "EO";
         tabVariante = new Image[tabNomVariante.length];
-        description = "Description Source";
+        description = "Une pile, batterie ou acccumulateur est un dispositif électrochimique qui convertit l'énergie chimique en énergie électrique.\n" +
+                "Elle fournit une intensité au circuit électrique.";
         tooltip = new Tooltip("Tooltip Source");
         Tooltip.install(this,tooltip);
         nom = "Source";

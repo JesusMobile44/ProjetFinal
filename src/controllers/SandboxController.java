@@ -14,7 +14,11 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import main.Main;
 
 import java.text.DecimalFormat;
@@ -58,7 +62,11 @@ public class SandboxController {
     public void initialize() {
         scroll.setContent(gridPaneSandBox);
         textDescription.setText("Cliquer sur une composante pour afficher sa description");
+        textDescription.setFont(Font.font("Verdana", FontWeight.BOLD, 16));
+        textDescription.setFill(Color.WHITE);
+        textDescription.setTextAlignment(TextAlignment.CENTER);
         myHBox.getChildren().add(textDescription);
+        myHBox.setPadding(new Insets(16));
         gridPaneSandBox.setPrefSize(376, 414);
         backButtonStatic = backButton;
         backButtonStatic.setDisable(true);
@@ -89,6 +97,7 @@ public class SandboxController {
         myScrollPane.setContent(rootScrollPane);
     }
     public static void goBack(){
+        textDescription.setText("Cliquer sur une composante pour afficher sa description");
         backButtonStatic.setOpacity(0);
         backButtonStatic.setDisable(true);
         rootScrollPane.getChildren().clear();
@@ -98,7 +107,8 @@ public class SandboxController {
         rootScrollPane.getChildren().add(new Source());
         rootScrollPane.getChildren().add(new Diode());
         rootScrollPane.getChildren().add(new Fusible());
-        rootScrollPane.getChildren().add(new Interrupteur());
+        rootScrollPane.getChildren().add(new HautParleur());
+        //rootScrollPane.getChildren().add(new Interrupteur());
         rootScrollPane.getChildren().add(new MiseAterre());
         rootScrollPane.getChildren().add(new Ohmetre());
         rootScrollPane.getChildren().add(new Resisteur());

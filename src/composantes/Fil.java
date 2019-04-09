@@ -27,7 +27,8 @@ public class Fil extends Composante {
         tabNomVariante[9] = "NEO";
         tabNomVariante[10] = "NSEO";
         tabVariante = new Image[tabNomVariante.length];
-        description = "Description Fil";
+        description = "Un fil électrique est la composante électrique servant au transport de l'électricité\n" +
+                "";
         tooltip = new Tooltip("Tooltip Fil");
         Tooltip.install(this,tooltip);
         nom = "Fil";

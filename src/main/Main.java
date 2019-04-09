@@ -39,7 +39,7 @@ public class Main extends Application {
         numeroMode = 0;
 
         primaryStage = getStage();
-        primaryStage.setTitle("Minecraft Redstone");
+        primaryStage.setTitle("Minecraft Zéphirr");
 
         primaryStage.setScene(getScenes()[0]);
 
