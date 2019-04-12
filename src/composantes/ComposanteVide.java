@@ -13,6 +13,7 @@ public class ComposanteVide extends Composante {
         tabVariante[0] = Main.getImagesContainer().getHashMapImage().get("vide.png");
         this.setImage(tabVariante[0]);
         enPlace = true;
-
+        this.setFitHeight(100);
+        this.setFitWidth(100);
     }
 }

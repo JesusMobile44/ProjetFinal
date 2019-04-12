@@ -99,6 +99,17 @@ public class Composante extends ImageView {
         });
     }
 
+    protected void initializeImage(){
+        realImage = new Image("file:images/" + nom.toLowerCase() + ".jpg");
+        for (int i = 0; i < tabNomVariante.length; i++) {
+            tabVariante[i] = Main.getImagesContainer().getHashMapImage().get(nom.toLowerCase() + " (" + (i + 1) + ").png");
+        }
+        this.setImage(tabVariante[0]);
+        this.setFitHeight(100);
+        this.setFitWidth(100);
+        System.out.println("hello world");
+    }
+
     public Image[] getTabVariante() {
         return tabVariante;
     }

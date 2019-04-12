@@ -10,6 +10,21 @@ public class Source extends ComposanteActivable {
     private Noeud noeudDirectionnel;
 
     public Source() {
+        initialize();
+    }
+
+    public Source(ComposanteSave composanteSave, int i, int j) {
+        initialize();
+        direction = composanteSave.getDirection();
+        resistance=composanteSave.getResistance();
+        volt=composanteSave.getVolt();
+        row = i;
+        col = j;
+        this.setImage(tabVariante[direction]);
+        enPlace = true;
+    }
+
+    private void initialize(){
         tabNomVariante = new String[4];
         tabNomVariante[0] = "NS";
         tabNomVariante[1] = "OE";
@@ -20,14 +35,7 @@ public class Source extends ComposanteActivable {
         tooltip = new Tooltip("Tooltip Source");
         Tooltip.install(this,tooltip);
         nom = "Source";
-        realImage = new Image("file:images/" + nom.toLowerCase() + ".jpg");
-        for (int i = 0; i < tabNomVariante.length; i++) {
-            tabVariante[i] = Main.getImagesContainer().getHashMapImage().get(nom.toLowerCase() + " (" + (i + 1) + ").png");
-        }
-        this.setImage(tabVariante[0]);
-
-        this.setFitHeight(100);
-        this.setFitWidth(100);
+        initializeImage();
         this.setVolt(10);
         this.setAmperage(1);
         noeudDirectionnel=null;

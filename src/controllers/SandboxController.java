@@ -3,10 +3,7 @@ package controllers;
 import composantes.Composante;
 import composantes.ComposanteVide;
 import composantes.*;
-import concepts.Branche;
-import concepts.Circuit;
-import concepts.Noeud;
-import concepts.NouvelleMaille;
+import concepts.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -15,13 +12,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import main.Main;
+import composantes.ComposanteSave;
 
+import java.io.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.stream.IntStream;
 
 
@@ -50,9 +47,7 @@ public class SandboxController {
     @FXML
     private Button backButton;
 
-
     private Circuit circuit = new Circuit();
-
 
     @FXML
     public void initialize() {
@@ -66,17 +61,9 @@ public class SandboxController {
         backButtonStatic.setOnAction(event -> goBack());
         //initializeGridPane(gridPaneSandBox);
 
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 20; j++) {
-                ComposanteVide vide = new ComposanteVide();
-                vide.fitHeightProperty().set(100);
-                vide.fitWidthProperty().set(100);
-                vide.setRow(j);
-                vide.setCol(i);
-                gridPaneSandBox.add(vide, i, j);
-            }
-        }
-
+        for (int i = 0; i < 20; i++)
+            for (int j = 0; j < 20; j++)
+                creerComposanteVide(i, j);
 
         goBack();
         //rootScrollPane.getChildren().add(new Moteur());
@@ -299,6 +286,13 @@ public class SandboxController {
         Main.changerDeMode(0);
     }
 
+    public void clear() {
+        for (int i = 0; i < 20; i++)
+            for (int j = 0; j < 20; j++) {
+                gridPaneSandBox.getChildren().remove(getNodeFromGridPane(gridPaneSandBox, i, j));
+                creerComposanteVide(i, j);
+            }
+    }
 
     public static void echangerComposantes(int[] posSource, int[] posTarget, Composante source, Composante target) {
         source.setRow(posTarget[0]);
@@ -320,53 +314,55 @@ public class SandboxController {
         gridPaneSandBox.getChildren().remove(target);
         source.setCol(i);
         source.setRow(j);
-        source.getTooltip().setText(source.getNom() + " (" + source.getCol() + "," + source.getRow() + ")\nIntensité: " + df.format(source.getAmperage()) + "\nTension: " + df.format(source.getVolt()) + "\nRésistance: " + df.format(source.getResistance()));
-        MenuItem itemSupprimer = new MenuItem("Supprimer");
-        Menu menuVariante = new Menu("Variantes");
-        MenuItem itemVariante[] = new MenuItem[source.getTabNomVariante().length];
+        if(!source.getNom().toUpperCase().equals("VIDE")){
+            source.getTooltip().setText(source.getNom() + " (" + source.getCol() + "," + source.getRow() + ")\nIntensité: " + df.format(source.getAmperage()) + "\nTension: " + df.format(source.getVolt()) + "\nRésistance: " + df.format(source.getResistance()));
+            MenuItem itemSupprimer = new MenuItem("Supprimer");
+            Menu menuVariante = new Menu("Variantes");
+            MenuItem itemVariante[] = new MenuItem[source.getTabNomVariante().length];
 
-        for (int k = 0; k < itemVariante.length; k++) {
-            itemVariante[k] = new MenuItem(source.getTabNomVariante()[k]);
-            menuVariante.getItems().add(itemVariante[k]);
-            int temp = k;
-            itemVariante[k].setOnAction(event -> {
-                source.setImage(source.getTabVariante()[temp]);
-                source.setDirection(temp);
+            for (int k = 0; k < itemVariante.length; k++) {
+                itemVariante[k] = new MenuItem(source.getTabNomVariante()[k]);
+                menuVariante.getItems().add(itemVariante[k]);
+                int temp = k;
+                itemVariante[k].setOnAction(event -> {
+                    source.setImage(source.getTabVariante()[temp]);
+                    source.setDirection(temp);
+                    updateCircuit();
+                });
+
+            }
+            ContextMenu contextMenu = new ContextMenu(menuVariante);
+
+            if (source.getNom().toUpperCase().equals("SOURCE")) {
+                MenuItem itemTension = new MenuItem("Modifier la tension");
+                itemTension.setOnAction(event -> {
+                    changerValeur(source, "la tension");
+                    updateCircuit();
+                });
+                contextMenu.getItems().addAll(itemTension);
+            }
+
+            if (source.getNom().toUpperCase().equals("RESISTEUR")) {
+                MenuItem itemResistance = new MenuItem("Modifier la résistance");
+                itemResistance.setOnAction(event -> {
+                    changerValeur(source, "la résistance");
+                    updateCircuit();
+                });
+                contextMenu.getItems().add(itemResistance);
+            }
+            itemSupprimer.setOnAction(event -> {
+                gridPaneSandBox.getChildren().remove(source);
+                ComposanteVide vide = new ComposanteVide();
+                vide.fitHeightProperty().set(100);
+                vide.fitWidthProperty().set(100);
+                vide.setRow(source.getRow());
+                vide.setCol(source.getCol());
+                gridPaneSandBox.add(vide, source.getCol(), source.getRow());
                 updateCircuit();
             });
-
+            contextMenu.getItems().add(itemSupprimer);
+            source.setOnContextMenuRequested(event -> contextMenu.show(source, event.getScreenX(), event.getScreenY()));
         }
-        ContextMenu contextMenu = new ContextMenu(menuVariante);
-
-        if (source.getNom().toUpperCase().equals("SOURCE")) {
-            MenuItem itemTension = new MenuItem("Modifier la tension");
-            itemTension.setOnAction(event -> {
-                changerValeur(source, "la tension");
-                updateCircuit();
-            });
-            contextMenu.getItems().addAll(itemTension);
-        }
-
-        if (source.getNom().toUpperCase().equals("RESISTEUR")) {
-            MenuItem itemResistance = new MenuItem("Modifier la résistance");
-            itemResistance.setOnAction(event -> {
-                changerValeur(source, "la résistance");
-                updateCircuit();
-            });
-            contextMenu.getItems().add(itemResistance);
-        }
-        itemSupprimer.setOnAction(event -> {
-            gridPaneSandBox.getChildren().remove(source);
-            ComposanteVide vide = new ComposanteVide();
-            vide.fitHeightProperty().set(100);
-            vide.fitWidthProperty().set(100);
-            vide.setRow(source.getRow());
-            vide.setCol(source.getCol());
-            gridPaneSandBox.add(vide, source.getCol(), source.getRow());
-            updateCircuit();
-        });
-        contextMenu.getItems().add(itemSupprimer);
-        source.setOnContextMenuRequested(event -> contextMenu.show(source, event.getScreenX(), event.getScreenY()));
         gridPaneSandBox.add(source, i, j);
     }
 
@@ -513,6 +509,12 @@ public class SandboxController {
             circuit1.calculVariables();
     }
 
+    public static void creerComposanteVide(int i, int j) {
+        ComposanteVide vide = new ComposanteVide();
+        vide.setRow(j);
+        vide.setCol(i);
+        gridPaneSandBox.add(vide, i, j);
+    }
 
     public static void creerMailles() {
 
@@ -1603,6 +1605,96 @@ public class SandboxController {
             alerte.setHeaderText("La valeur entrée est invalide, veuillez réessayer");
             alerte.showAndWait();
             changerValeur(composante, string);
+        }
+    }
+
+    public void save() {
+        try {
+            FileChooser fc = new FileChooser();
+            fc.setTitle("Veuillez sélectionner un fichier");
+            fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers Zephyr", "*.zep"));
+            File fichier = fc.showSaveDialog(Main.getStage());
+            ComposanteSave[][] gridPaneSave = new ComposanteSave[20][20];
+            for (int i = 0; i < 20; i++)
+                for (int j = 0; j < 20; j++)
+                    gridPaneSave[i][j] = new ComposanteSave((Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
+            ObjectOutputStream sortie = new ObjectOutputStream(
+                    new BufferedOutputStream(
+                            new FileOutputStream(fichier)));
+            sortie.writeObject(gridPaneSave);
+            sortie.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void load() {
+        try {
+            FileChooser fc = new FileChooser();
+            fc.setTitle("Veuillez sélectionner un fichier");
+            File fichier = fc.showOpenDialog(Main.getStage());
+            ObjectInputStream entree = new ObjectInputStream(
+                    new BufferedInputStream(
+                            new FileInputStream(fichier)));
+            try {
+                ComposanteSave[][] gridPaneSave = (ComposanteSave[][]) entree.readObject();
+                clear();
+                for (int i = 0; i < 20; i++)
+                    for (int j = 0; j < 20; j++) {
+                        switch (gridPaneSave[i][j].getNom().toUpperCase()) {
+                            case "FIL":
+                                placerComposantes(new Fil(gridPaneSave[i][j], i, j),(Composante) getNodeFromGridPane(gridPaneSandBox, i,j));
+                                break;
+                            case "AMPEREMÈTRE":
+                                placerComposantes(new Amperemetre(gridPaneSave[i][j], i, j),(Composante) getNodeFromGridPane(gridPaneSandBox, i,j));
+                                break;
+                            case "AMPOULE":
+                                placerComposantes(new Ampoule(gridPaneSave[i][j], i, j),(Composante) getNodeFromGridPane(gridPaneSandBox, i,j));
+                                break;
+                            case "SOURCE":
+                                placerComposantes(new Source(gridPaneSave[i][j], i, j),(Composante) getNodeFromGridPane(gridPaneSandBox, i,j));
+                                break;
+                            case "DIODE":
+                                placerComposantes(new Diode(gridPaneSave[i][j], i, j),(Composante) getNodeFromGridPane(gridPaneSandBox, i,j));
+                                break;
+                            case "FUSIBLE":
+                                placerComposantes(new Fusible(gridPaneSave[i][j], i, j),(Composante) getNodeFromGridPane(gridPaneSandBox, i,j));
+                                break;
+                            case "INTERRUPTEUR":
+                                placerComposantes(new Interrupteur(gridPaneSave[i][j], i, j),(Composante) getNodeFromGridPane(gridPaneSandBox, i,j));
+                                break;
+                            case "MISE À TERRE":
+                                placerComposantes(new MiseAterre(gridPaneSave[i][j], i, j),(Composante) getNodeFromGridPane(gridPaneSandBox, i,j));
+                                break;
+                            case "OHMÈTRE":
+                                placerComposantes(new Ohmetre(gridPaneSave[i][j], i, j),(Composante) getNodeFromGridPane(gridPaneSandBox, i,j));
+                                break;
+                            case "RESISTEUR":
+                                placerComposantes(new Resisteur(gridPaneSave[i][j], i, j),(Composante) getNodeFromGridPane(gridPaneSandBox, i,j));
+                                break;
+                            case "VOLTMÈTRE":
+                                placerComposantes(new Voltmetre(gridPaneSave[i][j], i, j),(Composante) getNodeFromGridPane(gridPaneSandBox, i,j));
+                                break;
+                            case "SWITCH":
+                                placerComposantes(new Switch(gridPaneSave[i][j], i, j),(Composante) getNodeFromGridPane(gridPaneSandBox, i,j));
+                                break;
+                            case "HAUT-PARLEUR":
+                                placerComposantes(new HautParleur(gridPaneSave[i][j], i, j),(Composante) getNodeFromGridPane(gridPaneSandBox, i,j));
+                                break;
+                            case "MOTEUR":
+                                //placerComposantes(new Moteur(gridPaneSave[i][j], i, j),(Composante) getNodeFromGridPane(gridPaneSandBox, i,j));
+                                break;
+                            case "VIDE":
+                                placerComposantes(new ComposanteVide(),(Composante) getNodeFromGridPane(gridPaneSandBox, i,j));
+                                break;
+                        }
+                    }
+
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
