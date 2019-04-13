@@ -2,7 +2,6 @@ package concepts;
 
 import composantes.*;
 import controllers.SandboxController;
-import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 
@@ -155,9 +154,22 @@ public class Circuit {
 
         for (int i = 0; i < this.getBranches().size(); i++) {
             this.getBranches().get(i).setIntensité(pivot[i]);
-            for (int j = 0; j < this.getBranches().get(i).getComposantesBranche().size(); j++) {
+            if (this.getBranches().get(i).getIntensité()<0){
+                this.getBranches().get(i).setIntensité(this.getBranches().get(i).getIntensité()*-1);
+                if (this.getBranches().get(i).getNoeudDirectionnel()==this.getBranches().get(i).getNoeudsAdjacents().get(0)){
+                    this.getBranches().get(i).setNoeudDirectionnel(this.getBranches().get(i).getNoeudsAdjacents().get(1));
+                }
+                else {
+                    this.getBranches().get(i).setNoeudDirectionnel(this.getBranches().get(i).getNoeudsAdjacents().get(0));
+                }
+            }
+            for (int j=0; j<this.getBranches().get(i).getComposantesBranche().size(); j++){
                 this.getBranches().get(i).getComposantesBranche().get(j).setAmperage(this.getBranches().get(i).getIntensité());
             }
+        }
+
+        for (Resisteur resiteur: this.getResisteurs()) {
+            resiteur.setVolt(resiteur.getAmperage() * resiteur.getResistance());
         }
 
         reloadTooltip();
