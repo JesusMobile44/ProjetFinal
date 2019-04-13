@@ -746,7 +746,6 @@ public class SandboxController {
         }
     }
 
-
     public static void creerNoeuds(Noeud initial) {
         Noeud actuel = initial;
         circuit1.getNoeuds().add(initial);
@@ -1293,7 +1292,6 @@ public class SandboxController {
         System.out.println(" ");
     }
 
-
     public static void creerSerie() {
 
         boolean debutFound = false;
@@ -1584,7 +1582,6 @@ public class SandboxController {
             }
         }
     }
-
 
     public static void changerValeur(Composante composante, String string) {
         TextInputDialog alerteValeur = new TextInputDialog("Entrez ici");
