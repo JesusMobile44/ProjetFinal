@@ -1,11 +1,7 @@
 package composantes;
 
-import controllers.SandboxController;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
 import main.Main;
 
 
@@ -14,6 +10,21 @@ public class Fil extends Composante {
     private boolean noeud;
 
     public Fil() {
+        initialize();
+    }
+
+    public Fil(ComposanteSave composanteSave, int i, int j) {
+        initialize();
+        direction = composanteSave.getDirection();
+        resistance=composanteSave.getResistance();
+        volt=composanteSave.getVolt();
+        row = i;
+        col = j;
+        this.setImage(tabVariante[direction]);
+        enPlace = true;
+    }
+
+    private void initialize(){
         tabNomVariante = new String[11];
         tabNomVariante[0] = "NS";
         tabNomVariante[1] = "NO";
@@ -32,16 +43,8 @@ public class Fil extends Composante {
         tooltip = new Tooltip("Transporte l'électricité");
         Tooltip.install(this,tooltip);
         nom = "Fil";
-        realImage = new Image("file:images/" + nom.toLowerCase() + ".jpg");
-        for (int i = 0; i < tabNomVariante.length; i++) {
-            tabVariante[i] = Main.getImagesContainer().getHashMapImage().get(nom.toLowerCase() + " (" + (i + 1) + ").png");
-        }
-        this.setImage(tabVariante[0]);
-        this.setFitHeight(100);
-        this.setFitWidth(100);
+        initializeImage();
         this.noeud = false;
-
-
     }
 
     public boolean isNoeud() {

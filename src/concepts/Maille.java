@@ -30,23 +30,32 @@ public class Maille {
     }
 
     public void calculResistanceEq(GridPane gridPane) {
+        //MAILLES SECONDAIRES AVANT MAILLE PRINCIPALE
         for (int i = 0; i < mailles.size(); i++)
             mailles.get(i).calculResistanceEq(gridPane);
+
+        //TROUVER RESISTEUR
         ArrayList<Resisteur> resisteurs = new ArrayList<>();
         for (int i = 0; i < circuit.size(); i++)
             if (((Composante) SandboxController.getNodeFromGridPane(gridPane, circuit.get(i).getCol(), circuit.get(i).getRow())).getNom().toUpperCase().equals("RESISTEUR"))
                 resisteurs.add(((Resisteur) SandboxController.getNodeFromGridPane(gridPane, circuit.get(i).getCol(), circuit.get(i).getRow())));
+
+        //ADDITIONNER RESISTANCE
         for (int i = 0; i < resisteurs.size(); i++)
             resistanceEq += resisteurs.get(i).getResistance();
+
+        //ADDITIONNER RESISTANCE EQ DES MAILLES
         double resistanceMailles = 0;
         for (int i = 0; i < mailles.size(); i++)
             resistanceMailles += 1 / mailles.get(i).getResistanceEq();
         if(resistanceMailles>0)
             resistanceEq += 1 / resistanceMailles;
+
+        //CHANGER RESISTANCE DANS LES FILS
         for (int i = 0; i < circuit.size(); i++)
             if (!((Composante) SandboxController.getNodeFromGridPane(gridPane, circuit.get(i).getCol(), circuit.get(i).getRow())).getNom().toUpperCase().equals("RESISTEUR"))
                 ((Composante) SandboxController.getNodeFromGridPane(gridPane, circuit.get(i).getCol(), circuit.get(i).getRow())).setResistance(resistanceEq);
-            System.out.println(resistanceEq);
+        System.out.println(resistanceEq);
     }
 
     public void calculVolt(GridPane gridPane) {

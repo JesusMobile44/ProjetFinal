@@ -3,6 +3,7 @@ package main;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import autre.ImagesContainer;
 
@@ -43,6 +44,7 @@ public class Main extends Application {
 
         primaryStage.setScene(getScenes()[0]);
 
+        primaryStage.getIcons().add(new Image("autre/images/zephyr.jpg"));
 
         primaryStage.setMaximized(true);
         primaryStage.show();

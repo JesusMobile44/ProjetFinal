@@ -6,6 +6,21 @@ import main.Main;
 
 public class Ampoule extends ComposanteActivable {
     public Ampoule() {
+        initialize();
+    }
+
+    public Ampoule(ComposanteSave composanteSave, int i, int j) {
+        initialize();
+        direction = composanteSave.getDirection();
+        resistance=composanteSave.getResistance();
+        volt=composanteSave.getVolt();
+        row = i;
+        col = j;
+        this.setImage(tabVariante[direction]);
+        enPlace = true;
+    }
+
+    private void initialize(){
         tabNomVariante = new String[2];
         tabNomVariante[0] = "NS";
         tabNomVariante[1] = "OE";

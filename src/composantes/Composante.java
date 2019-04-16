@@ -24,6 +24,7 @@ public class Composante extends ImageView {
     protected boolean enPlace;
     protected int row = 0;
     protected int col = 0;
+    protected String sensCourant;
 
     public Composante() {
         this.direction = 0;
@@ -32,6 +33,7 @@ public class Composante extends ImageView {
         this.resistance = 0;
         this.tabAutour = new Composante[4];
         this.enPlace = false;
+        this.sensCourant = "∅";
 
         this.setOnMouseClicked(event -> {
             SandboxController.textDescription.setText(this.getDescription());
@@ -95,6 +97,17 @@ public class Composante extends ImageView {
         this.setOnDragDone(event -> {
             SandboxController.updateCircuit();
         });
+    }
+
+    protected void initializeImage(){
+        realImage = new Image("file:images/" + nom.toLowerCase() + ".jpg");
+        for (int i = 0; i < tabNomVariante.length; i++) {
+            tabVariante[i] = Main.getImagesContainer().getHashMapImage().get(nom.toLowerCase() + " (" + (i + 1) + ").png");
+        }
+        this.setImage(tabVariante[0]);
+        this.setFitHeight(100);
+        this.setFitWidth(100);
+        System.out.println("hello world");
     }
 
     public Image[] getTabVariante() {
@@ -207,5 +220,13 @@ public class Composante extends ImageView {
 
     public void setCol(int col) {
         this.col = col;
+    }
+
+    public String getSensCourant() {
+        return sensCourant;
+    }
+
+    public void setSensCourant(String sensCourant) {
+        this.sensCourant = sensCourant;
     }
 }
