@@ -13,7 +13,7 @@ public class Resisteur extends Composante {
         description = "Une résistance ou resistor est un composant électronique ou électrique\n" +
                 "dont la principale caractéristique est d'opposer une plus ou moins grande \n" +
                 "résistance (mesurée en ohms) à la circulation du courant électrique.";
-        tooltip = new Tooltip("Tooltip Résisteur");
+        tooltip = new Tooltip("Oppose un résistance à la circulation");
         Tooltip.install(this,tooltip);
         nom = "Resisteur";
         realImage = new Image("file:images/" + nom.toLowerCase() + ".jpg");

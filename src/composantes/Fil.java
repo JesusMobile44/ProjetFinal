@@ -29,7 +29,7 @@ public class Fil extends Composante {
         tabVariante = new Image[tabNomVariante.length];
         description = "Un fil électrique est la composante électrique servant au transport de l'électricité\n" +
                 "";
-        tooltip = new Tooltip("Tooltip Fil");
+        tooltip = new Tooltip("Transporte l'électricité");
         Tooltip.install(this,tooltip);
         nom = "Fil";
         realImage = new Image("file:images/" + nom.toLowerCase() + ".jpg");

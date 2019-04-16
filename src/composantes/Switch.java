@@ -18,8 +18,9 @@ public class Switch extends Composante{
         tabNomVariante[7] = "SO";
 
         tabVariante = new Image[tabNomVariante.length];
-        description = "Description Switch";
-        tooltip = new Tooltip("Tooltip Switch");
+        description = "Une Switch, ou  intérupteur, est une composante\n" +
+                "le passage du flux dans une direction ou dans une autre";
+        tooltip = new Tooltip("Cliquer pour changer de direction");
         Tooltip.install(this,tooltip);
         nom = "Switch";
         realImage = new Image("file:images/" + nom.toLowerCase() + ".jpg");

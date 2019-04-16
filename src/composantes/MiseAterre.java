@@ -14,7 +14,7 @@ public class MiseAterre extends Composante {
         tabVariante = new Image[tabNomVariante.length];
         description = "Une mise à terre sert à évacuer les courants électriques vers la terre de manière sécuritaire.\n" +
                 "";
-        tooltip = new Tooltip("Tooltip Mise à Terre");
+        tooltip = new Tooltip("Évacue les courants");
         Tooltip.install(this,tooltip);
         nom = "Mise à Terre";
         realImage = new Image("file:images/" + nom.toLowerCase() + ".jpg");

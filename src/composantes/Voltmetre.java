@@ -10,8 +10,9 @@ public class Voltmetre extends Composante {
         tabNomVariante[0] = "NS";
         tabNomVariante[1] = "OE";
         tabVariante = new Image[tabNomVariante.length];
-        description = "Description Voltmètre";
-        tooltip = new Tooltip("Tooltip Voltmètre");
+        description = "Un Voltmètre est un appareil qui permet de mesurer la tension entre deux points.\n" +
+                "Il doit être branché en parallèle.";
+        tooltip = new Tooltip("Mesure la tension");
         Tooltip.install(this,tooltip);
         nom = "Voltmètre";
         realImage = new Image("file:images/" + nom.toLowerCase() + ".jpg");
