@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.TransferMode;
 import main.Main;
 
@@ -26,6 +27,7 @@ public class Composante extends ImageView {
     protected int col = 0;
     protected String sensCourant;
 
+
     public Composante() {
         this.direction = 0;
         this.amperage = 0;
@@ -35,7 +37,11 @@ public class Composante extends ImageView {
         this.enPlace = false;
         this.sensCourant = "∅";
 
+
         this.setOnMouseClicked(event -> {
+            if (SandboxController.xPressed){
+                SandboxController.supprimer(this);
+            }
             SandboxController.textDescription.setText(this.getDescription());
             SandboxController.changerMenuComposante(this);
 
@@ -68,7 +74,7 @@ public class Composante extends ImageView {
 
 
             if (source != target) {
-                if (source.isEnPlace() && target.isEnPlace()) {
+                if (source.isEnPlace() && target.isEnPlace() && !SandboxController.cPressed) {
 
                     switch (Main.numeroMode) {
                         case 1:
@@ -79,7 +85,12 @@ public class Composante extends ImageView {
                     source.enPlace = true;
                     event.setDropCompleted(true);
 
-                } else if (target.isEnPlace()) {
+                }
+                else if (source.isEnPlace() && target.isEnPlace() && SandboxController.cPressed){
+                    SandboxController.copierComposante(source, target);
+                    System.out.println("WRRYY");
+                }
+                else if (target.isEnPlace()) {
                     switch (Main.numeroMode) {
                         case 1:
                             SandboxController.remettreComposante(source);
@@ -90,6 +101,7 @@ public class Composante extends ImageView {
                     source.enPlace = true;
                     event.setDropCompleted(true);
                 }
+
             }
 
 
@@ -229,4 +241,6 @@ public class Composante extends ImageView {
     public void setSensCourant(String sensCourant) {
         this.sensCourant = sensCourant;
     }
+
+
 }
