@@ -1,11 +1,11 @@
 package main;
 
+import autre.ImagesContainer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import autre.ImagesContainer;
 
 
 public class Main extends Application {
@@ -20,7 +20,7 @@ public class Main extends Application {
         launch(args);
     }
 
-    public static ImagesContainer imagesContainer = new ImagesContainer();
+    private static ImagesContainer imagesContainer = new ImagesContainer();
 
     public void start(Stage primaryStage)throws Exception{
 
@@ -61,7 +61,7 @@ public class Main extends Application {
     }
 
 
-    public static Scene[] getScenes() {
+    private static Scene[] getScenes() {
         return scenes;
     }
 

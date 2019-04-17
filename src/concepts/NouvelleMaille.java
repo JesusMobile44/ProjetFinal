@@ -15,21 +15,11 @@ public class NouvelleMaille {
     int sensDuCourant;
 
     public NouvelleMaille(ArrayList<Composante> composantesMaille, ArrayList<Resisteur> resisteurs, ArrayList<Noeud> noeudsMaille, ArrayList<Branche> branchesMaille, ArrayList<Source> sources) {
-        for (int i=0; i<composantesMaille.size();i++){
-            this.composantesMaille.add(composantesMaille.get(i));
-        }
-        for (int i=0; i<resisteurs.size();i++){
-            this.resisteurs.add(resisteurs.get(i));
-        }
-        for (int i=0; i<noeudsMaille.size();i++){
-            this.noeudsMaille.add(noeudsMaille.get(i));
-        }
-        for (int i=0; i<branchesMaille.size();i++){
-            this.branchesMaille.add(branchesMaille.get(i));
-        }
-        for (int i=0; i<sources.size();i++){
-            this.sources.add(sources.get(i));
-        }
+        this.composantesMaille.addAll(composantesMaille);
+        this.resisteurs.addAll(resisteurs);
+        this.noeudsMaille.addAll(noeudsMaille);
+        this.branchesMaille.addAll(branchesMaille);
+        this.sources.addAll(sources);
     }
 
     public NouvelleMaille() {

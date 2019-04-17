@@ -4,8 +4,8 @@ public class ComposanteActivable extends Composante {
 
     private boolean active;
 
-    public ComposanteActivable() {
-        this.active = true;
+    ComposanteActivable() {
+        this.active = false;
     }
 
     public boolean isActive() {

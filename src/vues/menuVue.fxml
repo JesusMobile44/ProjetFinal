@@ -9,25 +9,19 @@
 
 <BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
          <center>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#setSandbox" text="Sandbox" />
-            <Button mnemonicParsing="false" onAction="#setAventure" text="Aventure" />
-            <Button mnemonicParsing="false" onAction="#setGuide" text="Guide" />
-               </children>
-            </HBox>
+             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                 <Button alignment="CENTER" mnemonicParsing="false" onAction="#setSandbox" text="Sandbox"/>
+                 <Button mnemonicParsing="false" onAction="#setAventure" text="Aventure"/>
+                 <Button mnemonicParsing="false" onAction="#setGuide" text="Guide"/>
+             </HBox>
          </center>
    <top>
-      <MenuBar BorderPane.alignment="CENTER">
-         <menus>
-            <Menu mnemonicParsing="false" text="Changer De Mode">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Mode Sandbox" onAction="#setSandbox"/>
-                  <MenuItem mnemonicParsing="false" text="Mode Aventure" onAction="#setAventure"/>
-                  <MenuItem mnemonicParsing="false" text="Guide" onAction="#setGuide"/>
-              </items>
-            </Menu>
-         </menus>
-      </MenuBar>
+       <MenuBar BorderPane.alignment="CENTER">
+           <Menu mnemonicParsing="false" text="Changer De Mode">
+               <MenuItem mnemonicParsing="false" text="Mode Sandbox" onAction="#setSandbox"/>
+               <MenuItem mnemonicParsing="false" text="Mode Aventure" onAction="#setAventure"/>
+               <MenuItem mnemonicParsing="false" text="Guide" onAction="#setGuide"/>
+           </Menu>
+       </MenuBar>
    </top>
       </BorderPane>

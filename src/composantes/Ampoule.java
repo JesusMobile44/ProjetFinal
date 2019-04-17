@@ -1,8 +1,8 @@
 package composantes;
 
+import autre.ImagesContainer;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
-import main.Main;
 
 public class Ampoule extends ComposanteActivable {
     public Ampoule() {
@@ -31,7 +31,7 @@ public class Ampoule extends ComposanteActivable {
         nom = "Ampoule";
         realImage = new Image("file:images/" + nom.toLowerCase() + ".jpg");
         for (int i = 0; i < tabNomVariante.length+2; i++) {
-            tabVariante[i] = Main.getImagesContainer().getHashMapImage().get(nom.toLowerCase() + " (" + (i + 1) + ").png");
+            tabVariante[i] = ImagesContainer.getHashMapImage().get(nom.toLowerCase() + " (" + (i + 1) + ").png");
         }
         this.setImage(tabVariante[0]);
 

@@ -7,12 +7,12 @@ import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 
-public class Maille {
-    ArrayList<Coordonnée> circuit;
-    ArrayList<Maille> mailles;
-    double resistanceEq;
-    double intensite;
-    double tension;
+class Maille {
+    private ArrayList<Coordonnee> circuit;
+    private ArrayList<Maille> mailles;
+    private double resistanceEq;
+    private double intensite;
+    private double tension;
 
     public Maille(double intensite) {
         this.circuit = new ArrayList<>();
@@ -29,7 +29,7 @@ public class Maille {
         reloadTooltip(gridPane);
     }
 
-    public void calculResistanceEq(GridPane gridPane) {
+    private void calculResistanceEq(GridPane gridPane) {
         //MAILLES SECONDAIRES AVANT MAILLE PRINCIPALE
         for (int i = 0; i < mailles.size(); i++)
             mailles.get(i).calculResistanceEq(gridPane);
@@ -58,7 +58,7 @@ public class Maille {
         System.out.println(resistanceEq);
     }
 
-    public void calculVolt(GridPane gridPane) {
+    private void calculVolt(GridPane gridPane) {
         tension = resistanceEq * intensite;
         for (int i = 0; i < mailles.size(); i++)
             mailles.get(i).setTension(tension);
@@ -66,7 +66,7 @@ public class Maille {
             ((Composante) SandboxController.getNodeFromGridPane(gridPane, circuit.get(i).getCol(), circuit.get(i).getRow())).setVolt(tension);
     }
 
-    public void calculAmpere(GridPane gridPane) {
+    private void calculAmpere(GridPane gridPane) {
         intensite = tension / resistanceEq;
         for (int i = 0; i < mailles.size(); i++)
             mailles.get(i).calculAmpere(gridPane);
@@ -74,18 +74,18 @@ public class Maille {
             ((Composante) SandboxController.getNodeFromGridPane(gridPane, circuit.get(i).getCol(), circuit.get(i).getRow())).setAmperage(intensite);
     }
 
-    public void reloadTooltip(GridPane gridPane){
+    private void reloadTooltip(GridPane gridPane){
         for (int i = 0; i < circuit.size(); i++){
             Composante composante = ((Composante) SandboxController.getNodeFromGridPane(gridPane, circuit.get(i).getCol(), circuit.get(i).getRow()));
             composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nTension: " + SandboxController.df.format(composante.getVolt()) + "\nRésistance: " + SandboxController.df.format(composante.getResistance()));
         }
     }
 
-    public ArrayList<Coordonnée> getCircuit() {
+    public ArrayList<Coordonnee> getCircuit() {
         return circuit;
     }
 
-    public void setCircuit(ArrayList<Coordonnée> circuit) {
+    public void setCircuit(ArrayList<Coordonnee> circuit) {
         this.circuit = circuit;
     }
 
@@ -97,7 +97,7 @@ public class Maille {
         this.mailles = mailles;
     }
 
-    public double getResistanceEq() {
+    private double getResistanceEq() {
         return resistanceEq;
     }
 
@@ -117,7 +117,7 @@ public class Maille {
         return tension;
     }
 
-    public void setTension(double tension) {
+    private void setTension(double tension) {
         this.tension = tension;
     }
 }

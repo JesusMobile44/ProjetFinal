@@ -1,6 +1,5 @@
 package controllers;
 
-import javafx.stage.Stage;
 import main.Main;
 
 public class MenuController {

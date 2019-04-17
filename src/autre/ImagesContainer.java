@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class ImagesContainer {
 
-    public static HashMap <String, Image> hashMapImage = new HashMap<>();
+    private static HashMap <String, Image> hashMapImage = new HashMap<>();
 
     public ImagesContainer() {
         for (int i=0; i<2; i++){

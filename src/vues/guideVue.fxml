@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.layout.BorderPane?>
 <BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GuideController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
-            <menus>
-                <Menu mnemonicParsing="false" text="Changer De Mode">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Menu" onAction="#setMenu"/>
-                        <MenuItem mnemonicParsing="false" text="Mode Sandbox" onAction="#setSandbox"/>
-                        <MenuItem mnemonicParsing="false" text="Mode Aventure" onAction="#setAventure"/>
-                    </items>
-                </Menu>
-            </menus>
+            <Menu mnemonicParsing="false" text="Changer De Mode">
+                <MenuItem mnemonicParsing="false" text="Menu" onAction="#setMenu"/>
+                <MenuItem mnemonicParsing="false" text="Mode Sandbox" onAction="#setSandbox"/>
+                <MenuItem mnemonicParsing="false" text="Mode Aventure" onAction="#setAventure"/>
+            </Menu>
         </MenuBar>
     </top>
 

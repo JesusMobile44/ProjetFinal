@@ -1,6 +1,8 @@
 package concepts;
 
-import composantes.*;
+import composantes.Composante;
+import composantes.Resisteur;
+import composantes.Source;
 import controllers.SandboxController;
 
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ public class Circuit {
         determinationSens();
     }
 
-    public void calculParallele() {
+    private void calculParallele() {
         updateNoeudsDirectionnels();
 
         double[][] matrice = new double[this.getBranches().size() - (this.getNoeuds().size() - 1) + this.getNoeuds().size() - 1][this.getBranches().size() + 1];
@@ -148,14 +150,12 @@ public class Circuit {
         Matrice matrice1 = new Matrice(matrice.length, matrice[0].length, matrice);
         matrice1.triangleSuperieur();
         matrice = matrice1.getMatrice();
-        System.out.println(matrice);
         double[] pivot = matrice1.calculPivot();
-        System.out.println(pivot);
 
         for (int i = 0; i < this.getBranches().size(); i++) {
-            this.getBranches().get(i).setIntensité(pivot[i]);
-            if (this.getBranches().get(i).getIntensité() < 0) {
-                this.getBranches().get(i).setIntensité(this.getBranches().get(i).getIntensité() * -1);
+            this.getBranches().get(i).setIntensite(pivot[i]);
+            if (this.getBranches().get(i).getIntensite() < 0) {
+                this.getBranches().get(i).setIntensite(this.getBranches().get(i).getIntensite() * -1);
                 if (this.getBranches().get(i).getNoeudDirectionnel() == this.getBranches().get(i).getNoeudsAdjacents().get(0)) {
                     this.getBranches().get(i).setNoeudDirectionnel(this.getBranches().get(i).getNoeudsAdjacents().get(1));
                 } else {
@@ -163,7 +163,7 @@ public class Circuit {
                 }
             }
             for (int j = 0; j < this.getBranches().get(i).getComposantesBranche().size(); j++) {
-                this.getBranches().get(i).getComposantesBranche().get(j).setAmperage(this.getBranches().get(i).getIntensité());
+                this.getBranches().get(i).getComposantesBranche().get(j).setAmperage(this.getBranches().get(i).getIntensite());
             }
         }
 
@@ -174,7 +174,7 @@ public class Circuit {
         reloadTooltip();
     }
 
-    public void calculSerie() {
+    private void calculSerie() {
         for (int i = 0; i < this.getResisteurs().size(); i++) {
             resistanceEquivalente += this.getResisteurs().get(i).getResistance();
         }
@@ -183,10 +183,10 @@ public class Circuit {
             tensionTotaleSource += this.getSources().get(i).getVolt();
         }
 
-        this.getBranches().get(0).setIntensité((tensionTotaleSource) / (resistanceEquivalente));
+        this.getBranches().get(0).setIntensite((tensionTotaleSource) / (resistanceEquivalente));
 
         for (int i = 0; i < this.getComposantes().size(); i++) {
-            this.getComposantes().get(i).setAmperage(this.getBranches().get(0).getIntensité());
+            this.getComposantes().get(i).setAmperage(this.getBranches().get(0).getIntensite());
             if (this.getComposantes().get(i).getNom().equals("RESISTEUR")) {
                 this.getComposantes().get(i).setVolt(this.getComposantes().get(i).getResistance() * this.getComposantes().get(i).getAmperage());
             }
@@ -196,7 +196,7 @@ public class Circuit {
 
     }
 
-    public void determinationSens() {
+    private void determinationSens() {
         if (enSerie) {
             ArrayList<Source> sources = new ArrayList<>();
             ArrayList<Integer> sourcesPos = new ArrayList<>();
@@ -385,7 +385,7 @@ public class Circuit {
         }
     }
 
-    public void reloadTooltip() {
+    private void reloadTooltip() {
         for (int i = 0; i < this.getComposantes().size(); i++) {
             Composante composante = this.getComposantes().get(i);
             switch (composante.getNom().toUpperCase()) {
@@ -437,13 +437,13 @@ public class Circuit {
     }
 
 
-    public void updateNoeudsDirectionnels() {
+    private void updateNoeudsDirectionnels() {
         for (int i = 0; i < this.getBranches().size(); i++) {
             this.getBranches().get(i).setNoeudDirectionnel(this.getBranches().get(i).getNoeudsAdjacents().get(0));
         }
     }
 
-    public String switchSensCourant(String dir, Composante composante) {
+    private String switchSensCourant(String dir, Composante composante) {
         switch (dir.toUpperCase()) {
             case "N":
                 switch (composante.getTabNomVariante()[composante.getDirection()]) {
