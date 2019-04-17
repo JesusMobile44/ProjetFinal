@@ -30,6 +30,7 @@ public class Circuit {
             calculParallele();
         }
         determinationSens();
+
     }
 
     public void calculParallele() {

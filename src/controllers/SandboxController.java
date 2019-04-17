@@ -302,6 +302,7 @@ public class SandboxController {
                 gridPaneSandBox.getChildren().remove(getNodeFromGridPane(gridPaneSandBox, i, j));
                 creerComposanteVide(i, j);
             }
+        updateCircuit();
     }
 
     public static void echangerComposantes(int[] posSource, int[] posTarget, Composante source, Composante target) {
@@ -1706,5 +1707,7 @@ public class SandboxController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        updateCircuit();
     }
 }
