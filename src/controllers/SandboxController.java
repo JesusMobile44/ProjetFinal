@@ -11,6 +11,8 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.*;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -40,6 +42,8 @@ public class SandboxController {
     public static Text textDescription = new Text();
     private static boolean menuTouteComposantes = true;
     private static ArrayList<Composante> composantes = new ArrayList<>();
+    public static boolean cPressed = false;
+    public static boolean xPressed = false;
 
     @FXML
     private SplitPane mySplitPane;
@@ -82,8 +86,6 @@ public class SandboxController {
         rootScrollPane.setPadding(new Insets(16));
         rootScrollPane.setVgap(16);
         rootScrollPane.setHgap(16);
-
-
         myScrollPane.setContent(rootScrollPane);
     }
 
@@ -458,24 +460,22 @@ public class SandboxController {
             }
 
             itemSupprimer.setOnAction(event -> {
-                gridPaneSandBox.getChildren().remove(source);
-                ComposanteVide vide = new ComposanteVide();
-                vide.fitHeightProperty().set(100);
-                vide.fitWidthProperty().set(100);
-                vide.setRow(source.getRow());
-                vide.setCol(source.getCol());
-                gridPaneSandBox.add(vide, source.getCol(), source.getRow());
-                updateCircuit();
+                supprimer(source);
             });
             contextMenu.getItems().add(itemSupprimer);
             source.setOnContextMenuRequested(event -> contextMenu.show(source, event.getScreenX(), event.getScreenY()));
         }
         gridPaneSandBox.add(source, i, j);
     }
-
-    // Generic function to find the index of an element in an object array in Java
-    public static <T> int find(T[] tableau, T target) {
-        return IntStream.range(0, tableau.length).filter(i -> target.equals(tableau[i])).findFirst().orElse(-1);
+    public static void supprimer(Composante source){
+        gridPaneSandBox.getChildren().remove(source);
+        ComposanteVide vide = new ComposanteVide();
+        vide.fitHeightProperty().set(100);
+        vide.fitWidthProperty().set(100);
+        vide.setRow(source.getRow());
+        vide.setCol(source.getCol());
+        gridPaneSandBox.add(vide, source.getCol(), source.getRow());
+        updateCircuit();
     }
 
     public static void remettreComposante(Composante composante) {
@@ -580,6 +580,57 @@ public class SandboxController {
                 }
                 break;
         }
+    }
+
+    public static void copierComposante(Composante source, Composante target){
+        Composante copie = null;
+        switch (source.getNom().toUpperCase()) {
+            case "FIL":
+                copie = new Fil(new ComposanteSave(source),target.getRow(),target.getCol());
+                break;
+            case "AMPEREMÈTRE":
+                copie = new Amperemetre(new ComposanteSave(source),target.getRow(),target.getCol());
+                break;
+            case "AMPOULE":
+                copie = new Ampoule(new ComposanteSave(source),target.getRow(),target.getCol());
+                break;
+            case "SOURCE":
+                copie = new Source(new ComposanteSave(source),target.getRow(),target.getCol());
+                break;
+            case "DIODE":
+                copie = new Diode(new ComposanteSave(source),target.getRow(),target.getCol());
+                break;
+            case "FUSIBLE":
+                copie = new Fusible(new ComposanteSave(source),target.getRow(),target.getCol());
+                break;
+            case "INTERRUPTEUR":
+                copie = new Interrupteur(new ComposanteSave(source),target.getRow(),target.getCol());
+                break;
+            case "MISE À TERRE":
+                copie = new MiseAterre(new ComposanteSave(source),target.getRow(),target.getCol());
+                break;
+            case "OHMÈTRE":
+                copie = new Ohmetre(new ComposanteSave(source),target.getRow(),target.getCol());
+                break;
+            case "RESISTEUR":
+                copie = new Resisteur(new ComposanteSave(source),target.getRow(),target.getCol());
+                break;
+            case "VOLTMÈTRE":
+                copie = new Voltmetre(new ComposanteSave(source),target.getRow(),target.getCol());
+                break;
+            case "SWITCH":
+                copie = new Switch(new ComposanteSave(source),target.getRow(),target.getCol());
+                break;
+            case "HAUT-PARLEUR":
+                copie = new HautParleur(new ComposanteSave(source),target.getRow(),target.getCol());
+                break;
+            case "MOTEUR":
+                copie = new Moteur();
+                break;
+        }
+        gridPaneSandBox.getChildren().remove(target);
+        gridPaneSandBox.add(copie, copie.getCol(), copie.getRow());
+        //gridPaneSandBox.add(source,source.getRow(),source.getCol());
     }
 
     public static Node getNodeFromGridPane(GridPane gridPane, int col, int row) {

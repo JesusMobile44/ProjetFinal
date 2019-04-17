@@ -1,10 +1,12 @@
 package main;
 
 import autre.ImagesContainer;
+import controllers.SandboxController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 
@@ -36,6 +38,20 @@ public class Main extends Application {
         getScenes()[1] = sandBox;
         getScenes()[2] = aventure;
         getScenes()[3] = guide;
+
+        getScenes()[1].setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.C)
+                SandboxController.cPressed = true;
+            if (event.getCode() == KeyCode.X)
+                SandboxController.xPressed = true;
+        });
+
+        getScenes()[1].setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.C)
+                SandboxController.cPressed = false;
+            if (event.getCode() == KeyCode.X)
+                SandboxController.xPressed = false;
+        });
 
         numeroMode = 0;
 

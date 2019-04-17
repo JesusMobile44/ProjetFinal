@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.TransferMode;
 import main.Main;
 
@@ -37,6 +38,9 @@ public class Composante extends ImageView {
         this.sensCourant = "∅";
 
         this.setOnMouseClicked(event -> {
+            if (SandboxController.xPressed) {
+                SandboxController.supprimer(this);
+            }
             SandboxController.textDescription.setText(this.getDescription());
             SandboxController.changerMenuComposante(this);
 
@@ -67,7 +71,7 @@ public class Composante extends ImageView {
 
 
             if (source != target) {
-                if (source.isEnPlace() && target.isEnPlace()) {
+                if (source.isEnPlace() && target.isEnPlace() && !SandboxController.cPressed) {
 
                     if (Main.numeroMode == 1) {
                         SandboxController.echangerComposantes(posSource, posTarget, source, target);
@@ -76,12 +80,14 @@ public class Composante extends ImageView {
                     source.enPlace = true;
                     event.setDropCompleted(true);
 
+                } else if (source.isEnPlace() && target.isEnPlace() && SandboxController.cPressed) {
+                    SandboxController.copierComposante(source, target);
+                    System.out.println("WRRYY");
                 } else if (target.isEnPlace()) {
                     if (Main.numeroMode == 1) {
                         SandboxController.remettreComposante(source);
                         SandboxController.placerComposantes(source, target);
                     }
-
                     source.enPlace = true;
                     event.setDropCompleted(true);
                 }
@@ -92,7 +98,7 @@ public class Composante extends ImageView {
         this.setOnDragDone(event -> SandboxController.updateCircuit());
     }
 
-    void initializeImage(){
+    void initializeImage() {
         for (int i = 0; i < tabNomVariante.length; i++) {
             tabVariante[i] = ImagesContainer.getHashMapImage().get(nom.toLowerCase() + " (" + (i + 1) + ").png");
         }
