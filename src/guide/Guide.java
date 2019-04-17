@@ -1,4 +1,4 @@
 package guide;
 
-public class Guide {
+class Guide {
 }

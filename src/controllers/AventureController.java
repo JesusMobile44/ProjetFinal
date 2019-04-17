@@ -12,7 +12,7 @@ import main.Main;
 import java.text.DecimalFormat;
 
 public class AventureController {
-    public static GridPane gridPaneAventure = new GridPane();
+    private static GridPane gridPaneAventure = new GridPane();
     public static FlowPane rootDescription = new FlowPane();
     private static FlowPane rootScrollPane = new FlowPane();
     public static DecimalFormat df = new DecimalFormat("#.##");

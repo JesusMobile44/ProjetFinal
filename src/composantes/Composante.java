@@ -1,32 +1,34 @@
 package composantes;
 
+import autre.ImagesContainer;
 import controllers.SandboxController;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.TransferMode;
 import main.Main;
 
 public class Composante extends ImageView {
-    protected Image[] tabVariante;
-    protected String[] tabNomVariante;
-    protected int direction;
-    protected double amperage;
-    protected double volt;
-    protected double resistance;
-    protected String description;
-    protected Tooltip tooltip;
-    protected String nom;
-    protected Composante[] tabAutour;
-    protected Image realImage;
-    protected boolean enPlace;
-    protected int row = 0;
-    protected int col = 0;
-    protected String sensCourant;
+    Image[] tabVariante;
+    String[] tabNomVariante;
+    int direction;
+    private double amperage;
+    double volt;
+    double resistance;
+    String description;
+    Tooltip tooltip;
+    String nom;
+    private Composante[] tabAutour;
+    boolean enPlace;
+    int row = 0;
+    int col = 0;
+    private String sensCourant;
 
-    public Composante() {
+    Composante() {
         this.direction = 0;
         this.amperage = 0;
         this.volt = 0;
@@ -36,16 +38,17 @@ public class Composante extends ImageView {
         this.sensCourant = "∅";
 
         this.setOnMouseClicked(event -> {
+            if (SandboxController.xPressed) {
+                SandboxController.supprimer(this);
+            }
             SandboxController.textDescription.setText(this.getDescription());
             SandboxController.changerMenuComposante(this);
 
         });
 
         this.setOnMouseEntered(event -> {
-            switch (Main.numeroMode) {
-                case 1:
-                    Label label = new Label(this.getDescription());
-                    break;
+            if (Main.numeroMode == 1) {
+                Label label = new Label(this.getDescription());
             }
         });
 
@@ -68,25 +71,23 @@ public class Composante extends ImageView {
 
 
             if (source != target) {
-                if (source.isEnPlace() && target.isEnPlace()) {
+                if (source.isEnPlace() && target.isEnPlace() && !SandboxController.cPressed) {
 
-                    switch (Main.numeroMode) {
-                        case 1:
-                            SandboxController.echangerComposantes(posSource, posTarget, source, target);
-                            break;
+                    if (Main.numeroMode == 1) {
+                        SandboxController.echangerComposantes(posSource, posTarget, source, target);
                     }
 
                     source.enPlace = true;
                     event.setDropCompleted(true);
 
+                } else if (source.isEnPlace() && target.isEnPlace() && SandboxController.cPressed) {
+                    SandboxController.copierComposante(source, target);
+                    System.out.println("WRRYY");
                 } else if (target.isEnPlace()) {
-                    switch (Main.numeroMode) {
-                        case 1:
-                            SandboxController.remettreComposante(source);
-                            SandboxController.placerComposantes(source, target);
-                            break;
+                    if (Main.numeroMode == 1) {
+                        SandboxController.remettreComposante(source);
+                        SandboxController.placerComposantes(source, target);
                     }
-
                     source.enPlace = true;
                     event.setDropCompleted(true);
                 }
@@ -94,20 +95,16 @@ public class Composante extends ImageView {
 
 
         });
-        this.setOnDragDone(event -> {
-            SandboxController.updateCircuit();
-        });
+        this.setOnDragDone(event -> SandboxController.updateCircuit());
     }
 
-    protected void initializeImage(){
-        realImage = new Image("file:images/" + nom.toLowerCase() + ".jpg");
+    void initializeImage() {
         for (int i = 0; i < tabNomVariante.length; i++) {
-            tabVariante[i] = Main.getImagesContainer().getHashMapImage().get(nom.toLowerCase() + " (" + (i + 1) + ").png");
+            tabVariante[i] = ImagesContainer.getHashMapImage().get(nom.toLowerCase() + " (" + (i + 1) + ").png");
         }
         this.setImage(tabVariante[0]);
         this.setFitHeight(100);
         this.setFitWidth(100);
-        System.out.println("hello world");
     }
 
     public Image[] getTabVariante() {
@@ -158,7 +155,7 @@ public class Composante extends ImageView {
         this.resistance = resistance;
     }
 
-    public String getDescription() {
+    private String getDescription() {
         return description;
     }
 
@@ -190,15 +187,7 @@ public class Composante extends ImageView {
         this.tabAutour = tabAutour;
     }
 
-    public Image getRealImage() {
-        return realImage;
-    }
-
-    public void setRealImage(Image realImage) {
-        this.realImage = realImage;
-    }
-
-    public boolean isEnPlace() {
+    private boolean isEnPlace() {
         return enPlace;
     }
 

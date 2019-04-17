@@ -3,7 +3,6 @@ package composantes;
 import concepts.Noeud;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
-import main.Main;
 
 public class Source extends ComposanteActivable {
 

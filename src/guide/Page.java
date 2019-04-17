@@ -1,4 +1,4 @@
 package guide;
 
-public class Page {
+class Page {
 }
