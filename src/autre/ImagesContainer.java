@@ -48,6 +48,9 @@ public class ImagesContainer {
         for (int i=0; i<2; i++){
             hashMapImage.put("voltmètre ("+(i+1)+").png", new Image("autre/images/voltmètre ("+(i+1)+").png"));
         }
+        for (int i=0; i<4; i++){
+            hashMapImage.put("interrupteur ("+(i+1)+").png", new Image("autre/images/interrupteur ("+(i+1)+").png"));
+        }
         hashMapImage.put("vide.png", new Image("autre/images/vide.png"));
         hashMapImage.put("back (1).png", new Image("autre/images/back (1).png"));
     }

@@ -84,18 +84,18 @@ public class Circuit {
                 mailles[i] = this.getMailles().get(numeroMailles[i]);
             }
 
-            for (int i = 0; i < mailles.length; i++) {
-                for (int j = 0; j < mailles[i].getBranchesMaille().size(); j++) {
+            for (NouvelleMaille maille : mailles) {
+                for (int j = 0; j < maille.getBranchesMaille().size(); j++) {
                     for (int k = 0; k < this.getBranches().size(); k++) {
-                        if (mailles[i].getBranchesMaille().get(j) == this.getBranches().get(k)) {
+                        if (maille.getBranchesMaille().get(j) == this.getBranches().get(k)) {
                             brancheFound[k] = true;
                         }
                     }
                 }
             }
 
-            for (int i = 0; i < brancheFound.length; i++) {
-                if (!brancheFound[i]) {
+            for (boolean b : brancheFound) {
+                if (!b) {
                     maillesOK = false;
                 }
             }
@@ -327,10 +327,8 @@ public class Circuit {
             }
             double vSource = 0;
             double vInverse = 0;
-            for (int i = 0; i < sources.size(); i++)
-                vSource += sources.get(i).getVolt();
-            for (int i = 0; i < inverses.size(); i++)
-                vInverse += inverses.get(i).getVolt();
+            for (Source source : sources) vSource += source.getVolt();
+            for (Source invers : inverses) vInverse += invers.getVolt();
             int start;
             boolean inverse;
             if (vSource > vInverse) {
@@ -371,15 +369,15 @@ public class Circuit {
             }
 
         } else {
-            for (int i = 0; i < branches.size(); i++) {
+            for (Branche branch : branches) {
                 String dir = null;
-                for (int j = 0; j < branches.get(i).getNoeudDirectionnel().getBranchesAdjacentes().size() && dir == null; j++) {
-                    if (branches.get(i).getNoeudDirectionnel().getBranchesAdjacentes().get(j) == branches.get(i)) {
-                        dir = branches.get(i).getNoeudDirectionnel().getDirections()[j];
+                for (int j = 0; j < branch.getNoeudDirectionnel().getBranchesAdjacentes().size() && dir == null; j++) {
+                    if (branch.getNoeudDirectionnel().getBranchesAdjacentes().get(j) == branch) {
+                        dir = branch.getNoeudDirectionnel().getDirections()[j];
                     }
                 }
-                for (int j = 0; j < branches.get(i).getComposantesBranche().size(); j++) {
-                    switchSensCourant(dir, branches.get(i).getComposantesBranche().get(j));
+                for (int j = 0; j < branch.getComposantesBranche().size(); j++) {
+                    switchSensCourant(dir, branch.getComposantesBranche().get(j));
                 }
             }
         }

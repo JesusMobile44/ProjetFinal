@@ -22,7 +22,6 @@ public class Composante extends ImageView {
     Tooltip tooltip;
     String nom;
     private Composante[] tabAutour;
-    Image realImage;
     boolean enPlace;
     int row = 0;
     int col = 0;
@@ -94,7 +93,6 @@ public class Composante extends ImageView {
     }
 
     void initializeImage(){
-        realImage = new Image("file:images/" + nom.toLowerCase() + ".jpg");
         for (int i = 0; i < tabNomVariante.length; i++) {
             tabVariante[i] = ImagesContainer.getHashMapImage().get(nom.toLowerCase() + " (" + (i + 1) + ").png");
         }
@@ -181,14 +179,6 @@ public class Composante extends ImageView {
 
     public void setTabAutour(Composante[] tabAutour) {
         this.tabAutour = tabAutour;
-    }
-
-    public Image getRealImage() {
-        return realImage;
-    }
-
-    public void setRealImage(Image realImage) {
-        this.realImage = realImage;
     }
 
     private boolean isEnPlace() {

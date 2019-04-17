@@ -79,8 +79,6 @@ public class SandboxController {
                 creerComposanteVide(i, j);
 
         goBack();
-        //rootScrollPane.getChildren().add(new Moteur());
-        //rootScrollPane.getChildren().add(new HautParleur());
         rootScrollPane.setPadding(new Insets(16));
         rootScrollPane.setVgap(16);
         rootScrollPane.setHgap(16);
@@ -101,7 +99,7 @@ public class SandboxController {
         rootScrollPane.getChildren().add(new Diode());
         rootScrollPane.getChildren().add(new Fusible());
         rootScrollPane.getChildren().add(new HautParleur());
-        //rootScrollPane.getChildren().add(new Interrupteur());
+        rootScrollPane.getChildren().add(new Interrupteur());
         rootScrollPane.getChildren().add(new MiseAterre());
         rootScrollPane.getChildren().add(new Ohmetre());
         rootScrollPane.getChildren().add(new Resisteur());
@@ -230,8 +228,8 @@ public class SandboxController {
             case "INTERRUPTEUR":
                 rootScrollPane.getChildren().add(0, new Interrupteur());
                 Interrupteur interrupteur = new Interrupteur();
-                interrupteur.setImage(interrupteur.getTabVariante()[1]);
-                interrupteur.setDirection(1);
+                interrupteur.setImage(interrupteur.getTabVariante()[2]);
+                interrupteur.setDirection(2);
                 rootScrollPane.getChildren().add(1, interrupteur);
                 updateCircuit();
                 break;
@@ -280,10 +278,18 @@ public class SandboxController {
                 break;
             case "SWITCH":
                 rootScrollPane.getChildren().add(0, new Switch());
-                Switch aSwitch = new Switch();
-                aSwitch.setImage(aSwitch.getTabVariante()[1]);
-                aSwitch.setDirection(1);
-                rootScrollPane.getChildren().add(1, aSwitch);
+                Switch switch1 = new Switch();
+                switch1.setImage(switch1.getTabVariante()[2]);
+                switch1.setDirection(2);
+                rootScrollPane.getChildren().add(1, switch1);
+                Switch switch2 = new Switch();
+                switch2.setImage(switch2.getTabVariante()[4]);
+                switch2.setDirection(4);
+                rootScrollPane.getChildren().add(2, switch2);
+                Switch switch3 = new Switch();
+                switch3.setImage(switch3.getTabVariante()[6]);
+                switch3.setDirection(6);
+                rootScrollPane.getChildren().add(3, switch3);
                 updateCircuit();
                 break;
         }
@@ -332,21 +338,24 @@ public class SandboxController {
         source.setRow(j);
         if (!source.getNom().toUpperCase().equals("VIDE")) {
             source.getTooltip().setText(source.getNom() + " (" + source.getCol() + "," + source.getRow() + ")\nIntensité: " + df.format(source.getAmperage()) + "\nTension: " + df.format(source.getVolt()) + "\nRésistance: " + df.format(source.getResistance()));
+            ContextMenu contextMenu = new ContextMenu();
             MenuItem itemSupprimer = new MenuItem("Supprimer");
-            Menu menuVariante = new Menu("Variantes");
-            MenuItem[] itemVariante = new MenuItem[source.getTabNomVariante().length];
+            if (!source.getNom().toUpperCase().equals("SWITCH")&&!source.getNom().toUpperCase().equals("INTERRUPTEUR")) {
+                Menu menuVariante = new Menu("Variantes");
+                MenuItem[] itemVariante = new MenuItem[source.getTabNomVariante().length];
 
-            for (int k = 0; k < itemVariante.length; k++) {
-                itemVariante[k] = new MenuItem(source.getTabNomVariante()[k]);
-                menuVariante.getItems().add(itemVariante[k]);
-                int temp = k;
-                itemVariante[k].setOnAction(event -> {
-                    source.setImage(source.getTabVariante()[temp]);
-                    source.setDirection(temp);
-                    updateCircuit();
-                });
+                for (int k = 0; k < itemVariante.length; k++) {
+                    itemVariante[k] = new MenuItem(source.getTabNomVariante()[k]);
+                    menuVariante.getItems().add(itemVariante[k]);
+                    int temp = k;
+                    itemVariante[k].setOnAction(event -> {
+                        source.setImage(source.getTabVariante()[temp]);
+                        source.setDirection(temp);
+                        updateCircuit();
+                    });
+                }
+                contextMenu.getItems().add(menuVariante);
             }
-            ContextMenu contextMenu = new ContextMenu(menuVariante);
 
             switch (source.getNom().toUpperCase()) {
                 case "SOURCE":
@@ -380,46 +389,71 @@ public class SandboxController {
                     });
                     contextMenu.getItems().add(itemMusique);
                     break;
-                case "SWITCH":
-                    MenuItem itemSwitch = new MenuItem("Switch");
+                case "INTERRUPTEUR":
+                    MenuItem itemSwitch = new MenuItem("ON/OFF");
                     itemSwitch.setOnAction(event -> {
-                        switch (source.getTabNomVariante()[source.getDirection()]){
-                            case "OS":
+                        switch (source.getDirection()){
+                            case 0:
                                 source.setDirection(1);
                                 source.setImage(source.getTabVariante()[1]);
                                 break;
-                            case "ON":
+                            case 1:
                                 source.setDirection(0);
                                 source.setImage(source.getTabVariante()[0]);
                                 break;
-                            case "NO":
+                            case 2:
                                 source.setDirection(3);
                                 source.setImage(source.getTabVariante()[3]);
                                 break;
-                            case "NE":
+                            case 3:
                                 source.setDirection(2);
                                 source.setImage(source.getTabVariante()[2]);
                                 break;
-                            case "EN":
+                        }
+                        updateCircuit();
+                    });
+                    contextMenu.getItems().add(itemSwitch);
+                    break;
+                case "SWITCH":
+                    MenuItem itemONOFF = new MenuItem("Switch");
+                    itemONOFF.setOnAction(event -> {
+                        switch (source.getDirection()){
+                            case 0:
+                                source.setDirection(1);
+                                source.setImage(source.getTabVariante()[1]);
+                                break;
+                            case 1:
+                                source.setDirection(0);
+                                source.setImage(source.getTabVariante()[0]);
+                                break;
+                            case 2:
+                                source.setDirection(3);
+                                source.setImage(source.getTabVariante()[3]);
+                                break;
+                            case 3:
+                                source.setDirection(2);
+                                source.setImage(source.getTabVariante()[2]);
+                                break;
+                            case 4:
                                 source.setDirection(5);
                                 source.setImage(source.getTabVariante()[5]);
                                 break;
-                            case "ES":
+                            case 5:
                                 source.setDirection(4);
                                 source.setImage(source.getTabVariante()[4]);
                                 break;
-                            case "SE":
+                            case 6:
                                 source.setDirection(7);
                                 source.setImage(source.getTabVariante()[7]);
                                 break;
-                            case "SO":
+                            case 7:
                                 source.setDirection(6);
                                 source.setImage(source.getTabVariante()[6]);
                                 break;
                         }
                         updateCircuit();
                     });
-                    contextMenu.getItems().add(itemSwitch);
+                    contextMenu.getItems().add(itemONOFF);
                     break;
             }
 
@@ -585,8 +619,8 @@ public class SandboxController {
             for (int i = 0; i < circuit1.getComposantes().size(); i++) {
                 if (circuit1.getComposantes().get(i).getNom().toUpperCase().equals("HAUT-PARLEUR") || circuit1.getComposantes().get(i).getNom().toUpperCase().equals("AMPOULE")) {
                     boolean unique = true;
-                    for (int j = 0; j < composantes.size(); j++)
-                        if (circuit1.getComposantes().get(i) == composantes.get(j))
+                    for (Composante composante : composantes)
+                        if (circuit1.getComposantes().get(i) == composante)
                             unique = false;
                     if (unique)
                         composantes.add(circuit1.getComposantes().get(i));
@@ -826,8 +860,8 @@ public class SandboxController {
                             }
                         }
 
-                        for (int k = 0; k < same.length; k++) {
-                            if (!same[k]) {
+                        for (boolean b : same) {
+                            if (!b) {
                                 allTheSame = false;
                             }
                         }
@@ -1329,7 +1363,6 @@ public class SandboxController {
                                         case "SE":
                                             dir = "down";
                                             row++;
-                                            System.out.println("fil down");
                                             break;
                                         case "OE":
                                             if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("SOURCE")) {

@@ -22,9 +22,9 @@ public class Interrupteur extends ComposanteActivable {
     private void initialize(){
         tabNomVariante = new String[4];
         tabNomVariante[0] = "NS";
-        tabNomVariante[1] = "OE";
-        tabNomVariante[2] = "SN";
-        tabNomVariante[3] = "EO";
+        tabNomVariante[1] = "OFF";
+        tabNomVariante[2] = "OE";
+        tabNomVariante[3] = "OFF";
         tabVariante = new Image[tabNomVariante.length];
         description = "";
         tooltip = new Tooltip("Tooltip Interrupteur");

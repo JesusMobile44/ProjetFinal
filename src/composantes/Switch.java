@@ -22,12 +22,12 @@ public class Switch extends Composante{
 
     private void initialize(){
         tabNomVariante = new String[8];
-        tabNomVariante[0] = "OS";
-        tabNomVariante[1] = "ON";
+        tabNomVariante[0] = "SO";
+        tabNomVariante[1] = "NO";
         tabNomVariante[2] = "NO";
         tabNomVariante[3] = "NE";
-        tabNomVariante[4] = "EN";
-        tabNomVariante[5] = "ES";
+        tabNomVariante[4] = "NE";
+        tabNomVariante[5] = "SE";
         tabNomVariante[6] = "SE";
         tabNomVariante[7] = "SO";
 

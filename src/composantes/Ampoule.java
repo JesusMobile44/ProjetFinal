@@ -29,7 +29,6 @@ public class Ampoule extends ComposanteActivable {
         tooltip = new Tooltip("Produit de la lumière");
         Tooltip.install(this,tooltip);
         nom = "Ampoule";
-        realImage = new Image("file:images/" + nom.toLowerCase() + ".jpg");
         for (int i = 0; i < tabNomVariante.length+2; i++) {
             tabVariante[i] = ImagesContainer.getHashMapImage().get(nom.toLowerCase() + " (" + (i + 1) + ").png");
         }
