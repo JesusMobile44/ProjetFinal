@@ -15,7 +15,7 @@ public class Circuit {
     private ArrayList<Branche> branches = new ArrayList<>();
     private ArrayList<Resisteur> resisteurs = new ArrayList<>();
     private ArrayList<Source> sources = new ArrayList<>();
-    private float resistanceEquivalente;
+    private double resistanceEquivalente;
     private boolean enSerie;
     private boolean incomplet;
 
@@ -172,6 +172,10 @@ public class Circuit {
             resiteur.setVolt(resiteur.getAmperage() * resiteur.getResistance());
         }
 
+        if (this.getSources().size() == 1){
+            this.setResistanceEquivalente(this.getSources().get(0).getVolt() * this.getSources().get(0).getAmperage());
+        }
+
         reloadTooltip();
     }
 
@@ -188,7 +192,7 @@ public class Circuit {
 
         for (int i = 0; i < this.getComposantes().size(); i++) {
             this.getComposantes().get(i).setAmperage(this.getBranches().get(0).getIntensite());
-            if (this.getComposantes().get(i).getNom().equals("RESISTEUR")) {
+            if (this.getComposantes().get(i).getNom().toUpperCase().equals("RESISTEUR")) {
                 this.getComposantes().get(i).setVolt(this.getComposantes().get(i).getResistance() * this.getComposantes().get(i).getAmperage());
             }
         }
@@ -399,6 +403,9 @@ public class Circuit {
                     break;
                 case "SOURCE":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nTension: " + SandboxController.df.format(composante.getVolt()) + "\nSens du courant: " + composante.getSensCourant());
+                    if (this.getResistanceEquivalente() != 0){
+                        composante.getTooltip().setText(composante.getTooltip().getText() + "\nRésistance équivalente : "+this.getResistanceEquivalente());
+                    }
                     break;
                 case "DIODE":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant());
@@ -584,11 +591,11 @@ public class Circuit {
         this.enSerie = enSerie;
     }
 
-    public float getResistanceEquivalente() {
+    public double getResistanceEquivalente() {
         return resistanceEquivalente;
     }
 
-    public void setResistanceEquivalente(float resistanceEquivalente) {
+    public void setResistanceEquivalente(double resistanceEquivalente) {
         this.resistanceEquivalente = resistanceEquivalente;
     }
 

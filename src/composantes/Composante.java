@@ -82,7 +82,6 @@ public class Composante extends ImageView {
 
                 } else if (source.isEnPlace() && target.isEnPlace() && SandboxController.cPressed) {
                     SandboxController.copierComposante(source, target);
-                    System.out.println("WRRYY");
                 } else if (target.isEnPlace()) {
                     if (Main.numeroMode == 1) {
                         SandboxController.remettreComposante(source);

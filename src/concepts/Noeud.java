@@ -18,6 +18,7 @@ public class Noeud {
         this.analyseComplete = false;
         this.directionsAnalysees = new boolean[this.composante.getTabNomVariante()[this.composante.getDirection()].length()];
         this.directions = new String[this.composante.getTabNomVariante()[this.composante.getDirection()].length()];
+        this.branchesAnalysees = new boolean[directions.length];
 
         for (int i = 0; i<this.composante.getTabNomVariante()[this.composante.getDirection()].length(); i++){
             this.directions[i] = this.composante.getTabNomVariante()[this.composante.getDirection()].substring(i,i+1);
@@ -25,6 +26,7 @@ public class Noeud {
 
         for (int i = 0; i<this.getDirections().length; i++){
             this.directionsAnalysees[i] = false;
+            this.branchesAnalysees[i] = false;
         }
     }
 
@@ -93,6 +95,7 @@ public class Noeud {
     public void resetBranchesAnalysees(){
         for (int i = 0; i<this.getBranchesAnalysees().length; i++){
             this.branchesAnalysees[i] = false;
+            this.directionsAnalysees[i] = false;
         }
     }
 }
