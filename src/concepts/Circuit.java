@@ -185,10 +185,19 @@ public class Circuit {
         }
         float tensionTotaleSource = 0;
         for (int i = 0; i < this.getSources().size(); i++) {
-            tensionTotaleSource += this.getSources().get(i).getVolt();
+            if (this.getSources().get(i).isInverseEnSerie()){
+                tensionTotaleSource -= this.getSources().get(i).getVolt();
+            }
+            else {
+                tensionTotaleSource += this.getSources().get(i).getVolt();
+            }
         }
 
         this.getBranches().get(0).setIntensite((tensionTotaleSource) / (resistanceEquivalente));
+
+        if (this.getBranches().get(0).getIntensite() <0){
+            this.getBranches().get(0).setIntensite(this.getBranches().get(0).getIntensite()*-1);
+        }
 
         for (int i = 0; i < this.getComposantes().size(); i++) {
             this.getComposantes().get(i).setAmperage(this.getBranches().get(0).getIntensite());

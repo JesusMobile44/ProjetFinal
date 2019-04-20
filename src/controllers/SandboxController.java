@@ -1618,7 +1618,6 @@ public class SandboxController {
                             brancheTemporaire.getResisteurs().add(((Resisteur) (getNodeFromGridPane(gridPaneSandBox, col, row))));
                         }
 
-
                         //Cherche si la composante suivante est rattachée à la précédente et check la prochaine direction
                         switch (dir) {
                             case "up":
@@ -1630,6 +1629,9 @@ public class SandboxController {
                                     case "SN":
                                         dir = "up";
                                         row--;
+                                        if (debug instanceof Source){
+                                            ((Source) debug).setInverseEnSerie(true);
+                                        }
                                         break;
                                     case "SE":
                                         dir = "right";
@@ -1685,6 +1687,9 @@ public class SandboxController {
                                     case "EO":
                                         dir = "right";
                                         col++;
+                                        if (debug instanceof Source){
+                                            ((Source) debug).setInverseEnSerie(true);
+                                        }
                                         break;
                                     case "NSO":
                                         circuits.get(numeroDeCircuit).setEnSerie(false);
@@ -1720,6 +1725,9 @@ public class SandboxController {
                                     case "NS":
                                         dir = "down";
                                         row++;
+                                        if (debug instanceof Source){
+                                            ((Source) debug).setInverseEnSerie(true);
+                                        }
                                         break;
                                     case "SN":
                                         dir = "down";
@@ -1776,6 +1784,9 @@ public class SandboxController {
                                     case "OE":
                                         dir = "left";
                                         col--;
+                                        if (debug instanceof Source){
+                                            ((Source) debug).setInverseEnSerie(true);
+                                        }
                                         break;
                                     case "EO":
                                         dir = "left";

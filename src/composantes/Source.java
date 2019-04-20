@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 public class Source extends ComposanteActivable {
 
     private Noeud noeudDirectionnel;
+    private boolean inverseEnSerie;
 
     public Source() {
         initialize();
@@ -39,6 +40,7 @@ public class Source extends ComposanteActivable {
         this.setVolt(10);
         this.setAmperage(1);
         noeudDirectionnel=null;
+        inverseEnSerie = false;
     }
 
     public Noeud getNoeudDirectionnel() {
@@ -47,5 +49,13 @@ public class Source extends ComposanteActivable {
 
     public void setNoeudDirectionnel(Noeud noeudDirectionnel) {
         this.noeudDirectionnel = noeudDirectionnel;
+    }
+
+    public boolean isInverseEnSerie() {
+        return inverseEnSerie;
+    }
+
+    public void setInverseEnSerie(boolean inverseEnSerie) {
+        this.inverseEnSerie = inverseEnSerie;
     }
 }
