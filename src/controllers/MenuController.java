@@ -1,5 +1,7 @@
 package controllers;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import main.Main;
 
 public class MenuController {
@@ -8,9 +10,9 @@ public class MenuController {
         Main.changerDeMode(1);
     }
 
-    public void setAventure(){
-        Main.changerDeMode(2);
-    }
+    public void setExit(){ System.exit(0);}
+
+    public void dragOver(Button button){button.setOpacity(50);}
 
     public void setGuide(){
         Main.changerDeMode(3);
