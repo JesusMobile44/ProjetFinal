@@ -57,7 +57,9 @@ public class Circuit {
     private static void retirerBrancheDiode(Branche branche){
         for (Composante composante:
              branche.getComposantesBranche()) {
-            composante.setVolt(0);
+            if (!(composante instanceof Source)){
+                composante.setVolt(0);
+            }
             composante.setAmperage(0);
             composante.setSensCourant("∅");
         }
@@ -484,12 +486,12 @@ public class Circuit {
                             case "NE":
                                 composante.setSensCourant("→");
                                 dir = "O";
-                                col--;
+                                col++;
                                 break;
                             case "NO":
                                 composante.setSensCourant("←");
                                 dir = "E";
-                                col++;
+                                col--;
                                 break;
                             default:
                                 composante.setSensCourant("∅");
@@ -513,7 +515,7 @@ public class Circuit {
                             case "EO":
                                 composante.setSensCourant("←");
                                 dir = "E";
-                                col++;
+                                col--;
                                 break;
                             default:
                                 composante.setSensCourant("∅");
@@ -532,12 +534,12 @@ public class Circuit {
                             case "SE":
                                 composante.setSensCourant("→");
                                 dir = "O";
-                                col--;
+                                col++;
                                 break;
                             case "SO":
                                 composante.setSensCourant("←");
                                 dir = "E";
-                                col++;
+                                col--;
                                 break;
                             default:
                                 composante.setSensCourant("∅");
@@ -561,7 +563,7 @@ public class Circuit {
                             case "EO":
                                 composante.setSensCourant("→");
                                 dir = "O";
-                                col--;
+                                col++;
                                 break;
                             default:
                                 composante.setSensCourant("∅");

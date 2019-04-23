@@ -957,55 +957,61 @@ public class SandboxController {
         int j;
         int i = 0;
 
-        while (!done) {
-            j = 0;
-            done2 = false;
-            while (!done2) {
 
-                NouvelleMaille maille1 = circuits.get(numeroDeCircuit).getMailles().get(i);
-                NouvelleMaille maille2 = circuits.get(numeroDeCircuit).getMailles().get(j);
+            while (!done) {
+                j = 0;
+                done2 = false;
+                while (!done2) {
 
-                boolean allTheSame = true;
-                boolean[] same = new boolean[maille1.getBranchesMaille().size()];
-                for (int k = 0; k < same.length; k++) {
-                    same[k] = false;
-                }
+                    NouvelleMaille maille1 = null;
+                    NouvelleMaille maille2 = null;
+                    maille1 = circuits.get(numeroDeCircuit).getMailles().get(i);
+                    maille2 = circuits.get(numeroDeCircuit).getMailles().get(j);
 
-                if (i != j) {
-                    if (maille1.getBranchesMaille().size() == maille2.getBranchesMaille().size()) {
+                    boolean allTheSame = true;
+                    boolean[] same = new boolean[maille1.getBranchesMaille().size()];
+                    for (int k = 0; k < same.length; k++) {
+                        same[k] = false;
+                    }
 
-                        for (int m = 0; m < maille1.getBranchesMaille().size(); m++) {
-                            for (int k = 0; k < maille2.getBranchesMaille().size(); k++) {
-                                if (maille1.getBranchesMaille().get(m) == maille2.getBranchesMaille().get(k)) {
-                                    same[m] = true;
+                    if (i != j) {
+                        if (maille1.getBranchesMaille().size() == maille2.getBranchesMaille().size()) {
+
+                            for (int m = 0; m < maille1.getBranchesMaille().size(); m++) {
+                                for (int k = 0; k < maille2.getBranchesMaille().size(); k++) {
+                                    if (maille1.getBranchesMaille().get(m) == maille2.getBranchesMaille().get(k)) {
+                                        same[m] = true;
+                                    }
                                 }
                             }
-                        }
 
-                        for (boolean b : same) {
-                            if (!b) {
-                                allTheSame = false;
+                            for (boolean b : same) {
+                                if (!b) {
+                                    allTheSame = false;
+                                }
                             }
-                        }
 
-                        if (allTheSame) {
-                            circuits.get(numeroDeCircuit).getMailles().remove(j);
-                            j--;
-                        }
+                            if (allTheSame) {
+                                circuits.get(numeroDeCircuit).getMailles().remove(j);
+                                j--;
+                            }
 
+                        }
+                    }
+
+
+                    j++;
+                    if (j >= circuits.get(numeroDeCircuit).getMailles().size()) {
+                        done2 = true;
                     }
                 }
-                j++;
-                if (j >= circuits.get(numeroDeCircuit).getMailles().size()) {
-                    done2 = true;
+
+                i++;
+                if (i >= circuits.get(numeroDeCircuit).getMailles().size()) {
+                    done = true;
                 }
             }
 
-            i++;
-            if (i >= circuits.get(numeroDeCircuit).getMailles().size()) {
-                done = true;
-            }
-        }
 
         for (int k = 0; k < circuits.get(numeroDeCircuit).getMailles().size(); k++) {
             NouvelleMaille mailleTempo = circuits.get(numeroDeCircuit).getMailles().get(k);
