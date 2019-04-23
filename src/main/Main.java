@@ -14,7 +14,7 @@ public class Main extends Application {
 
     public static int numeroMode;
 
-    private static Scene[] scenes = new Scene[4];
+    private static Scene[] scenes = new Scene[3];
 
     private static Stage stage= new Stage();
 
@@ -25,19 +25,13 @@ public class Main extends Application {
     private static ImagesContainer imagesContainer = new ImagesContainer();
 
     public void start(Stage primaryStage)throws Exception{
+        getScenes()[0] = new Scene(FXMLLoader.load(getClass().getResource("../vues/menuVue.fxml")));
+        getScenes()[1] = new Scene(FXMLLoader.load(getClass().getResource("../vues/sandboxVue.fxml")));
+        getScenes()[2] = new Scene(FXMLLoader.load(getClass().getResource("../vues/guideVue.fxml")));
 
-        Scene menu = new Scene(FXMLLoader.load(getClass().getResource("../vues/menuVue.fxml")));
-        Scene sandBox = new Scene(FXMLLoader.load(getClass().getResource("../vues/sandboxVue.fxml")));
-        Scene aventure = new Scene(FXMLLoader.load(getClass().getResource("../vues/aventureVue.fxml")));
-        Scene guide = new Scene(FXMLLoader.load(getClass().getResource("../vues/guideVue.fxml")));
-        menu.getStylesheets().add("modena_dark.css"); //Dark Theme: https://github.com/joffrey-bion/javafx-themes
-        sandBox.getStylesheets().add("modena_dark.css"); //Dark Theme: https://github.com/joffrey-bion/javafx-themes
-        aventure.getStylesheets().add("modena_dark.css"); //Dark Theme: https://github.com/joffrey-bion/javafx-themes
-        guide.getStylesheets().add("modena_dark.css"); //Dark Theme: https://github.com/joffrey-bion/javafx-themes
-        getScenes()[0] = menu;
-        getScenes()[1] = sandBox;
-        getScenes()[2] = aventure;
-        getScenes()[3] = guide;
+        getScenes()[0].getStylesheets().add("modena_dark.css"); //Dark Theme: https://github.com/joffrey-bion/javafx-themes
+        getScenes()[1].getStylesheets().add("modena_dark.css"); //Dark Theme: https://github.com/joffrey-bion/javafx-themes
+        getScenes()[2].getStylesheets().add("modena_dark.css"); //Dark Theme: https://github.com/joffrey-bion/javafx-themes
 
         getScenes()[1].setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.C)
@@ -56,13 +50,13 @@ public class Main extends Application {
         numeroMode = 0;
 
         primaryStage = getStage();
-        primaryStage.setTitle("Minecraft Zéphirr");
+        primaryStage.setTitle("Zéphirr");
 
         primaryStage.setScene(getScenes()[0]);
-
-        primaryStage.getIcons().add(new Image("autre/images/zephyr.jpg"));
-
         primaryStage.setMaximized(true);
+        primaryStage.setMinHeight(650);
+        primaryStage.setMinWidth(650);
+        primaryStage.getIcons().add(new Image("autre/images/zephyr.jpg"));
         primaryStage.show();
     }
 
@@ -77,7 +71,7 @@ public class Main extends Application {
     }
 
 
-    private static Scene[] getScenes() {
+    public static Scene[] getScenes() {
         return scenes;
     }
 

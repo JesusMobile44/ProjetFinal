@@ -10,7 +10,7 @@ public class ImagesContainer {
 
     public ImagesContainer() {
         for (int i=0; i<2; i++){
-            hashMapImage.put("amperemètre ("+(i+1)+").png", new Image("autre/images/amperemètre (" +(i+1)+").png"));
+            hashMapImage.put("ampèremètre ("+(i+1)+").png", new Image("autre/images/amperemètre (" +(i+1)+").png"));
         }
         for (int i=0; i<4; i++){
             hashMapImage.put("ampoule ("+(i+1)+").png", new Image("autre/images/ampoule (" +(i+1)+").png"));
@@ -51,8 +51,15 @@ public class ImagesContainer {
         for (int i=0; i<4; i++){
             hashMapImage.put("interrupteur ("+(i+1)+").png", new Image("autre/images/interrupteur ("+(i+1)+").png"));
         }
+
+        //hashMapImage.put("ampoule.png", new Image("autre/images/ampoule.png"));
+        //hashMapImage.put("fil.png", new Image("autre/images/fil.png"));
+
+        hashMapImage.put("sandbox.png", new Image("autre/images/sandbox.png"));
         hashMapImage.put("vide.png", new Image("autre/images/vide.png"));
+        hashMapImage.put("transparent.png", new Image("autre/images/transparent.png"));
         hashMapImage.put("back (1).png", new Image("autre/images/back (1).png"));
+
     }
 
     public static HashMap<String, Image> getHashMapImage() {

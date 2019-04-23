@@ -27,7 +27,7 @@ public class Amperemetre extends Composante {
         description = "Un ampèremètre est un appareil de mesure de l'intensité d'un courant électrique dans un circuit.\nL'unité de mesure de l'intensité est l'ampère, symbole : A";
         tooltip = new Tooltip("Mesure l'intensité électrique");
         Tooltip.install(this,tooltip);
-        nom = "Amperemètre";
+        nom = "Ampèremètre";
         initializeImage();
     }
 }
