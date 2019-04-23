@@ -50,10 +50,12 @@ public class Main extends Application {
         numeroMode = 0;
 
         primaryStage = getStage();
-        primaryStage.setTitle("Minecraft Zéphirr");
+        primaryStage.setTitle("Zéphirr");
 
         primaryStage.setScene(getScenes()[0]);
         primaryStage.setMaximized(true);
+        primaryStage.setMinHeight(650);
+        primaryStage.setMinWidth(650);
         primaryStage.getIcons().add(new Image("autre/images/zephyr.jpg"));
         primaryStage.show();
     }

@@ -1,6 +1,7 @@
 package concepts;
 
 import composantes.Composante;
+import composantes.Diode;
 import composantes.Resisteur;
 import composantes.Source;
 import controllers.SandboxController;
@@ -29,10 +30,37 @@ public class Circuit {
         if (this.enSerie) {
             calculSerie();
         } else {
-            calculParallele();
+            boolean okDiode = false;
+            while (!okDiode){
+                okDiode = true;
+                calculParallele();
+                for (int i=0; i<this.getBranches().size(); i++){
+                    for (int j=0; j<this.getBranches().get(i).getDiodes().size(); j++){
+                        if (this.getBranches().get(i).getDiodes().get(j).getNoeudDirectionnel() == this.getBranches().get(i).getNoeudDirectionnel()){
+                            retirerBrancheDiode(this.getBranches().get(i));
+                            this.getBranches().remove(i);
+                            okDiode = false;
+                        }
+                    }
+                }
+            }
         }
-        determinationSens();
+        if (this.enSerie && this.getBranches().get(0).getIntensite()==0){
 
+        }else {
+            determinationSens();
+        }
+
+        reloadTooltip();
+    }
+
+    private static void retirerBrancheDiode(Branche branche){
+        for (Composante composante:
+             branche.getComposantesBranche()) {
+            composante.setVolt(0);
+            composante.setAmperage(0);
+            composante.setSensCourant("∅");
+        }
     }
 
     private void calculParallele() {
@@ -175,8 +203,6 @@ public class Circuit {
         if (this.getSources().size() == 1){
             this.setResistanceEquivalente(this.getSources().get(0).getVolt() * this.getSources().get(0).getAmperage());
         }
-
-        reloadTooltip();
     }
 
     private void calculSerie() {
@@ -197,6 +223,14 @@ public class Circuit {
 
         if (this.getBranches().get(0).getIntensite() <0){
             this.getBranches().get(0).setIntensite(this.getBranches().get(0).getIntensite()*-1);
+            for (Diode diode:
+                 this.getBranches().get(0).getDiodes()) {
+                if (diode.isInverseEnSerie()){
+                    diode.setInverseEnSerie(false);
+                }else {
+                    diode.setInverseEnSerie(true);
+                }
+            }
         }
 
         for (int i = 0; i < this.getComposantes().size(); i++) {
@@ -206,12 +240,24 @@ public class Circuit {
             }
         }
 
-        reloadTooltip();
+        boolean diodeInverse = false;
 
+        for (Diode diode:
+                this.getBranches().get(0).getDiodes()) {
+
+            if (diode.isInverseEnSerie()){
+                diodeInverse = true;
+            }
+        }
+
+        if (!diodeInverse){
+            retirerBrancheDiode(this.getBranches().get(0));
+            this.getBranches().get(0).setIntensite(0);
+        }
     }
 
     private void determinationSens() {
-        if (enSerie) {
+        if (this.enSerie) {
             ArrayList<Source> sources = new ArrayList<>();
             ArrayList<Integer> sourcesPos = new ArrayList<>();
             ArrayList<Source> inverses = new ArrayList<>();
@@ -368,17 +414,17 @@ public class Circuit {
             }
             if (inverse) {
                 for (int i = start; i > -1; i--) {
-                    dir = switchSensCourant(dir, composantes.get(i));
+                    dir = switchSensCourantSerie(dir, composantes.get(i));
                 }
                 for (int i = composantes.size() - 1; i > start; i--) {
-                    dir = switchSensCourant(dir, composantes.get(i));
+                    dir = switchSensCourantSerie(dir, composantes.get(i));
                 }
             } else {
                 for (int i = start; i < composantes.size(); i++) {
-                    dir = switchSensCourant(dir, composantes.get(i));
+                    dir = switchSensCourantSerie(dir, composantes.get(i));
                 }
                 for (int i = 0; i < start; i++) {
-                    dir = switchSensCourant(dir, composantes.get(i));
+                    dir = switchSensCourantSerie(dir, composantes.get(i));
                 }
             }
 
@@ -391,10 +437,141 @@ public class Circuit {
                     }
                 }
                 for (int j = 0; j < branch.getComposantesBranche().size(); j++) {
-                    switchSensCourant(dir, branch.getComposantesBranche().get(j));
+                    switchSensCourantParallele(dir, branch.getNoeudDirectionnel());
                 }
             }
         }
+    }
+
+    private void switchSensCourantParallele(String dir, Noeud initial){
+        int row = initial.getComposanteNoeud().getRow();
+        int col = initial.getComposanteNoeud().getCol();
+
+        boolean finished = false;
+
+        switch (dir) {
+            case "N":
+                dir = "S";
+                row--;
+                break;
+            case "E":
+                dir = "O";
+                col++;
+                break;
+            case "S":
+                dir = "N";
+                row++;
+                break;
+            case "O":
+                dir = "E";
+                col--;
+                break;
+        }
+
+            while (!finished) {
+
+                Composante composante = ((Composante) SandboxController.getNodeFromGridPane(SandboxController.gridPaneSandBox, col, row));
+
+                switch (dir.toUpperCase()) {
+                    case "N":
+                        switch (composante.getTabNomVariante()[composante.getDirection()]) {
+                            case "NS":
+                            case "SN":
+                                composante.setSensCourant("↓");
+                                dir = "N";
+                                row++;
+                                break;
+                            case "NE":
+                                composante.setSensCourant("→");
+                                dir = "O";
+                                col--;
+                                break;
+                            case "NO":
+                                composante.setSensCourant("←");
+                                dir = "E";
+                                col++;
+                                break;
+                            default:
+                                composante.setSensCourant("∅");
+                                finished = true;
+                                break;
+                        }
+                        break;
+                    case "E":
+                        switch (composante.getTabNomVariante()[composante.getDirection()]) {
+                            case "NE":
+                                composante.setSensCourant("↑");
+                                dir = "S";
+                                row--;
+                                break;
+                            case "SE":
+                                composante.setSensCourant("↓");
+                                dir = "N";
+                                row++;
+                                break;
+                            case "OE":
+                            case "EO":
+                                composante.setSensCourant("←");
+                                dir = "E";
+                                col++;
+                                break;
+                            default:
+                                composante.setSensCourant("∅");
+                                finished = true;
+                                break;
+                        }
+                        break;
+                    case "S":
+                        switch (composante.getTabNomVariante()[composante.getDirection()]) {
+                            case "NS":
+                            case "SN":
+                                composante.setSensCourant("↑");
+                                dir = "S";
+                                row--;
+                                break;
+                            case "SE":
+                                composante.setSensCourant("→");
+                                dir = "O";
+                                col--;
+                                break;
+                            case "SO":
+                                composante.setSensCourant("←");
+                                dir = "E";
+                                col++;
+                                break;
+                            default:
+                                composante.setSensCourant("∅");
+                                finished = true;
+                                break;
+                        }
+                        break;
+                    case "O":
+                        switch (composante.getTabNomVariante()[composante.getDirection()]) {
+                            case "NO":
+                                composante.setSensCourant("↑");
+                                dir = "S";
+                                row--;
+                                break;
+                            case "SO":
+                                composante.setSensCourant("↓");
+                                dir = "N";
+                                row++;
+                                break;
+                            case "OE":
+                            case "EO":
+                                composante.setSensCourant("→");
+                                dir = "O";
+                                col--;
+                                break;
+                            default:
+                                composante.setSensCourant("∅");
+                                finished = true;
+                                break;
+                        }
+                        break;
+                }
+            }
+
     }
 
     private void reloadTooltip() {
@@ -451,14 +628,13 @@ public class Circuit {
         }
     }
 
-
     private void updateNoeudsDirectionnels() {
         for (int i = 0; i < this.getBranches().size(); i++) {
             this.getBranches().get(i).setNoeudDirectionnel(this.getBranches().get(i).getNoeudsAdjacents().get(0));
         }
     }
 
-    private String switchSensCourant(String dir, Composante composante) {
+    private String switchSensCourantSerie(String dir, Composante composante) {
         switch (dir.toUpperCase()) {
             case "N":
                 switch (composante.getTabNomVariante()[composante.getDirection()]) {

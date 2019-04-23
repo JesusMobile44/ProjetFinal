@@ -24,7 +24,7 @@ public class GuideController {
 
     public ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) -> {
         image1.fitWidthProperty().bind(Main.getStage().widthProperty());
-        image1.setFitHeight(image2.getFitWidth() / 6);
+        image1.setFitHeight(image1.getFitWidth() / 6);
         image2.fitWidthProperty().bind(Main.getStage().widthProperty());
         image2.setFitHeight(image2.getFitWidth() / 6);
         formule.fitWidthProperty().bind(Main.getStage().widthProperty());
@@ -127,12 +127,16 @@ public class GuideController {
 
         Main.getStage().widthProperty().addListener(stageSizeListener);
         Main.getStage().heightProperty().addListener(stageSizeListener);
+
+        Main.getStage().setMinHeight(650);
+        Main.getStage().setMinWidth(650);
     }
 
     public void unbind() {
         Main.getStage().maxHeightProperty().unbind();
         Main.getStage().minHeightProperty().unbind();
-        Main.getStage().minHeightProperty().setValue(100);
+        Main.getStage().setMinHeight(650);
+        Main.getStage().setMinWidth(650);
         Main.getStage().maxHeightProperty().setValue(Double.MAX_VALUE);
     }
 

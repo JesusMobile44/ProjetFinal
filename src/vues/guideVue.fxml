@@ -17,7 +17,7 @@
         <MenuBar BorderPane.alignment="CENTER">
             <Menu mnemonicParsing="false" text="Changer De Mode">
                 <MenuItem mnemonicParsing="false" onAction="#setMenu" text="Menu" />
-                <MenuItem mnemonicParsing="false" onAction="#setSandbox" text="Mode Sandbox" />
+                <MenuItem mnemonicParsing="false" onAction="#setSandbox" text="Simulateur" />
             </Menu>
         </MenuBar>
     </top>

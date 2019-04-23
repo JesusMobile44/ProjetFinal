@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 public class SandboxController {
 
-    private static GridPane gridPaneSandBox = new GridPane();
+    public static GridPane gridPaneSandBox = new GridPane();
     private static Button backButtonStatic = new Button();
     private static FlowPane rootScrollPane = new FlowPane();
     public static DecimalFormat df = new DecimalFormat("#.##");
@@ -293,8 +293,8 @@ public class SandboxController {
     }
 
     public void setGuide() {
-        Main.getStage().maxHeightProperty().bind(Main.getStage().widthProperty().multiply(1500/1920));
-        Main.getStage().minHeightProperty().bind(Main.getStage().widthProperty().multiply(1920/1080));
+        Main.getStage().maxHeightProperty().bind(Main.getStage().widthProperty().multiply(1500 / 1920));
+        Main.getStage().minHeightProperty().bind(Main.getStage().widthProperty().multiply(1920 / 1080));
         Main.changerDeMode(2);
     }
 
@@ -305,7 +305,7 @@ public class SandboxController {
                 gridPaneSandBox.getChildren().remove(getNodeFromGridPane(gridPaneSandBox, i, j));
                 creerComposanteVide(i, j);
             }
-                updateCircuit();
+        updateCircuit();
 
     }
 
@@ -341,7 +341,7 @@ public class SandboxController {
             source.getTooltip().setText(source.getNom() + " (" + source.getCol() + "," + source.getRow() + ")\nIntensité: " + df.format(source.getAmperage()) + "\nTension: " + df.format(source.getVolt()) + "\nRésistance: " + df.format(source.getResistance()));
             ContextMenu contextMenu = new ContextMenu();
             MenuItem itemSupprimer = new MenuItem("Supprimer");
-            if (!source.getNom().toUpperCase().equals("SWITCH")&&!source.getNom().toUpperCase().equals("INTERRUPTEUR")) {
+            if (!source.getNom().toUpperCase().equals("SWITCH") && !source.getNom().toUpperCase().equals("INTERRUPTEUR")) {
                 Menu menuVariante = new Menu("Variantes");
                 MenuItem[] itemVariante = new MenuItem[source.getTabNomVariante().length];
 
@@ -393,7 +393,7 @@ public class SandboxController {
                 case "INTERRUPTEUR":
                     MenuItem itemSwitch = new MenuItem("ON/OFF");
                     itemSwitch.setOnAction(event -> {
-                        switch (source.getDirection()){
+                        switch (source.getDirection()) {
                             case 0:
                                 source.setDirection(1);
                                 source.setImage(source.getTabVariante()[1]);
@@ -418,7 +418,7 @@ public class SandboxController {
                 case "SWITCH":
                     MenuItem itemONOFF = new MenuItem("Switch");
                     itemONOFF.setOnAction(event -> {
-                        switch (source.getDirection()){
+                        switch (source.getDirection()) {
                             case 0:
                                 source.setDirection(1);
                                 source.setImage(source.getTabVariante()[1]);
@@ -467,7 +467,7 @@ public class SandboxController {
         gridPaneSandBox.add(source, i, j);
     }
 
-    public static void supprimer(Composante source){
+    public static void supprimer(Composante source) {
         gridPaneSandBox.getChildren().remove(source);
         ComposanteVide vide = new ComposanteVide();
         vide.fitHeightProperty().set(100);
@@ -582,47 +582,47 @@ public class SandboxController {
         }
     }
 
-    public static void copierComposante(Composante source, Composante target){
+    public static void copierComposante(Composante source, Composante target) {
         Composante copie = null;
         switch (source.getNom().toUpperCase()) {
             case "FIL":
-                copie = new Fil(new ComposanteSave(source),target.getRow(),target.getCol());
+                copie = new Fil(new ComposanteSave(source), target.getRow(), target.getCol());
                 break;
             case "AMPÈREMÈTRE":
-                copie = new Amperemetre(new ComposanteSave(source),target.getRow(),target.getCol());
+                copie = new Amperemetre(new ComposanteSave(source), target.getRow(), target.getCol());
                 break;
             case "AMPOULE":
-                copie = new Ampoule(new ComposanteSave(source),target.getRow(),target.getCol());
+                copie = new Ampoule(new ComposanteSave(source), target.getRow(), target.getCol());
                 break;
             case "SOURCE":
-                copie = new Source(new ComposanteSave(source),target.getRow(),target.getCol());
+                copie = new Source(new ComposanteSave(source), target.getRow(), target.getCol());
                 break;
             case "DIODE":
-                copie = new Diode(new ComposanteSave(source),target.getRow(),target.getCol());
+                copie = new Diode(new ComposanteSave(source), target.getRow(), target.getCol());
                 break;
             case "FUSIBLE":
-                copie = new Fusible(new ComposanteSave(source),target.getRow(),target.getCol());
+                copie = new Fusible(new ComposanteSave(source), target.getRow(), target.getCol());
                 break;
             case "INTERRUPTEUR":
-                copie = new Interrupteur(new ComposanteSave(source),target.getRow(),target.getCol());
+                copie = new Interrupteur(new ComposanteSave(source), target.getRow(), target.getCol());
                 break;
             case "MISE À TERRE":
-                copie = new MiseAterre(new ComposanteSave(source),target.getRow(),target.getCol());
+                copie = new MiseAterre(new ComposanteSave(source), target.getRow(), target.getCol());
                 break;
             case "OHMÈTRE":
-                copie = new Ohmetre(new ComposanteSave(source),target.getRow(),target.getCol());
+                copie = new Ohmetre(new ComposanteSave(source), target.getRow(), target.getCol());
                 break;
             case "RESISTEUR":
-                copie = new Resisteur(new ComposanteSave(source),target.getRow(),target.getCol());
+                copie = new Resisteur(new ComposanteSave(source), target.getRow(), target.getCol());
                 break;
             case "VOLTMÈTRE":
-                copie = new Voltmetre(new ComposanteSave(source),target.getRow(),target.getCol());
+                copie = new Voltmetre(new ComposanteSave(source), target.getRow(), target.getCol());
                 break;
             case "SWITCH":
-                copie = new Switch(new ComposanteSave(source),target.getRow(),target.getCol());
+                copie = new Switch(new ComposanteSave(source), target.getRow(), target.getCol());
                 break;
             case "HAUT-PARLEUR":
-                copie = new HautParleur(new ComposanteSave(source),target.getRow(),target.getCol());
+                copie = new HautParleur(new ComposanteSave(source), target.getRow(), target.getCol());
                 break;
             case "MOTEUR":
                 copie = new Moteur();
@@ -651,29 +651,29 @@ public class SandboxController {
         boolean debutFound = true;
 
         for (int i = 0; i < 20; i++)
-                for (int j = 0; j < 20; j++){
+            for (int j = 0; j < 20; j++) {
 
-                    Composante debut = ((Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
+                Composante debut = ((Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
 
-                    if (debut.getNom().toUpperCase().equals("SOURCE") ) {
+                if (debut.getNom().toUpperCase().equals("SOURCE")) {
 
-                        for (int k = 0; k < circuits.size(); k++) {
-                            for (int l = 0; l < circuits.get(k).getSources().size(); l++) {
-                                if (debut.getRow() == circuits.get(k).getSources().get(l).getRow() && debut.getCol() == circuits.get(k).getSources().get(l).getCol()) {
-                                    debutFound = false;
-                                }
+                    for (int k = 0; k < circuits.size(); k++) {
+                        for (int l = 0; l < circuits.get(k).getSources().size(); l++) {
+                            if (debut.getRow() == circuits.get(k).getSources().get(l).getRow() && debut.getCol() == circuits.get(k).getSources().get(l).getCol()) {
+                                debutFound = false;
                             }
                         }
+                    }
 
-                        if (debutFound) {
-                            Circuit newCircuit = new Circuit();
-                            newCircuit.getComposantes().add(debut);
-                            newCircuit.getSources().add((Source)debut);
-                            newCircuit.setEnSerie(true);
-                            circuits.add(newCircuit);
-                        }
+                    if (debutFound) {
+                        Circuit newCircuit = new Circuit();
+                        newCircuit.getComposantes().add(debut);
+                        newCircuit.getSources().add((Source) debut);
+                        newCircuit.setEnSerie(true);
+                        circuits.add(newCircuit);
                     }
                 }
+            }
 
 
                 /*
@@ -686,7 +686,7 @@ public class SandboxController {
         */
 
 
-        for (int z=0; z < circuits.size(); z++) {
+        for (int z = 0; z < circuits.size(); z++) {
 
 
             boolean enDouble = false;
@@ -714,7 +714,7 @@ public class SandboxController {
                     creerSerie(z);
                 }
                 if (!circuits.get(z).isEnSerie()) {
-                    for (int j=0; j<circuits.get(z).getNoeuds().size(); j++){
+                    for (int j = 0; j < circuits.get(z).getNoeuds().size(); j++) {
                         circuits.get(z).getNoeuds().get(j).resetBranchesAnalysees();
                     }
                     Noeud initial = circuits.get(z).getNoeuds().get(0);
@@ -723,7 +723,7 @@ public class SandboxController {
                     circuit1.setIncomplet(false);
 
                     circuits.add(z, circuit1);
-                    circuits.remove(z+1);
+                    circuits.remove(z + 1);
 
                     creerNoeuds(initial, z);
                     if (!circuits.get(z).isIncomplet()) {
@@ -731,7 +731,6 @@ public class SandboxController {
                         creerMailles(z);
                     }
                 }
-
 
                 remplirCircuit(z);
 
@@ -741,7 +740,7 @@ public class SandboxController {
                         if (circuits.get(z).getComposantes().get(i).getNom().toUpperCase().equals("HAUT-PARLEUR") || circuits.get(z).getComposantes().get(i).getNom().toUpperCase().equals("AMPOULE")) {
                             boolean unique = true;
                             for (Composante composante : composantes)
-                                if (circuits.get(z).getComposantes().get(i) == composante)
+                                if (circuits.get(z).getComposantes().get(i).getCol() == composante.getCol() && circuits.get(z).getComposantes().get(i).getRow() == composante.getRow())
                                     unique = false;
                             if (unique)
                                 composantes.add(circuits.get(z).getComposantes().get(i));
@@ -815,7 +814,6 @@ public class SandboxController {
             mailleTemporaire.getBranchesMaille().add(circuits.get(numeroDeCircuit).getBranches().get(i));
             int monoBranche = 0;
 
-            //
             for (int k = 0; k < noeudTemporaire.getBranchesAdjacentes().size(); k++) {
                 if (noeudTemporaire.getBranchesAdjacentes().get(k) == brancheTemporaire) {
                     monoBranche++;
@@ -1229,7 +1227,6 @@ public class SandboxController {
 
                                 changerDirectionsAnalysees(rencontre, dir);
 
-
                             } else {
                                 System.out.println("Nouveau noeud!");
                                 Noeud tempo = new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row));
@@ -1246,7 +1243,8 @@ public class SandboxController {
                         actuel.getDirectionsAnalysees()[j] = true;
 
                     } else {
-                        circuits.get(numeroDeCircuit).setIncomplet(true);
+                        //circuits.get(numeroDeCircuit).setIncomplet(true);
+                        actuel.getDirectionsAnalysees()[j] = true;
                     }
                 }
             }
@@ -1255,36 +1253,36 @@ public class SandboxController {
     }
 
     private static void changerDirectionsAnalysees(Noeud noeud, String dir) {
-            switch (dir) {
-                case "up":
-                    for (int k = 0; k < noeud.getDirections().length; k++) {
-                        if (noeud.getDirections()[k].equals("S")) {
-                            noeud.getDirectionsAnalysees()[k] = true;
-                        }
+        switch (dir) {
+            case "up":
+                for (int k = 0; k < noeud.getDirections().length; k++) {
+                    if (noeud.getDirections()[k].equals("S")) {
+                        noeud.getDirectionsAnalysees()[k] = true;
                     }
-                    break;
-                case "down":
-                    for (int k = 0; k < noeud.getDirections().length; k++) {
-                        if (noeud.getDirections()[k].equals("N")) {
-                            noeud.getDirectionsAnalysees()[k] = true;
-                        }
+                }
+                break;
+            case "down":
+                for (int k = 0; k < noeud.getDirections().length; k++) {
+                    if (noeud.getDirections()[k].equals("N")) {
+                        noeud.getDirectionsAnalysees()[k] = true;
                     }
-                    break;
-                case "left":
-                    for (int k = 0; k < noeud.getDirections().length; k++) {
-                        if (noeud.getDirections()[k].equals("E")) {
-                            noeud.getDirectionsAnalysees()[k] = true;
-                        }
+                }
+                break;
+            case "left":
+                for (int k = 0; k < noeud.getDirections().length; k++) {
+                    if (noeud.getDirections()[k].equals("E")) {
+                        noeud.getDirectionsAnalysees()[k] = true;
                     }
-                    break;
-                case "right":
-                    for (int k = 0; k < noeud.getDirections().length; k++) {
-                        if (noeud.getDirections()[k].equals("O")) {
-                            noeud.getDirectionsAnalysees()[k] = true;
-                        }
+                }
+                break;
+            case "right":
+                for (int k = 0; k < noeud.getDirections().length; k++) {
+                    if (noeud.getDirections()[k].equals("O")) {
+                        noeud.getDirectionsAnalysees()[k] = true;
                     }
-                    break;
-            }
+                }
+                break;
+        }
     }
 
     private static void creerBranches(int numeroDeCircuit) {
@@ -1307,6 +1305,7 @@ public class SandboxController {
                 int col = actuel.getComposanteNoeud().getCol();
                 String dir = null;
                 ArrayList<Source> sourcesSeules = new ArrayList<>();
+                ArrayList<Diode> diodesSeules = new ArrayList<>();
 
                 if (!actuel.getDirectionsAnalysees()[j]) {
 
@@ -1338,298 +1337,45 @@ public class SandboxController {
 
                         Composante debug = ((Composante) getNodeFromGridPane(gridPaneSandBox, col, row));
 
-                        if (debug != null) {
+                        //if (debug != null) {
 
-                            if (!finished && !error) {
-                                brancheTemporaire.getComposantesBranche().add((Composante) getNodeFromGridPane(gridPaneSandBox, col, row));
+                        if (!finished && !error) {
+                            brancheTemporaire.getComposantesBranche().add((Composante) getNodeFromGridPane(gridPaneSandBox, col, row));
 
-                                if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("SOURCE")) {
-                                    brancheTemporaire.getSources().add(((Source) getNodeFromGridPane(gridPaneSandBox, col, row)));
-                                }
-                                if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("RESISTEUR")) {
-                                    brancheTemporaire.getResisteurs().add(((Resisteur) getNodeFromGridPane(gridPaneSandBox, col, row)));
-                                }
+                            if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Source) {
+                                brancheTemporaire.getSources().add(((Source) getNodeFromGridPane(gridPaneSandBox, col, row)));
                             }
-
-
-                            switch (dir) {
-                                case "up":
-                                    switch (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getTabNomVariante()[((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getDirection()]) {
-                                        case "NS":
-                                            if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("SOURCE")) {
-                                                ((Source) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeudDirectionnel(actuel);
-                                            }
-                                            dir = "up";
-                                            row--;
-                                            break;
-                                        case "SN":
-                                            if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("SOURCE")) {
-                                                sourcesSeules.add((Source) getNodeFromGridPane(gridPaneSandBox, col, row));
-                                            }
-                                            dir = "up";
-                                            row--;
-                                            break;
-                                        case "SE":
-                                            dir = "right";
-                                            col++;
-                                            break;
-                                        case "SO":
-                                            dir = "left";
-                                            col--;
-                                            break;
-                                        case "NSE":
-                                            finished = true;
-                                            break;
-                                        case "NSO":
-                                            finished = true;
-                                            break;
-                                        case "SOE":
-                                            finished = true;
-                                            break;
-                                        case "NSEO":
-                                            finished = true;
-                                            break;
-                                        default:
-                                            error = true;
-                                            break;
-                                    }
-                                    break;
-                                case "right":
-                                    switch (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getTabNomVariante()[((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getDirection()]) {
-                                        case "NO":
-                                            dir = "up";
-                                            row--;
-                                            break;
-                                        case "SO":
-                                            dir = "down";
-                                            row++;
-                                            break;
-                                        case "OE":
-                                            if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("SOURCE")) {
-                                                sourcesSeules.add((Source) getNodeFromGridPane(gridPaneSandBox, col, row));
-                                            }
-                                            dir = "right";
-                                            col++;
-                                            break;
-                                        case "EO":
-                                            if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("SOURCE")) {
-                                                ((Source) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeudDirectionnel(actuel);
-                                            }
-                                            dir = "right";
-                                            col++;
-                                            break;
-                                        case "NSO":
-                                            finished = true;
-                                            break;
-                                        case "SOE":
-                                            finished = true;
-                                            break;
-                                        case "NEO":
-                                            finished = true;
-                                            break;
-                                        case "NSEO":
-                                            finished = true;
-                                            break;
-                                        default:
-                                            error = true;
-                                            break;
-                                    }
-                                    break;
-                                case "down":
-                                    switch (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getTabNomVariante()[((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getDirection()]) {
-                                        case "NS":
-                                            if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("SOURCE")) {
-                                                sourcesSeules.add((Source) getNodeFromGridPane(gridPaneSandBox, col, row));
-                                            }
-                                            dir = "down";
-                                            row++;
-                                            break;
-                                        case "SN":
-                                            if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("SOURCE")) {
-                                                ((Source) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeudDirectionnel(actuel);
-                                            }
-                                            dir = "down";
-                                            row++;
-                                            break;
-                                        case "NE":
-                                            dir = "right";
-                                            col++;
-                                            break;
-                                        case "NO":
-                                            dir = "left";
-                                            col--;
-                                            break;
-                                        case "NSE":
-                                            finished = true;
-                                            break;
-                                        case "NSO":
-                                            finished = true;
-                                            break;
-                                        case "NEO":
-                                            finished = true;
-                                            break;
-                                        case "NSEO":
-                                            finished = true;
-                                            break;
-                                        default:
-                                            error = true;
-                                            break;
-                                    }
-                                    break;
-                                case "left":
-                                    switch (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getTabNomVariante()[((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getDirection()]) {
-                                        case "NE":
-                                            dir = "up";
-                                            row--;
-                                            break;
-                                        case "SE":
-                                            dir = "down";
-                                            row++;
-                                            break;
-                                        case "OE":
-                                            if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("SOURCE")) {
-                                                ((Source) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeudDirectionnel(actuel);
-                                            }
-                                            dir = "left";
-                                            col--;
-                                            break;
-                                        case "EO":
-                                            if (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getNom().toUpperCase().equals("SOURCE")) {
-                                                sourcesSeules.add((Source) getNodeFromGridPane(gridPaneSandBox, col, row));
-                                            }
-                                            dir = "left";
-                                            col--;
-                                            break;
-                                        case "NSE":
-                                            finished = true;
-                                            break;
-                                        case "SOE":
-                                            finished = true;
-                                            break;
-                                        case "NEO":
-                                            finished = true;
-                                            break;
-                                        case "NSEO":
-                                            finished = true;
-                                            break;
-                                        default:
-                                            error = true;
-                                            break;
-                                    }
-
-                                    break;
-
+                            if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Resisteur) {
+                                brancheTemporaire.getResisteurs().add(((Resisteur) getNodeFromGridPane(gridPaneSandBox, col, row)));
                             }
-
-                            if (finished) {
-                                brancheTemporaire.getComposantesBranche().remove(brancheTemporaire.getComposantesBranche().size() - 1);
-                                actuel.getBranchesAdjacentes().add(brancheTemporaire);
-                                brancheTemporaire.getNoeudsAdjacents().add(actuel);
-                            }
-
-                        } else {
-                            error = true;
-                        }
-                    }
-
-                    if (!error) {
-
-                        System.out.println("Branche créée!");
-                        System.out.println(" ");
-
-                        Noeud tempo = null;
-
-                        for (int k = 0; k < circuits.get(numeroDeCircuit).getNoeuds().size(); k++) {
-                            if (getNodeFromGridPane(gridPaneSandBox, col, row) == circuits.get(numeroDeCircuit).getNoeuds().get(k).getComposanteNoeud()) {
-                                tempo = circuits.get(numeroDeCircuit).getNoeuds().get(k);
-                                circuits.get(numeroDeCircuit).getNoeuds().get(k).getBranchesAdjacentes().add(brancheTemporaire);
-                                brancheTemporaire.getNoeudsAdjacents().add(circuits.get(numeroDeCircuit).getNoeuds().get(k));
-                                for (Source source : sourcesSeules) {
-                                    source.setNoeudDirectionnel(tempo);
-                                }
+                            if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Diode) {
+                                brancheTemporaire.getDiodes().add(((Diode) getNodeFromGridPane(gridPaneSandBox, col, row)));
                             }
                         }
 
-                        sourcesSeules.clear();
-                        changerDirectionsAnalysees(tempo, dir);
-                        circuits.get(numeroDeCircuit).getBranches().add(brancheTemporaire);
-                        actuel.getDirectionsAnalysees()[j] = true;
-                    }
 
-                }
-            }
-        }
-        System.out.println(" ");
-    }
-
-    private static void creerSerie(int numeroDeCircuit) {
-
-        Composante composanteInitiale = circuits.get(numeroDeCircuit).getSources().get(0);
-        circuits.get(numeroDeCircuit).getSources().clear();
-        circuits.get(numeroDeCircuit).getComposantes().clear();
-        Branche brancheTemporaire = new Branche();
-
-        brancheTemporaire.getComposantesBranche().add(composanteInitiale);
-        brancheTemporaire.getSources().add((Source) composanteInitiale);
-
-
-            int row = composanteInitiale.getRow();
-            int col = composanteInitiale.getCol();
-            String dir = null;
-            boolean finished = false;
-            boolean error = false;
-
-            switch (composanteInitiale.getDirection()) {
-                case 0:
-                    dir = "up";
-                    row--;
-                    break;
-                case 1:
-                    dir = "right";
-                    col++;
-                    break;
-                case 2:
-                    dir = "down";
-                    row++;
-                    break;
-                case 3:
-                    dir = "left";
-                    col--;
-                    break;
-            }
-
-
-            while (!finished && !error) {
-                if (getNodeFromGridPane(gridPaneSandBox, col, row) != composanteInitiale) {
-                    Composante debug = ((Composante) (getNodeFromGridPane(gridPaneSandBox, col, row)));
-
-                    if (debug != null) {
-                        brancheTemporaire.getComposantesBranche().add((Composante) (getNodeFromGridPane(gridPaneSandBox, col, row)));
-
-                        //Check si cest une source
-                        if (((Composante) (getNodeFromGridPane(gridPaneSandBox, col, row))).getNom().toUpperCase().equals("SOURCE")) {
-                            brancheTemporaire.getSources().add(((Source) (getNodeFromGridPane(gridPaneSandBox, col, row))));
-                        }
-
-                        //Check si c'est un résisteur
-                        if (((Composante) (getNodeFromGridPane(gridPaneSandBox, col, row))).getNom().toUpperCase().equals("RESISTEUR")) {
-                            brancheTemporaire.getResisteurs().add(((Resisteur) (getNodeFromGridPane(gridPaneSandBox, col, row))));
-                        }
-
-                        //Cherche si la composante suivante est rattachée à la précédente et check la prochaine direction
                         switch (dir) {
                             case "up":
                                 switch (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getTabNomVariante()[((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getDirection()]) {
                                     case "NS":
+                                        if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Source) {
+                                            ((Source) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeudDirectionnel(actuel);
+                                        }
+                                        if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Diode) {
+                                            ((Diode) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeudDirectionnel(actuel);
+                                        }
                                         dir = "up";
                                         row--;
                                         break;
                                     case "SN":
+                                        if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Source) {
+                                            sourcesSeules.add((Source) getNodeFromGridPane(gridPaneSandBox, col, row));
+                                        }
+                                        if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Diode) {
+                                            diodesSeules.add((Diode) getNodeFromGridPane(gridPaneSandBox, col, row));
+                                        }
                                         dir = "up";
                                         row--;
-                                        if (debug instanceof Source){
-                                            ((Source) debug).setInverseEnSerie(true);
-                                        }
                                         break;
                                     case "SE":
                                         dir = "right";
@@ -1640,27 +1386,15 @@ public class SandboxController {
                                         col--;
                                         break;
                                     case "NSE":
-                                        circuits.get(numeroDeCircuit).setEnSerie(false);
-                                        ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
-                                        circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
                                         finished = true;
                                         break;
                                     case "NSO":
-                                        circuits.get(numeroDeCircuit).setEnSerie(false);
-                                        ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
-                                        circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
                                         finished = true;
                                         break;
                                     case "SOE":
-                                        circuits.get(numeroDeCircuit).setEnSerie(false);
-                                        ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
-                                        circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
                                         finished = true;
                                         break;
                                     case "NSEO":
-                                        circuits.get(numeroDeCircuit).setEnSerie(false);
-                                        ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
-                                        circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
                                         finished = true;
                                         break;
                                     default:
@@ -1679,38 +1413,35 @@ public class SandboxController {
                                         row++;
                                         break;
                                     case "OE":
+                                        if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Source) {
+                                            ((Source) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeudDirectionnel(actuel);
+                                        }
+                                        if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Diode) {
+                                            ((Diode) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeudDirectionnel(actuel);
+                                        }
                                         dir = "right";
                                         col++;
                                         break;
                                     case "EO":
+                                        if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Source) {
+                                            sourcesSeules.add((Source) getNodeFromGridPane(gridPaneSandBox, col, row));
+                                        }
+                                        if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Diode) {
+                                            diodesSeules.add((Diode) getNodeFromGridPane(gridPaneSandBox, col, row));
+                                        }
                                         dir = "right";
                                         col++;
-                                        if (debug instanceof Source){
-                                            ((Source) debug).setInverseEnSerie(true);
-                                        }
                                         break;
                                     case "NSO":
-                                        circuits.get(numeroDeCircuit).setEnSerie(false);
-                                        ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
-                                        circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
                                         finished = true;
                                         break;
                                     case "SOE":
-                                        circuits.get(numeroDeCircuit).setEnSerie(false);
-                                        ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
-                                        circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
                                         finished = true;
                                         break;
                                     case "NEO":
-                                        circuits.get(numeroDeCircuit).setEnSerie(false);
-                                        ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
-                                        circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
                                         finished = true;
                                         break;
                                     case "NSEO":
-                                        circuits.get(numeroDeCircuit).setEnSerie(false);
-                                        ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
-                                        circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
                                         finished = true;
                                         break;
                                     default:
@@ -1721,13 +1452,22 @@ public class SandboxController {
                             case "down":
                                 switch (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getTabNomVariante()[((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getDirection()]) {
                                     case "NS":
+                                        if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Source) {
+                                            sourcesSeules.add((Source) getNodeFromGridPane(gridPaneSandBox, col, row));
+                                        }
+                                        if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Diode) {
+                                            diodesSeules.add((Diode) getNodeFromGridPane(gridPaneSandBox, col, row));
+                                        }
                                         dir = "down";
                                         row++;
-                                        if (debug instanceof Source){
-                                            ((Source) debug).setInverseEnSerie(true);
-                                        }
                                         break;
                                     case "SN":
+                                        if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Source) {
+                                            ((Source) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeudDirectionnel(actuel);
+                                        }
+                                        if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Diode) {
+                                            ((Diode) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeudDirectionnel(actuel);
+                                        }
                                         dir = "down";
                                         row++;
                                         break;
@@ -1740,27 +1480,15 @@ public class SandboxController {
                                         col--;
                                         break;
                                     case "NSE":
-                                        circuits.get(numeroDeCircuit).setEnSerie(false);
-                                        ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
-                                        circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
                                         finished = true;
                                         break;
                                     case "NSO":
-                                        circuits.get(numeroDeCircuit).setEnSerie(false);
-                                        ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
-                                        circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
                                         finished = true;
                                         break;
                                     case "NEO":
-                                        circuits.get(numeroDeCircuit).setEnSerie(false);
-                                        ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
-                                        circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
                                         finished = true;
                                         break;
                                     case "NSEO":
-                                        circuits.get(numeroDeCircuit).setEnSerie(false);
-                                        ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
-                                        circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
                                         finished = true;
                                         break;
                                     default:
@@ -1777,71 +1505,431 @@ public class SandboxController {
                                     case "SE":
                                         dir = "down";
                                         row++;
-                                        System.out.println("fil down");
                                         break;
                                     case "OE":
+                                        if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Source) {
+                                            sourcesSeules.add((Source) getNodeFromGridPane(gridPaneSandBox, col, row));
+                                        }
+                                        if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Diode) {
+                                            diodesSeules.add((Diode) getNodeFromGridPane(gridPaneSandBox, col, row));
+                                        }
                                         dir = "left";
                                         col--;
-                                        if (debug instanceof Source){
-                                            ((Source) debug).setInverseEnSerie(true);
-                                        }
                                         break;
                                     case "EO":
+                                        if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Source) {
+                                            ((Source) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeudDirectionnel(actuel);
+                                        }
+                                        if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Diode) {
+                                            ((Diode) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeudDirectionnel(actuel);
+                                        }
                                         dir = "left";
                                         col--;
                                         break;
                                     case "NSE":
-                                        circuits.get(numeroDeCircuit).setEnSerie(false);
-                                        ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
-                                        circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
                                         finished = true;
                                         break;
                                     case "SOE":
-                                        circuits.get(numeroDeCircuit).setEnSerie(false);
-                                        ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
-                                        circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
                                         finished = true;
                                         break;
                                     case "NEO":
-                                        circuits.get(numeroDeCircuit).setEnSerie(false);
-                                        ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
-                                        circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
                                         finished = true;
                                         break;
                                     case "NSEO":
-                                        circuits.get(numeroDeCircuit).setEnSerie(false);
-                                        ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
-                                        circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
                                         finished = true;
                                         break;
                                     default:
                                         error = true;
                                         break;
                                 }
+
                                 break;
+
                         }
-                    } else {
-                        error = true;
+
+                        if (finished) {
+                            brancheTemporaire.getComposantesBranche().remove(brancheTemporaire.getComposantesBranche().size() - 1);
+                            actuel.getBranchesAdjacentes().add(brancheTemporaire);
+                            brancheTemporaire.getNoeudsAdjacents().add(actuel);
+                        }
+                        /*
+                        } else {
+                            error = true;
+                        }
+                        */
                     }
-                } else {
-                    finished = true;
+
+                    if (!error) {
+
+                        System.out.println("Branche créée!");
+                        System.out.println(" ");
+
+                        Noeud tempo = null;
+
+                        for (int k = 0; k < circuits.get(numeroDeCircuit).getNoeuds().size(); k++) {
+                            if (getNodeFromGridPane(gridPaneSandBox, col, row) == circuits.get(numeroDeCircuit).getNoeuds().get(k).getComposanteNoeud()) {
+                                tempo = circuits.get(numeroDeCircuit).getNoeuds().get(k);
+                                circuits.get(numeroDeCircuit).getNoeuds().get(k).getBranchesAdjacentes().add(brancheTemporaire);
+                                brancheTemporaire.getNoeudsAdjacents().add(circuits.get(numeroDeCircuit).getNoeuds().get(k));
+                                for (Source source : sourcesSeules) {
+                                    source.setNoeudDirectionnel(tempo);
+                                }
+                                for (Diode diode : diodesSeules) {
+                                    diode.setNoeudDirectionnel(tempo);
+                                }
+                            }
+                        }
+
+                        sourcesSeules.clear();
+                        changerDirectionsAnalysees(tempo, dir);
+                        circuits.get(numeroDeCircuit).getBranches().add(brancheTemporaire);
+                        actuel.getDirectionsAnalysees()[j] = true;
+                    }
                 }
             }
-            if (!error) {
-                circuits.get(numeroDeCircuit).getBranches().add(brancheTemporaire);
-                circuits.get(numeroDeCircuit).setIncomplet(false);
-                System.out.println("Added");
+        }
+        arrangerBranchesAdjacentes(numeroDeCircuit);
+        System.out.println(" ");
+    }
+
+    private static void arrangerBranchesAdjacentes(int numeroDeCircuit) {
+        for (int i = 0; i < circuits.get(numeroDeCircuit).getNoeuds().size(); i++) {
+            ArrayList<Branche> listeTemp = new ArrayList<>();
+            listeTemp.addAll(circuits.get(numeroDeCircuit).getNoeuds().get(i).getBranchesAdjacentes());
+            circuits.get(numeroDeCircuit).getNoeuds().get(i).getBranchesAdjacentes().clear();
+
+            for (int j = 0; j < circuits.get(numeroDeCircuit).getNoeuds().get(i).getDirections().length; j++) {
+                String dir = circuits.get(numeroDeCircuit).getNoeuds().get(i).getDirections()[j];
+                int row = circuits.get(numeroDeCircuit).getNoeuds().get(i).getComposanteNoeud().getRow();
+                int col = circuits.get(numeroDeCircuit).getNoeuds().get(i).getComposanteNoeud().getCol();
+
+                switch (dir) {
+                    case "N":
+                        row--;
+                        break;
+                    case "E":
+                        col++;
+                        break;
+                    case "S":
+                        row++;
+                        break;
+                    case "O":
+                        col--;
+                        break;
+                }
+
+                boolean finished = false;
+
+                for (int k = 0; k < listeTemp.size() && !finished; k++) {
+                    for (int l = 0; l < listeTemp.get(k).getComposantesBranche().size() && !finished; l++) {
+                        Composante composante = ((Composante) SandboxController.getNodeFromGridPane(SandboxController.gridPaneSandBox, col, row));
+
+                        if (composante == listeTemp.get(k).getComposantesBranche().get(l)) {
+                            finished = true;
+                            circuits.get(numeroDeCircuit).getNoeuds().get(i).getBranchesAdjacentes().add(listeTemp.get(k));
+                        }
+                    }
+                }
             }
+        }
+    }
+
+    private static void creerSerie(int numeroDeCircuit) {
+
+        Composante composanteInitiale = circuits.get(numeroDeCircuit).getSources().get(0);
+        circuits.get(numeroDeCircuit).getSources().clear();
+        circuits.get(numeroDeCircuit).getComposantes().clear();
+        Branche brancheTemporaire = new Branche();
+
+        brancheTemporaire.getComposantesBranche().add(composanteInitiale);
+        brancheTemporaire.getSources().add((Source) composanteInitiale);
+
+
+        int row = composanteInitiale.getRow();
+        int col = composanteInitiale.getCol();
+        String dir = null;
+        boolean finished = false;
+        boolean error = false;
+
+        switch (composanteInitiale.getDirection()) {
+            case 0:
+                dir = "up";
+                row--;
+                break;
+            case 1:
+                dir = "right";
+                col++;
+                break;
+            case 2:
+                dir = "down";
+                row++;
+                break;
+            case 3:
+                dir = "left";
+                col--;
+                break;
+        }
+
+
+        while (!finished && !error) {
+            if (getNodeFromGridPane(gridPaneSandBox, col, row) != composanteInitiale) {
+                Composante debug = ((Composante) (getNodeFromGridPane(gridPaneSandBox, col, row)));
+
+                if (debug != null) {
+                    brancheTemporaire.getComposantesBranche().add((Composante) (getNodeFromGridPane(gridPaneSandBox, col, row)));
+
+                    //Check si cest une source
+                    if (((getNodeFromGridPane(gridPaneSandBox, col, row))) instanceof Source) {
+                        brancheTemporaire.getSources().add(((Source) (getNodeFromGridPane(gridPaneSandBox, col, row))));
+                    }
+
+                    //Check si c'est un résisteur
+                    if (((getNodeFromGridPane(gridPaneSandBox, col, row))) instanceof Resisteur) {
+                        brancheTemporaire.getResisteurs().add(((Resisteur) (getNodeFromGridPane(gridPaneSandBox, col, row))));
+                    }
+
+                    if (((getNodeFromGridPane(gridPaneSandBox, col, row))) instanceof Diode) {
+                        brancheTemporaire.getDiodes().add(((Diode) (getNodeFromGridPane(gridPaneSandBox, col, row))));
+                    }
+
+                    //Cherche si la composante suivante est rattachée à la précédente et check la prochaine direction
+                    switch (dir) {
+                        case "up":
+                            switch (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getTabNomVariante()[((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getDirection()]) {
+                                case "NS":
+                                    dir = "up";
+                                    row--;
+                                    break;
+                                case "SN":
+                                    dir = "up";
+                                    row--;
+                                    if (debug instanceof Source) {
+                                        ((Source) debug).setInverseEnSerie(true);
+                                    }
+                                    if (debug instanceof Diode) {
+                                        ((Diode) debug).setInverseEnSerie(true);
+                                    }
+                                    break;
+                                case "SE":
+                                    dir = "right";
+                                    col++;
+                                    break;
+                                case "SO":
+                                    dir = "left";
+                                    col--;
+                                    break;
+                                case "NSE":
+                                    circuits.get(numeroDeCircuit).setEnSerie(false);
+                                    ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
+                                    circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
+                                    finished = true;
+                                    break;
+                                case "NSO":
+                                    circuits.get(numeroDeCircuit).setEnSerie(false);
+                                    ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
+                                    circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
+                                    finished = true;
+                                    break;
+                                case "SOE":
+                                    circuits.get(numeroDeCircuit).setEnSerie(false);
+                                    ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
+                                    circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
+                                    finished = true;
+                                    break;
+                                case "NSEO":
+                                    circuits.get(numeroDeCircuit).setEnSerie(false);
+                                    ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
+                                    circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
+                                    finished = true;
+                                    break;
+                                default:
+                                    error = true;
+                                    break;
+                            }
+                            break;
+                        case "right":
+                            switch (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getTabNomVariante()[((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getDirection()]) {
+                                case "NO":
+                                    dir = "up";
+                                    row--;
+                                    break;
+                                case "SO":
+                                    dir = "down";
+                                    row++;
+                                    break;
+                                case "OE":
+                                    dir = "right";
+                                    col++;
+                                    break;
+                                case "EO":
+                                    dir = "right";
+                                    col++;
+                                    if (debug instanceof Source) {
+                                        ((Source) debug).setInverseEnSerie(true);
+                                    }
+                                    if (debug instanceof Diode) {
+                                        ((Diode) debug).setInverseEnSerie(true);
+                                    }
+                                    break;
+                                case "NSO":
+                                    circuits.get(numeroDeCircuit).setEnSerie(false);
+                                    ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
+                                    circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
+                                    finished = true;
+                                    break;
+                                case "SOE":
+                                    circuits.get(numeroDeCircuit).setEnSerie(false);
+                                    ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
+                                    circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
+                                    finished = true;
+                                    break;
+                                case "NEO":
+                                    circuits.get(numeroDeCircuit).setEnSerie(false);
+                                    ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
+                                    circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
+                                    finished = true;
+                                    break;
+                                case "NSEO":
+                                    circuits.get(numeroDeCircuit).setEnSerie(false);
+                                    ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
+                                    circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
+                                    finished = true;
+                                    break;
+                                default:
+                                    error = true;
+                                    break;
+                            }
+                            break;
+                        case "down":
+                            switch (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getTabNomVariante()[((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getDirection()]) {
+                                case "NS":
+                                    dir = "down";
+                                    row++;
+                                    if (debug instanceof Source) {
+                                        ((Source) debug).setInverseEnSerie(true);
+                                    }
+                                    if (debug instanceof Diode) {
+                                        ((Diode) debug).setInverseEnSerie(true);
+                                    }
+                                    break;
+                                case "SN":
+                                    dir = "down";
+                                    row++;
+                                    break;
+                                case "NE":
+                                    dir = "right";
+                                    col++;
+                                    break;
+                                case "NO":
+                                    dir = "left";
+                                    col--;
+                                    break;
+                                case "NSE":
+                                    circuits.get(numeroDeCircuit).setEnSerie(false);
+                                    ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
+                                    circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
+                                    finished = true;
+                                    break;
+                                case "NSO":
+                                    circuits.get(numeroDeCircuit).setEnSerie(false);
+                                    ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
+                                    circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
+                                    finished = true;
+                                    break;
+                                case "NEO":
+                                    circuits.get(numeroDeCircuit).setEnSerie(false);
+                                    ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
+                                    circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
+                                    finished = true;
+                                    break;
+                                case "NSEO":
+                                    circuits.get(numeroDeCircuit).setEnSerie(false);
+                                    ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
+                                    circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
+                                    finished = true;
+                                    break;
+                                default:
+                                    error = true;
+                                    break;
+                            }
+                            break;
+                        case "left":
+                            switch (((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getTabNomVariante()[((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)).getDirection()]) {
+                                case "NE":
+                                    dir = "up";
+                                    row--;
+                                    break;
+                                case "SE":
+                                    dir = "down";
+                                    row++;
+                                    System.out.println("fil down");
+                                    break;
+                                case "OE":
+                                    dir = "left";
+                                    col--;
+                                    if (debug instanceof Source) {
+                                        ((Source) debug).setInverseEnSerie(true);
+                                    }
+                                    if (debug instanceof Diode) {
+                                        ((Diode) debug).setInverseEnSerie(true);
+                                    }
+                                    break;
+                                case "EO":
+                                    dir = "left";
+                                    col--;
+                                    break;
+                                case "NSE":
+                                    circuits.get(numeroDeCircuit).setEnSerie(false);
+                                    ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
+                                    circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
+                                    finished = true;
+                                    break;
+                                case "SOE":
+                                    circuits.get(numeroDeCircuit).setEnSerie(false);
+                                    ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
+                                    circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
+                                    finished = true;
+                                    break;
+                                case "NEO":
+                                    circuits.get(numeroDeCircuit).setEnSerie(false);
+                                    ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
+                                    circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
+                                    finished = true;
+                                    break;
+                                case "NSEO":
+                                    circuits.get(numeroDeCircuit).setEnSerie(false);
+                                    ((Fil) getNodeFromGridPane(gridPaneSandBox, col, row)).setNoeud(true);
+                                    circuits.get(numeroDeCircuit).getNoeuds().add(new Noeud((Composante) getNodeFromGridPane(gridPaneSandBox, col, row)));
+                                    finished = true;
+                                    break;
+                                default:
+                                    error = true;
+                                    break;
+                            }
+                            break;
+                    }
+                } else {
+                    error = true;
+                }
+            } else {
+                finished = true;
+            }
+        }
+        if (!error) {
+            circuits.get(numeroDeCircuit).getBranches().add(brancheTemporaire);
+            circuits.get(numeroDeCircuit).setIncomplet(false);
+            System.out.println("Added");
+        }
     }
 
     private static void remplirCircuit(int numeroDeCircuit) {
         for (int i = 0; i < circuits.get(numeroDeCircuit).getBranches().size(); i++) {
             for (int j = 0; j < circuits.get(numeroDeCircuit).getBranches().get(i).getComposantesBranche().size(); j++) {
                 circuits.get(numeroDeCircuit).getComposantes().add(circuits.get(numeroDeCircuit).getBranches().get(i).getComposantesBranche().get(j));
-                if (circuits.get(numeroDeCircuit).getBranches().get(i).getComposantesBranche().get(j).getNom().toUpperCase().equals("SOURCE")) {
+                if (circuits.get(numeroDeCircuit).getBranches().get(i).getComposantesBranche().get(j) instanceof Source) {
                     circuits.get(numeroDeCircuit).getSources().add((Source) circuits.get(numeroDeCircuit).getBranches().get(i).getComposantesBranche().get(j));
                 }
-                if (circuits.get(numeroDeCircuit).getBranches().get(i).getComposantesBranche().get(j).getNom().toUpperCase().equals("RESISTEUR")) {
+                if (circuits.get(numeroDeCircuit).getBranches().get(i).getComposantesBranche().get(j) instanceof Resisteur) {
                     circuits.get(numeroDeCircuit).getResisteurs().add((Resisteur) circuits.get(numeroDeCircuit).getBranches().get(i).getComposantesBranche().get(j));
                 }
             }
@@ -1962,7 +2050,7 @@ public class SandboxController {
         updateCircuit();
     }
 
-    public static void resetGridPane(){
+    public static void resetGridPane() {
 
         ComposanteSave[][] gridPaneSave = new ComposanteSave[20][20];
         for (int i = 0; i < 20; i++)

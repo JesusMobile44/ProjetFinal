@@ -55,6 +55,7 @@ public class ImagesContainer {
         //hashMapImage.put("ampoule.png", new Image("autre/images/ampoule.png"));
         //hashMapImage.put("fil.png", new Image("autre/images/fil.png"));
 
+        hashMapImage.put("sandbox.png", new Image("autre/images/sandbox.png"));
         hashMapImage.put("vide.png", new Image("autre/images/vide.png"));
         hashMapImage.put("transparent.png", new Image("autre/images/transparent.png"));
         hashMapImage.put("back (1).png", new Image("autre/images/back (1).png"));

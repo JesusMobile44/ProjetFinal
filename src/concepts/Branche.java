@@ -1,6 +1,7 @@
 package concepts;
 
 import composantes.Composante;
+import composantes.Diode;
 import composantes.Resisteur;
 import composantes.Source;
 
@@ -11,6 +12,7 @@ public class Branche {
     private ArrayList<Resisteur> resisteurs = new ArrayList<>();
     private ArrayList<Source> sources = new ArrayList<>();
     private ArrayList<Noeud> noeudsAdjacents = new ArrayList<>();
+    private ArrayList<Diode> diodes = new ArrayList<>();
     private double intensite;
     private boolean intensiteTrouvee;
     private Noeud noeudDirectionnel;
@@ -79,5 +81,13 @@ public class Branche {
 
     public void setDiviseur(double diviseur) {
         this.diviseur = diviseur;
+    }
+
+    public ArrayList<Diode> getDiodes() {
+        return diodes;
+    }
+
+    public void setDiodes(ArrayList<Diode> diodes) {
+        this.diodes = diodes;
     }
 }
