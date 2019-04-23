@@ -110,7 +110,7 @@ public class SandboxController {
         Image back = new Image("autre/images/back (1).png");
         backButtonStatic.setGraphic(new ImageView(back));
         switch (nom.toUpperCase()) {
-            case "AMPEREMÈTRE":
+            case "AMPÈREMÈTRE":
                 rootScrollPane.getChildren().add(0, new Amperemetre());
                 Amperemetre amperemetre1 = new Amperemetre();
                 amperemetre1.setImage(amperemetre1.getTabVariante()[1]);
@@ -288,16 +288,14 @@ public class SandboxController {
         }
     }
 
-    public void setAventure() {
-        Main.changerDeMode(2);
+    public void setMenu() {
+        Main.changerDeMode(0);
     }
 
     public void setGuide() {
-        Main.changerDeMode(3);
-    }
-
-    public void setMenu() {
-        Main.changerDeMode(0);
+        Main.getStage().maxHeightProperty().bind(Main.getStage().widthProperty().multiply(1500/1920));
+        Main.getStage().minHeightProperty().bind(Main.getStage().widthProperty().multiply(1920/1080));
+        Main.changerDeMode(2);
     }
 
     @FXML
@@ -490,7 +488,7 @@ public class SandboxController {
                     goBack();
                 }
                 break;
-            case "AMPEREMÈTRE":
+            case "AMPÈREMÈTRE":
                 if (!menuTouteComposantes) {
                     changerMenuComposante(new Amperemetre());
                 } else {
@@ -590,7 +588,7 @@ public class SandboxController {
             case "FIL":
                 copie = new Fil(new ComposanteSave(source),target.getRow(),target.getCol());
                 break;
-            case "AMPEREMÈTRE":
+            case "AMPÈREMÈTRE":
                 copie = new Amperemetre(new ComposanteSave(source),target.getRow(),target.getCol());
                 break;
             case "AMPOULE":
@@ -1909,7 +1907,7 @@ public class SandboxController {
                             case "FIL":
                                 placerComposantes(new Fil(gridPaneSave[i][j], i, j), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
                                 break;
-                            case "AMPEREMÈTRE":
+                            case "AMPÈREMÈTRE":
                                 placerComposantes(new Amperemetre(gridPaneSave[i][j], i, j), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
                                 break;
                             case "AMPOULE":
@@ -1978,7 +1976,7 @@ public class SandboxController {
                     case "FIL":
                         placerComposantes(new Fil(gridPaneSave[i][j], i, j), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
                         break;
-                    case "AMPEREMÈTRE":
+                    case "AMPÈREMÈTRE":
                         placerComposantes(new Amperemetre(gridPaneSave[i][j], i, j), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
                         break;
                     case "AMPOULE":

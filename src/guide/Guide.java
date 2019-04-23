@@ -1,4 +1,0 @@
-package guide;
-
-class Guide {
-}

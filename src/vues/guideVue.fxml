@@ -1,17 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GuideController">
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="borderPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GuideController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <Menu mnemonicParsing="false" text="Changer De Mode">
-                <MenuItem mnemonicParsing="false" text="Menu" onAction="#setMenu"/>
-                <MenuItem mnemonicParsing="false" text="Mode Sandbox" onAction="#setSandbox"/>
-                <MenuItem mnemonicParsing="false" text="Mode Aventure" onAction="#setAventure"/>
+                <MenuItem mnemonicParsing="false" onAction="#setMenu" text="Menu" />
+                <MenuItem mnemonicParsing="false" onAction="#setSandbox" text="Mode Sandbox" />
             </Menu>
         </MenuBar>
     </top>
+   <center>
+      <VBox alignment="CENTER" prefHeight="500.0" prefWidth="550.0" spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="nom" text="Nom">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="description" alignment="TOP_LEFT" ellipsisString="" lineSpacing="2.0" text="Description" wrapText="true">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="formule" fitHeight="1.0" fitWidth="1.0" pickOnBounds="true" preserveRatio="true" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
+               <children>
+                  <ImageView fx:id="image1" fitHeight="52.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="image2" fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0">
+               <children>
+                  <Button fx:id="previous" mnemonicParsing="false" onAction="#previous" text="←">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="pageL" mnemonicParsing="false" onAction="#choisirPage" text="Page" />
+                  <Button fx:id="next" mnemonicParsing="false" onAction="#next" text="→">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="25.0" left="25.0" right="25.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
 
 
     </BorderPane>

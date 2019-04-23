@@ -8,15 +8,10 @@ public class MenuController {
         Main.changerDeMode(1);
     }
 
-    public void setAventure(){
+    public void setGuide(){
+        Main.getStage().maxHeightProperty().bind(Main.getStage().widthProperty().multiply(1500/1920));
+        Main.getStage().minHeightProperty().bind(Main.getStage().widthProperty().multiply(1920/1080));
         Main.changerDeMode(2);
     }
 
-    public void setGuide(){
-        Main.changerDeMode(3);
-    }
-
-    public void setMenu(){
-        Main.changerDeMode(0);
-    }
 }
