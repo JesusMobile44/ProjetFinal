@@ -1,17 +1,29 @@
 package controllers;
 
 import autre.ImagesContainer;
+import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 import main.Main;
 
 public class MenuController {
     @FXML
-    ImageView sandbox, guide;
+    ImageView sandbox, guide, zephImage;
+
+    @FXML
+    Label zephLabel, nomsLabel, sandboxLabel, guideLabel;
+
+    @FXML
+    Button button;
 
     public ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) -> {
         sandbox.fitWidthProperty().bind(Main.getStage().widthProperty());
@@ -22,6 +34,21 @@ public class MenuController {
 
     public void initialize(){
         bind();
+        transitions(sandbox, 3.5);
+        transitions(guide, 3.5);
+        transitions(zephImage, 2.5);
+        transitions(zephLabel, 3.5);
+        transitions(nomsLabel, 5);
+        transitions(sandboxLabel, 3.5);
+        transitions(guideLabel, 3.5);
+        transitions(button, 5);
+    }
+
+    public void transitions(Node node, double dur){
+        FadeTransition fade = new FadeTransition(Duration.seconds(dur), node);
+        fade.setFromValue(0);
+        fade.setToValue(1);
+        fade.play();
     }
 
     public void bind() {
