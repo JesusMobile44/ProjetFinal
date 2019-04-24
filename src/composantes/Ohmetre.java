@@ -28,7 +28,7 @@ public class Ohmetre extends Composante {
                 "d'un composant ou d'un circuit électrique";
         tooltip = new Tooltip("Mesure la résistance équivalente");
         Tooltip.install(this,tooltip);
-        nom = "Ohmètre";
+        nom = "Ohmmètre";
         initializeImage();
     }
 }

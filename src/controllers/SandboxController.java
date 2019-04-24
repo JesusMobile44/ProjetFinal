@@ -245,7 +245,7 @@ public class SandboxController {
             case "MOTEUR":
                 //rootScrollPane.getChildren().add(0, new Fil());
                 break;
-            case "OHMÈTRE":
+            case "OHMMÈTRE":
                 rootScrollPane.getChildren().add(0, new Ohmetre());
                 Ohmetre ohmetre = new Ohmetre();
                 ohmetre.setImage(ohmetre.getTabVariante()[1]);
@@ -253,7 +253,7 @@ public class SandboxController {
                 rootScrollPane.getChildren().add(1, ohmetre);
                 //updateCircuit();
                 break;
-            case "RESISTEUR":
+            case "RÉSISTEUR":
                 rootScrollPane.getChildren().add(0, new Resisteur());
                 Resisteur resisteur = new Resisteur();
                 resisteur.setImage(resisteur.getTabVariante()[1]);
@@ -367,7 +367,7 @@ public class SandboxController {
                     });
                     contextMenu.getItems().addAll(itemTension);
                     break;
-                case "RESISTEUR":
+                case "RÉSISTEUR":
                     MenuItem itemResistance = new MenuItem("Modifier la résistance");
                     itemResistance.setOnAction(event -> {
                         changerValeur(source, "la résistance");
@@ -537,14 +537,14 @@ public class SandboxController {
                     goBack();
                 }
                 break;
-            case "OHMÈTRE":
+            case "OHMMÈTRE":
                 if (!menuTouteComposantes) {
                     changerMenuComposante(new Ohmetre());
                 } else {
                     goBack();
                 }
                 break;
-            case "RESISTEUR":
+            case "RÉSISTEUR":
                 if (!menuTouteComposantes) {
                     changerMenuComposante(new Resisteur());
                 } else {
@@ -609,10 +609,10 @@ public class SandboxController {
             case "MISE À TERRE":
                 copie = new MiseAterre(new ComposanteSave(source), target.getRow(), target.getCol());
                 break;
-            case "OHMÈTRE":
+            case "OHMMÈTRE":
                 copie = new Ohmetre(new ComposanteSave(source), target.getRow(), target.getCol());
                 break;
-            case "RESISTEUR":
+            case "RÉSISTEUR":
                 copie = new Resisteur(new ComposanteSave(source), target.getRow(), target.getCol());
                 break;
             case "VOLTMÈTRE":
@@ -2022,10 +2022,10 @@ public class SandboxController {
                             case "MISE À TERRE":
                                 placerComposantes(new MiseAterre(gridPaneSave[i][j], i, j), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
                                 break;
-                            case "OHMÈTRE":
+                            case "OHMMÈTRE":
                                 placerComposantes(new Ohmetre(gridPaneSave[i][j], i, j), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
                                 break;
-                            case "RESISTEUR":
+                            case "RÉSISTEUR":
                                 placerComposantes(new Resisteur(gridPaneSave[i][j], i, j), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
                                 break;
                             case "VOLTMÈTRE":
@@ -2091,10 +2091,10 @@ public class SandboxController {
                     case "MISE À TERRE":
                         placerComposantes(new MiseAterre(gridPaneSave[i][j], i, j), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
                         break;
-                    case "OHMÈTRE":
+                    case "OHMMÈTRE":
                         placerComposantes(new Ohmetre(gridPaneSave[i][j], i, j), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
                         break;
-                    case "RESISTEUR":
+                    case "RÉSISTEUR":
                         placerComposantes(new Resisteur(gridPaneSave[i][j], i, j), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
                         break;
                     case "VOLTMÈTRE":

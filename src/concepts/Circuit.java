@@ -607,10 +607,10 @@ public class Circuit {
                 case "MISE À TERRE":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + "\nSens du courant: " + composante.getSensCourant());
                     break;
-                case "OHMÈTRE":
+                case "OHMMÈTRE":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nRésistance: " + SandboxController.df.format(composante.getVolt()) + "\nSens du courant: " + composante.getSensCourant());
                     break;
-                case "RESISTEUR":
+                case "RÉSISTEUR":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nTension: " + SandboxController.df.format(composante.getVolt()) + "\nRésistance: " + SandboxController.df.format(composante.getResistance()) + "\nSens du courant: " + composante.getSensCourant());
                     break;
                 case "VOLTMÈTRE":
