@@ -1357,6 +1357,11 @@ public class SandboxController {
                             if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Diode) {
                                 brancheTemporaire.getDiodes().add(((Diode) getNodeFromGridPane(gridPaneSandBox, col, row)));
                             }
+                            if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof MiseAterre && circuits.get(numeroDeCircuit).getMiseAterre()==null) {
+                                circuits.get(numeroDeCircuit).setMiseAterre((MiseAterre) getNodeFromGridPane(gridPaneSandBox, col, row));
+                            }else if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof MiseAterre && circuits.get(numeroDeCircuit).getMiseAterre()!=null){
+                                circuits.get(numeroDeCircuit).setmATMultiples(true);
+                            }
                         }
 
 
