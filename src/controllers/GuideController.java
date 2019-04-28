@@ -40,40 +40,45 @@ public class GuideController {
         pages.add(new Page("Ampèremètre", "Appareil servant à mesurer le courant dans une branche de circuit;\n" +
                 "il doit être branché en série dans la branche en question;\n" +
                 "afin de ne pas influencer le circuit, sa résistance doit être très petite."));
-        pages.add(new Page("Ohmmètre", "Appareil servant à mesurer la résistance d'un résisteur ou la résistance équivalente de plusieur résisteur;\n" +
-                "il comporte une source interne d'électromotance et doit être branché seul aux résisteur à mesurer"));
+        pages.add(new Page("Ohmmètre", "Appareil servant à mesurer la résistance d'un résisteur ou la résistance équivalente\n" +
+                " de plusieur résisteur; il comporte une source interne d'électromotance\n" +
+                " et doit être branché seul aux résisteur à mesurer."));
         pages.add(new Page("Voltmètre","Appareil servant à mesurer la différence de potentiel entre deux points d'un circuit;\n" +
                 "il doit être brancher en parallèle entre les deux points en question;\n" +
                 "afin de ne pas influencer le circuit sa résistance doit être très grande."));
         pages.add(new Page("Ampoule","Composante électrique composé d'un filament métallique enfermé dans une ampoule de verre.\n" +
                 "Lorsque l'électricité passe dans le filament électrique, il est porté à incandescence."));
-        pages.add(new Page("Condensateur","Dispositif servant à emmagasiner des charges électriques formé de deux armatures conductrices séparées par un isolant;\n" +
-                "lorsqu'on dit qu'un condensateur porte une charge q, cela veut dire qu'une des armature\n" +
-                "porte une charge positive q et l'autre une charge négative -q"));
+        pages.add(new Page("Condensateur","Dispositif servant à emmagasiner des charges électriques formé de deux armatures conductrices\n" +
+                "séparées par un isolant;" + "lorsqu'on dit qu'un condensateur porte une charge q, cela veut dire \n" +
+                "qu'une des armature porte une charge positive q et l'autre une charge négative -q"));
         pages.add(new Page("Diode","Un diode est un dipôle qui ne laisse passer le courant que dans un sens.\n" +
-                "C'est un dipôle non-linéaire et polarisé (ou non-symétrique).\n" +
-                "Le sens de branchement d'une diode a donc une importance sur le fonctionnement du circuit électronique dans lequel elle est placée."));
-        pages.add(new Page("Fil","Composante servant au transport de l'électricité, afin de transmettre de l'énergie et de l'information;\n" +
-                "afin de ne pas influencer le circuit sa résistance doit être très faible."));
-        pages.add(new Page("Fusible","Un coupe-circuit à fusible est un organe de sécurité dont le rôle est d'ouvrir un circuit électrique lorsque\n" +
-                "le courant électrique dans celui-ci atteint une valeur d'intensité donnée pendant un certain temps."));
-        pages.add(new Page("Haut-Parleur","Un haut-parleur est un transducteur électroacoustique destiné à produire des sons à partir d'un signal électrique.\n" +
-                "Il est possible de sélectionner la musique en faisant clic-droit sur la composante et en sélectionnant Modifier la musique"));
-        pages.add(new Page("Interrupteur","Un interrupteur est un organe permettant d'interrompre ou d'autoriser le passage d'un flux électrique.\n" +
-                "Il est possible d'alterner entre l'état Ouvert et Fermer en faisant un clique droit sur la composante et en sélectionnant Switch"));
-        pages.add(new Page("Mise à terre","Lien conducteur entre un point du circuit et la terre que l'on considère comme un conducteur idéal;\n" +
-                "par définition, le potentiel électrique d'un point mis à terre est de zéro"));
-        pages.add(new Page("Résisteur","Une résistance, ou resistor, est un composant électronique ou électrique dont la principale caractéristique est d'opposer\n" +
-                "une plus ou moins grande résistance (mesurée en ohms) à la circulation du courant électrique.\n" +
-                "Un résisteur est nécéssaire au fonctionnement d'un circuit."));
+                "C'est un dipôle non-linéaire et polarisé (ou non-symétrique). Le sens de branchement d'une diode\n" +
+                "a donc une importance sur le fonctionnement du circuit électronique dans lequel elle est placée."));
+        pages.add(new Page("Fil","Composante servant au transport de l'électricité, afin de transmettre\n" +
+                "de l'énergie et de l'information; afin de ne pas influencer le circuit\n" +
+                "sa résistance doit être très faible."));
+        pages.add(new Page("Fusible","Un coupe-circuit à fusible est un organe de sécurité dont le rôle est d'ouvrir \n" +
+                "un circuit électrique lorsque le courant électrique dans celui-ci atteint\n" +
+                "une valeur d'intensité donnée pendant un certain temps."));
+        pages.add(new Page("Haut-Parleur","Un haut-parleur est un transducteur électroacoustique destiné à produire des sons\n" +
+                "à partir d'un signal électrique. Il est possible de sélectionner la musique en faisant clic-droit\n" +
+                "sur la composante et en sélectionnant Modifier la musique."));
+        pages.add(new Page("Interrupteur","Un interrupteur est un organe permettant d'interrompre ou d'autoriser le passage\n" +
+                "d'un flux électrique. Il est possible d'alterner entre l'état Ouvert et Fermer\n" +
+                "en faisant un clique droit sur la composante et en sélectionnant Switch"));
+        pages.add(new Page("Mise à terre","Lien conducteur entre un point du circuit et la terre que l'on considère comme\n" +
+                "un conducteur idéal; par définition, le potentiel électrique\n" +
+                "d'un point mis à terre est de zéro"));
+        pages.add(new Page("Résisteur","Une résistance, ou resistor, est un composant électronique ou électrique dont la principale\n" +
+                "caractéristique est d'opposer une plus ou moins grande résistance (mesurée en ohms) à la circulation\n" +
+                "du courant électrique. Un résisteur est nécéssaire au fonctionnement d'un circuit."));
         pages.add(new Page("Switch","Une Switch est un organe permettant le passage d'autoriser le passage d'un flux électrique\n" +
                 "dans une de deux direction données. Il est possible d'alterner entre les deux directions en faisant\n" +
                 "un clique droit sur la composante et en sélectionnant Switch"));
 
-
-        pages.add(new Page("(Branchés en) Série","Éléments de circuit placés sur la même branche;\n" +
+        pages.add(new Page("Série","Éléments de circuit placés sur la même branche;\n" +
                 "le même courant traverse chaque éléments"));
-        pages.add(new Page("(Branchés en) Parallèle","Éléments de circuit placés sur des branches parallèles;\n" +
+        pages.add(new Page("Parallèle","Éléments de circuit placés sur des branches parallèles;\n" +
                 "les branches partent du même noeud et aboutissent au même noeud."));
         pages.add(new Page("Loi des mailles de Kirchhoff","Sur une maille, la somme des variations de potentiel est égale à 0\n" +
                 "(les hausses et les baisses de potentiel sont équivalentes);\n" +
@@ -84,11 +89,11 @@ public class GuideController {
                 "sans modifier le courant débiter par la source"));
         pages.add(new Page("Tension","Dans le contexte de l'étude des circuits électriques, la tension aux bornes d'un élément de circuit\n" +
                 "correspond à la différence de poteniel entre ses bornes."));
-        pages.add(new Page("Intensité (courant électrique)","le courant à un endroit donné dans un circuit est la quantité de charges qui passe par cet endroit,\n" +
-                "divisée par le temps requis; par convention le courant est dans le sens du déplacement des charges positives\n" +
-                "et dans le sens contraire des charges négatives."));
-        pages.add(new Page("Loi d'Ohm","Relation de proportionnalité entre la tension appliquée aux bornes d'un résisteur et le courant qui le traverse;\n" +
-                "s'applique uniquement aux résisteur dont la résistance est constante."));
+        pages.add(new Page("Intensité","le courant à un endroit donné dans un circuit est la quantité de charges qui passe \n" +
+                "par cet endroit, divisée par le temps requis; par convention le courant est dans le sens du déplacement \n" +
+                "des charges positives et dans le sens contraire des charges négatives."));
+        pages.add(new Page("Loi d'Ohm","Relation de proportionnalité entre la tension appliquée aux bornes d'un résisteur \n" +
+                "et le courant qui le traverse; s'applique uniquement aux résisteur dont la résistance est constante."));
         page = 1;
         loadPage(page);
     }
@@ -118,7 +123,7 @@ public class GuideController {
 
     public void choisirPage() {
         ChoiceDialog<String> alerte = new ChoiceDialog<String>("Ampèremètre","Ohmmètre","Voltmètre", "Ampoule", "Condensateur", "Diode", "Fil", "Fusible",
-                "Haut-Parleur","Interruptueur", "Mise à terre", "Moteur", "Résisteur", "Source", "Switch",
+                "Haut-Parleur","Interrupteur", "Mise à terre", "Moteur", "Résisteur", "Source", "Switch",
                 "(Branchés en) Série","(Branchés en) Parallèle","Loi des mailles de Kirchhoff","Loi des noeuds de Kirchhoff",
                 "Résistance équivalente","Tension","Intensité","Loi d'Ohm");
         alerte.setTitle("Sélection de page");
