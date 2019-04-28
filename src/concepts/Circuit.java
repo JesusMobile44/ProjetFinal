@@ -1,9 +1,6 @@
 package concepts;
 
-import composantes.Composante;
-import composantes.Diode;
-import composantes.Resisteur;
-import composantes.Source;
+import composantes.*;
 import controllers.SandboxController;
 
 import java.util.ArrayList;
@@ -16,14 +13,17 @@ public class Circuit {
     private ArrayList<Branche> branches = new ArrayList<>();
     private ArrayList<Resisteur> resisteurs = new ArrayList<>();
     private ArrayList<Source> sources = new ArrayList<>();
+    private MiseAterre miseAterre = null;
     private double resistanceEquivalente;
     private boolean enSerie;
     private boolean incomplet;
+    private boolean mATMultiples;
 
     public Circuit() {
         this.enSerie = true;
         this.resistanceEquivalente = 0;
         this.incomplet = true;
+        this.mATMultiples = false;
     }
 
     public void calculVariables() {
@@ -45,13 +45,25 @@ public class Circuit {
                 }
             }
         }
-        if (this.enSerie && this.getBranches().get(0).getIntensite()==0){
 
+        if (this.enSerie && this.getBranches().get(0).getIntensite()==0){
         }else {
             determinationSens();
         }
 
+        if (!this.mATMultiples){
+            creationCircuitMAT(this.miseAterre);
+        }
+
         reloadTooltip();
+    }
+
+    private static void creationCircuitMAT(MiseAterre miseAterre){
+        if (miseAterre == null){
+
+        }
+
+
     }
 
     private static void retirerBrancheDiode(Branche branche){
@@ -242,15 +254,19 @@ public class Circuit {
             }
         }
 
-        boolean diodeInverse = false;
+        boolean diodeInverse = true;
 
-        for (Diode diode:
-                this.getBranches().get(0).getDiodes()) {
+        if (this.getBranches().get(0).getDiodes().size() != 0){
+            diodeInverse = false;
+            for (Diode diode:
+                    this.getBranches().get(0).getDiodes()) {
 
-            if (diode.isInverseEnSerie()){
-                diodeInverse = true;
+                if (diode.isInverseEnSerie()){
+                    diodeInverse = true;
+                }
             }
         }
+
 
         if (!diodeInverse){
             retirerBrancheDiode(this.getBranches().get(0));
@@ -592,7 +608,7 @@ public class Circuit {
                 case "SOURCE":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nTension: " + SandboxController.df.format(composante.getVolt()) + "\nSens du courant: " + composante.getSensCourant());
                     if (this.getResistanceEquivalente() != 0){
-                        composante.getTooltip().setText(composante.getTooltip().getText() + "\nRésistance équivalente : "+this.getResistanceEquivalente());
+                        composante.getTooltip().setText(composante.getTooltip().getText() + "\nRésistance équivalente : "+ SandboxController.df.format(this.getResistanceEquivalente()));
                     }
                     break;
                 case "DIODE":
@@ -792,5 +808,21 @@ public class Circuit {
 
     public void setIncomplet(boolean incomplet) {
         this.incomplet = incomplet;
+    }
+
+    public MiseAterre getMiseAterre() {
+        return miseAterre;
+    }
+
+    public void setMiseAterre(MiseAterre miseAterre) {
+        this.miseAterre = miseAterre;
+    }
+
+    public boolean ismATMultiples() {
+        return mATMultiples;
+    }
+
+    public void setmATMultiples(boolean mATMultiples) {
+        this.mATMultiples = mATMultiples;
     }
 }
