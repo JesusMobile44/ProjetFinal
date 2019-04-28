@@ -71,6 +71,17 @@ public class ImagesContainer {
         hashMapImage.put("transparent.png", new Image("autre/images/transparent.png"));
         hashMapImage.put("back (1).png", new Image("autre/images/back (1).png"));
 
+        hashMapImage.put("série.png",new Image("autre/images/série.png"));
+        hashMapImage.put("parallèle.png",new Image("autre/images/parallèle.png"));
+        hashMapImage.put("loi des mailles de kirchhoff.png",new Image("autre/images/loi des mailles de kirchhoff.png"));
+        hashMapImage.put("loi des mailles de kirchhoff formule.png",new Image("autre/images/loi des mailles de kirchhoff formule.png"));
+        hashMapImage.put("loi des noeuds de kirchhoff.png",new Image("autre/images/loi des noeuds de kirchhoff.png"));
+        hashMapImage.put("loi des noeuds de kirchhoff formule.png",new Image("autre/images/loi des noeuds de kirchhoff formule.png"));
+        hashMapImage.put("résistance équivalente formule.png",new Image("autre/images/résistance équivalente formule.png"));
+        hashMapImage.put("tension formule.png",new Image("autre/images/tension formule.png"));
+        hashMapImage.put("intensité formule.png",new Image("autre/images/intensité formule.png"));
+        hashMapImage.put("loi d'ohm formule.png",new Image("autre/images/loi d'ohm formule.png"));
+
     }
 
     public static HashMap<String, Image> getHashMapImage() {

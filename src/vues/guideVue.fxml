@@ -24,12 +24,12 @@
    <center>
       <VBox alignment="CENTER" prefHeight="500.0" prefWidth="550.0" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="nom" text="Nom">
+            <Label fx:id="nom" text="Nom" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Label fx:id="description" alignment="TOP_LEFT" ellipsisString="" lineSpacing="2.0" text="Description" textAlignment="CENTER">
+            <Label fx:id="description" alignment="TOP_CENTER" ellipsisString="" lineSpacing="2.0" text="Description" textAlignment="CENTER">
                <font>
                   <Font size="16.0" />
                </font>

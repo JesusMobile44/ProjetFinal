@@ -18,13 +18,13 @@ public class Page {
         else
             this.image1 = ImagesContainer.getHashMapImage().get(nom.toLowerCase() + ".png");
         if (ImagesContainer.getHashMapImage().get(nom.toLowerCase() + " (1).png") == null)
-            this.image1 = ImagesContainer.getHashMapImage().get("transparent.png");
+            this.image2 = ImagesContainer.getHashMapImage().get("transparent.png");
         else
             this.image2 = ImagesContainer.getHashMapImage().get(nom.toLowerCase() + " (1).png");
-        if (ImagesContainer.getHashMapImage().get(nom.toLowerCase() + "formule.png") == null)
+        if (ImagesContainer.getHashMapImage().get(nom.toLowerCase() + " formule.png") == null)
             this.formule = ImagesContainer.getHashMapImage().get("transparent.png");
         else
-            this.formule = ImagesContainer.getHashMapImage().get(nom.toLowerCase() + "formule.png");
+            this.formule = ImagesContainer.getHashMapImage().get(nom.toLowerCase() + " formule.png");
     }
 
     public String getNom() {
