@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SandboxController">
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SandboxController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <Menu mnemonicParsing="false" text="Changer De Mode">
@@ -27,7 +27,7 @@
     <center>
         <SplitPane fx:id="mySplitPane" dividerPositions="0.6565656565656566" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <ScrollPane fx:id="scroll" prefHeight="200.0" prefWidth="200.0" />
-            <SplitPane dividerPositions="0.3282828282828283, 0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+            <SplitPane dividerPositions="0.25, 0.9249" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
                 <HBox id="myHBox" fx:id="myHBox" prefHeight="100.0" prefWidth="200.0" />
                 <ScrollPane fx:id="myScrollPane" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0">
                     <FlowPane prefHeight="200.0" prefWidth="200.0" />
