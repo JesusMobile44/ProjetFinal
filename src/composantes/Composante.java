@@ -19,6 +19,7 @@ public class Composante extends ImageView {
     private double amperage;
     double volt;
     double resistance;
+    double capacite;
     String description;
     Tooltip tooltip;
     String nom;
@@ -152,6 +153,14 @@ public class Composante extends ImageView {
 
     public void setResistance(double resistance) {
         this.resistance = resistance;
+    }
+
+    public double getCapacite() {
+        return capacite;
+    }
+
+    public void setCapacite(double capacite) {
+        this.capacite = capacite;
     }
 
     private String getDescription() {

@@ -28,8 +28,9 @@ public class Resisteur extends Composante {
                 "dont la principale caractéristique est d'opposer une plus ou moins grande \n" +
                 "résistance (mesurée en ohms) à la circulation du courant électrique.";
         tooltip = new Tooltip("Oppose un résistance à la circulation");
+        tooltip.setStyle("-fx-font-size: 20");
         Tooltip.install(this,tooltip);
-        nom = "Resisteur";
+        nom = "Résisteur";
         initializeImage();
         this.setResistance(100);
     }

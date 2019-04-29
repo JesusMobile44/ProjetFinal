@@ -1,6 +1,7 @@
 package concepts.miseATerre;
 
 import composantes.Composante;
+import composantes.Condensateur;
 import concepts.Noeud;
 
 import java.util.ArrayList;

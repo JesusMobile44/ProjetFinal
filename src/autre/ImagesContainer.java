@@ -34,10 +34,10 @@ public class ImagesContainer {
             hashMapImage.put("mise à terre ("+(i+1)+").png", new Image("autre/images/mise à terre (" +(i+1)+").png"));
         }
         for (int i=0; i<2; i++){
-            hashMapImage.put("ohmètre ("+(i+1)+").png", new Image("autre/images/ohmètre (" +(i+1)+").png"));
+            hashMapImage.put("ohmmètre ("+(i+1)+").png", new Image("autre/images/ohmètre (" +(i+1)+").png"));
         }
         for (int i=0; i<4; i++){
-            hashMapImage.put("resisteur ("+(i+1)+").png", new Image("autre/images/resisteur (" +(i+1)+").png"));
+            hashMapImage.put("résisteur ("+(i+1)+").png", new Image("autre/images/resisteur (" +(i+1)+").png"));
         }
         for (int i=0; i<4; i++){
             hashMapImage.put("source ("+(i+1)+").png", new Image("autre/images/source (" +(i+1)+").png"));
@@ -52,13 +52,35 @@ public class ImagesContainer {
             hashMapImage.put("interrupteur ("+(i+1)+").png", new Image("autre/images/interrupteur ("+(i+1)+").png"));
         }
 
-        //hashMapImage.put("ampoule.png", new Image("autre/images/ampoule.png"));
-        //hashMapImage.put("fil.png", new Image("autre/images/fil.png"));
-
+        hashMapImage.put("ampèremètre.png", new Image("autre/images/amperemètre.png"));
+        hashMapImage.put("ampoule.png", new Image("autre/images/ampoule.png"));
+        hashMapImage.put("condensateur.png", new Image("autre/images/condensateur.png"));
+        hashMapImage.put("diode.png", new Image("autre/images/diode.png"));
+        hashMapImage.put("fil.png", new Image("autre/images/fil.png"));
+        hashMapImage.put("fusible.png", new Image("autre/images/fusible.png"));
+        hashMapImage.put("haut-parleur.png", new Image("autre/images/haut-parleur.png"));
+        hashMapImage.put("interrupteur.png", new Image("autre/images/interrupteur.png"));
+        hashMapImage.put("mise à terre.png", new Image("autre/images/mise à terre.png"));
+        hashMapImage.put("ohmmètre.png", new Image("autre/images/ohmètre.png"));
+        hashMapImage.put("résisteur.png", new Image("autre/images/resisteur.png"));
+        hashMapImage.put("source.png", new Image("autre/images/source.png"));
+        hashMapImage.put("switch.png", new Image("autre/images/switch.png"));
+        hashMapImage.put("voltmètre.png", new Image("autre/images/voltmètre.png"));
         hashMapImage.put("sandbox.png", new Image("autre/images/sandbox.png"));
         hashMapImage.put("vide.png", new Image("autre/images/vide.png"));
         hashMapImage.put("transparent.png", new Image("autre/images/transparent.png"));
         hashMapImage.put("back (1).png", new Image("autre/images/back (1).png"));
+
+        hashMapImage.put("série.png",new Image("autre/images/série.png"));
+        hashMapImage.put("parallèle.png",new Image("autre/images/parallèle.png"));
+        hashMapImage.put("loi des mailles de kirchhoff.png",new Image("autre/images/loi des mailles de kirchhoff.png"));
+        hashMapImage.put("loi des mailles de kirchhoff formule.png",new Image("autre/images/loi des mailles de kirchhoff formule.png"));
+        hashMapImage.put("loi des noeuds de kirchhoff.png",new Image("autre/images/loi des noeuds de kirchhoff.png"));
+        hashMapImage.put("loi des noeuds de kirchhoff formule.png",new Image("autre/images/loi des noeuds de kirchhoff formule.png"));
+        hashMapImage.put("résistance équivalente formule.png",new Image("autre/images/résistance équivalente formule.png"));
+        hashMapImage.put("tension formule.png",new Image("autre/images/tension formule.png"));
+        hashMapImage.put("intensité formule.png",new Image("autre/images/intensité formule.png"));
+        hashMapImage.put("loi d'ohm formule.png",new Image("autre/images/loi d'ohm formule.png"));
 
     }
 

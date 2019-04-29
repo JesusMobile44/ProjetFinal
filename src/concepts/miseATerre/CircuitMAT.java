@@ -551,40 +551,40 @@ public class CircuitMAT {
                                     case "S":
                                         switch (noeudMATemp.getDirection()){
                                             case "NS":
-                                                noeudMATemp.getTabDirections()[1].getBranches().add(brancheTemp);
+                                                noeudMATemp.getTabDirections()[0].getBranches().add(brancheTemp);
                                                 break;
                                             case "SN":
-                                                noeudMATemp.getTabDirections()[0].getBranches().add(brancheTemp);
+                                                noeudMATemp.getTabDirections()[1].getBranches().add(brancheTemp);
                                                 break;
                                         }
                                         break;
                                     case "E":
                                         switch (noeudMATemp.getDirection()){
                                             case "OE":
-                                                noeudMATemp.getTabDirections()[1].getBranches().add(brancheTemp);
+                                                noeudMATemp.getTabDirections()[0].getBranches().add(brancheTemp);
                                                 break;
                                             case "EO":
-                                                noeudMATemp.getTabDirections()[0].getBranches().add(brancheTemp);
+                                                noeudMATemp.getTabDirections()[1].getBranches().add(brancheTemp);
                                                 break;
                                         }
                                         break;
                                     case "O":
                                         switch (noeudMATemp.getDirection()){
                                             case "OE":
-                                                noeudMATemp.getTabDirections()[0].getBranches().add(brancheTemp);
+                                                noeudMATemp.getTabDirections()[1].getBranches().add(brancheTemp);
                                                 break;
                                             case "EO":
-                                                noeudMATemp.getTabDirections()[1].getBranches().add(brancheTemp);
+                                                noeudMATemp.getTabDirections()[0].getBranches().add(brancheTemp);
                                                 break;
                                         }
                                         break;
                                     case "N":
                                         switch (noeudMATemp.getDirection()){
                                             case "NS":
-                                                noeudMATemp.getTabDirections()[0].getBranches().add(brancheTemp);
+                                                noeudMATemp.getTabDirections()[1].getBranches().add(brancheTemp);
                                                 break;
                                             case "SN":
-                                                noeudMATemp.getTabDirections()[1].getBranches().add(brancheTemp);
+                                                noeudMATemp.getTabDirections()[0].getBranches().add(brancheTemp);
                                                 break;
                                         }
                                         break;
@@ -598,10 +598,10 @@ public class CircuitMAT {
                                     case "S":
                                         switch (noeudMATemp.getComposanteNoeudMAT().getSensCourant()){
                                             case "↓":
-                                                noeudMATemp.getTabDirections()[1].getBranches().add(brancheTemp);
+                                                noeudMATemp.getTabDirections()[0].getBranches().add(brancheTemp);
                                                 break;
                                             case "↑":
-                                                noeudMATemp.getTabDirections()[0].getBranches().add(brancheTemp);
+                                                noeudMATemp.getTabDirections()[1].getBranches().add(brancheTemp);
                                                 break;
                                             default:
                                                 break;
@@ -610,10 +610,10 @@ public class CircuitMAT {
                                     case "E":
                                         switch (noeudMATemp.getComposanteNoeudMAT().getSensCourant()){
                                             case "→":
-                                                noeudMATemp.getTabDirections()[1].getBranches().add(brancheTemp);
+                                                noeudMATemp.getTabDirections()[0].getBranches().add(brancheTemp);
                                                 break;
                                             case "←":
-                                                noeudMATemp.getTabDirections()[0].getBranches().add(brancheTemp);
+                                                noeudMATemp.getTabDirections()[1].getBranches().add(brancheTemp);
                                                 break;
                                             default:
                                                 break;
@@ -622,10 +622,10 @@ public class CircuitMAT {
                                     case "O":
                                         switch (noeudMATemp.getComposanteNoeudMAT().getSensCourant()){
                                             case "→":
-                                                noeudMATemp.getTabDirections()[0].getBranches().add(brancheTemp);
+                                                noeudMATemp.getTabDirections()[1].getBranches().add(brancheTemp);
                                                 break;
                                             case "←":
-                                                noeudMATemp.getTabDirections()[1].getBranches().add(brancheTemp);
+                                                noeudMATemp.getTabDirections()[0].getBranches().add(brancheTemp);
                                                 break;
                                             default:
                                                 break;
@@ -634,10 +634,10 @@ public class CircuitMAT {
                                     case "N":
                                         switch (noeudMATemp.getComposanteNoeudMAT().getSensCourant()){
                                             case "↓":
-                                                noeudMATemp.getTabDirections()[0].getBranches().add(brancheTemp);
+                                                noeudMATemp.getTabDirections()[1].getBranches().add(brancheTemp);
                                                 break;
                                             case "↑":
-                                                noeudMATemp.getTabDirections()[1].getBranches().add(brancheTemp);
+                                                noeudMATemp.getTabDirections()[0].getBranches().add(brancheTemp);
                                                 break;
                                             default:
                                                 break;

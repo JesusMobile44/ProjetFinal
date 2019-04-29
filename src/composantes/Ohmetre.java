@@ -27,8 +27,9 @@ public class Ohmetre extends Composante {
         description = "Un Ohmmètre est un instrument de mesure qui permet de mesurer la résistance électrique\n" +
                 "d'un composant ou d'un circuit électrique";
         tooltip = new Tooltip("Mesure la résistance équivalente");
+        tooltip.setStyle("-fx-font-size: 20");
         Tooltip.install(this,tooltip);
-        nom = "Ohmètre";
+        nom = "Ohmmètre";
         initializeImage();
     }
 }

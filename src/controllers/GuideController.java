@@ -30,15 +30,70 @@ public class GuideController {
         formule.fitWidthProperty().bind(Main.getStage().widthProperty());
         formule.setFitHeight(formule.getFitWidth() / 12);
         nom.setFont(new Font(image1.getFitWidth() / 24));
-        description.setFont(new Font(image1.getFitWidth() / 52));
+        description.setFont(new Font(image1.getFitWidth() / 64));
         description.setMaxSize(Main.getStage().getWidth() / 1.5, image1.getFitWidth());
         description.setPrefSize(Main.getStage().getWidth() / 1.5, image1.getFitWidth() / 10);
     };
 
     public void initialize() {
         bind();
-        pages.add(new Page("Ampèremètre", "Ceci est une ampèremètre"));
-        pages.add(new Page("Ampoule", "Ceci est une ampoule"));
+        pages.add(new Page("Ampèremètre", "Appareil servant à mesurer le courant dans une branche de circuit;\n" +
+                "il doit être branché en série dans la branche en question;\n" +
+                "afin de ne pas influencer le circuit, sa résistance doit être très petite."));
+        pages.add(new Page("Ohmmètre", "Appareil servant à mesurer la résistance d'un résisteur ou la résistance équivalente\n" +
+                " de plusieur résisteur; il comporte une source interne d'électromotance\n" +
+                " et doit être branché seul aux résisteur à mesurer."));
+        pages.add(new Page("Voltmètre","Appareil servant à mesurer la différence de potentiel entre deux points d'un circuit;\n" +
+                "il doit être brancher en parallèle entre les deux points en question;\n" +
+                "afin de ne pas influencer le circuit sa résistance doit être très grande."));
+        pages.add(new Page("Ampoule","Composante électrique composé d'un filament métallique enfermé dans une ampoule de verre.\n" +
+                "Lorsque l'électricité passe dans le filament électrique, il est porté à incandescence."));
+        pages.add(new Page("Condensateur","Dispositif servant à emmagasiner des charges électriques formé de deux armatures conductrices\n" +
+                "séparées par un isolant;" + "lorsqu'on dit qu'un condensateur porte une charge q, cela veut dire \n" +
+                "qu'une des armature porte une charge positive q et l'autre une charge négative -q"));
+        pages.add(new Page("Diode","Un diode est un dipôle qui ne laisse passer le courant que dans un sens.\n" +
+                "C'est un dipôle non-linéaire et polarisé (ou non-symétrique). Le sens de branchement d'une diode\n" +
+                "a donc une importance sur le fonctionnement du circuit électronique dans lequel elle est placée."));
+        pages.add(new Page("Fil","Composante servant au transport de l'électricité, afin de transmettre\n" +
+                "de l'énergie et de l'information; afin de ne pas influencer le circuit\n" +
+                "sa résistance doit être très faible."));
+        pages.add(new Page("Fusible","Un coupe-circuit à fusible est un organe de sécurité dont le rôle est d'ouvrir \n" +
+                "un circuit électrique lorsque le courant électrique dans celui-ci atteint\n" +
+                "une valeur d'intensité donnée pendant un certain temps."));
+        pages.add(new Page("Haut-Parleur","Un haut-parleur est un transducteur électroacoustique destiné à produire des sons\n" +
+                "à partir d'un signal électrique. Il est possible de sélectionner la musique en faisant clic-droit\n" +
+                "sur la composante et en sélectionnant Modifier la musique."));
+        pages.add(new Page("Interrupteur","Un interrupteur est un organe permettant d'interrompre ou d'autoriser le passage\n" +
+                "d'un flux électrique. Il est possible d'alterner entre l'état Ouvert et Fermer\n" +
+                "en faisant un clique droit sur la composante et en sélectionnant Switch"));
+        pages.add(new Page("Mise à terre","Lien conducteur entre un point du circuit et la terre que l'on considère comme\n" +
+                "un conducteur idéal; par définition, le potentiel électrique\n" +
+                "d'un point mis à terre est de zéro"));
+        pages.add(new Page("Résisteur","Une résistance, ou resistor, est un composant électronique ou électrique dont la principale\n" +
+                "caractéristique est d'opposer une plus ou moins grande résistance (mesurée en ohms) à la circulation\n" +
+                "du courant électrique. Un résisteur est nécéssaire au fonctionnement d'un circuit."));
+        pages.add(new Page("Switch","Une Switch est un organe permettant le passage d'autoriser le passage d'un flux électrique\n" +
+                "dans une de deux direction données. Il est possible d'alterner entre les deux directions en faisant\n" +
+                "un clique droit sur la composante et en sélectionnant Switch"));
+
+        pages.add(new Page("Série","Éléments de circuit placés sur la même branche;\n" +
+                "le même courant traverse chaque éléments"));
+        pages.add(new Page("Parallèle","Éléments de circuit placés sur des branches parallèles;\n" +
+                "les branches partent du même noeud et aboutissent au même noeud."));
+        pages.add(new Page("Loi des mailles de Kirchhoff","Sur une maille, la somme des variations de potentiel est égale à 0\n" +
+                "(les hausses et les baisses de potentiel sont équivalentes);\n" +
+                "conséquence du fait que la force électrique est conservative."));
+        pages.add(new Page("Loi des noeuds de Kirchhoff","Tout le courant qui pénètre dans un noeud doit en ressortir;\n" +
+                "conséquence du principe de conservation de la charge électrique;"));
+        pages.add(new Page("Résistance équivalente","Résistance d'un résisteur qui pourrait remplacer une association de résisteurs\n" +
+                "sans modifier le courant débiter par la source"));
+        pages.add(new Page("Tension","Dans le contexte de l'étude des circuits électriques, la tension aux bornes d'un élément de circuit\n" +
+                "correspond à la différence de poteniel entre ses bornes."));
+        pages.add(new Page("Intensité","le courant à un endroit donné dans un circuit est la quantité de charges qui passe \n" +
+                "par cet endroit, divisée par le temps requis; par convention le courant est dans le sens du déplacement \n" +
+                "des charges positives et dans le sens contraire des charges négatives."));
+        pages.add(new Page("Loi d'Ohm","Relation de proportionnalité entre la tension appliquée aux bornes d'un résisteur \n" +
+                "et le courant qui le traverse; s'applique uniquement aux résisteur dont la résistance est constante."));
         page = 1;
         loadPage(page);
     }
@@ -67,7 +122,10 @@ public class GuideController {
     }
 
     public void choisirPage() {
-        ChoiceDialog<String> alerte = new ChoiceDialog<String>("Ampèremètre", "Ampoule", "Condensateur", "Diode", "Fil", "Fusible", "Haut-Parleur", "Interruptueur", "Mise à terre", "Moteur", "Ohmmètre", "Résisteur", "Source", "Switch", "Voltmètre");
+        ChoiceDialog<String> alerte = new ChoiceDialog<String>("Ampèremètre","Ohmmètre","Voltmètre", "Ampoule", "Condensateur", "Diode", "Fil", "Fusible",
+                "Haut-Parleur","Interrupteur", "Mise à terre", "Moteur", "Résisteur", "Source", "Switch",
+                "(Branchés en) Série","(Branchés en) Parallèle","Loi des mailles de Kirchhoff","Loi des noeuds de Kirchhoff",
+                "Résistance équivalente","Tension","Intensité","Loi d'Ohm");
         alerte.setTitle("Sélection de page");
         alerte.setHeaderText("Veuillez choisir la page");
         alerte.setContentText("Votre choix: ");
@@ -76,33 +134,65 @@ public class GuideController {
                 case "AMPÈREMÈTRE":
                     page = 1;
                     break;
-                case "AMPOULE":
+                case "OHMMÈTRE":
                     page = 2;
                     break;
+                case "VOLTMÈTRE":
+                    page = 3;
+                    break;
+                case "AMPOULE":
+                    page = 4;
+                    break;
                 case "CONDENSATEUR":
+                    page = 5;
                     break;
                 case "DIODE":
+                    page = 6;
                     break;
                 case "FIL":
+                    page = 7;
                     break;
                 case "FUSIBLE":
+                    page = 8;
                     break;
                 case "HAUT-PARLEUR":
+                    page = 9;
                     break;
                 case "INTERRUPTEUR":
+                    page = 10;
                     break;
                 case "MISE À TERRE":
+                    page = 11;
                     break;
-                case "MOTEUR":
-                    //rootScrollPane.getChildren().add(0, new Fil());
-                    break;
-                case "OHMÈTRE":
-                    break;
-                case "RESISTEUR":
+                case "RÉSISTEUR":
+                    page = 12;
                     break;
                 case "SWITCH":
+                    page = 13;
                     break;
-                case "VOLTMÈTRE":
+                case "(BRANCHÉS EN) SÉRIE":
+                    page = 14;
+                    break;
+                case "(BRANCHÉS EN) PARALLÈLE":
+                    page = 15;
+                    break;
+                case "LOI DES MAILLES DE KIRCHHOFF":
+                    page = 16;
+                    break;
+                case "LOI DES NOEUDS DE KIRCHHOFF":
+                    page = 17;
+                    break;
+                case "RÉSISTANCE ÉQUIVALENTE":
+                    page = 18;
+                    break;
+                case "TENSION":
+                    page = 19;
+                    break;
+                case "INTENSITÉ":
+                    page = 20;
+                    break;
+                case "LOI D'OHM":
+                    page = 21;
                     break;
             }
             loadPage(page);

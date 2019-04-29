@@ -27,6 +27,7 @@ import main.Main;
 import java.io.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 
 public class SandboxController {
@@ -98,6 +99,7 @@ public class SandboxController {
         rootScrollPane.getChildren().add(new Resisteur());
         rootScrollPane.getChildren().add(new Voltmetre());
         rootScrollPane.getChildren().add(new Switch());
+        rootScrollPane.getChildren().add(new Condensateur());
         menuTouteComposantes = true;
     }
 
@@ -242,10 +244,15 @@ public class SandboxController {
                 rootScrollPane.getChildren().add(3, miseAterre2);
                 //updateCircuit();
                 break;
-            case "MOTEUR":
-                //rootScrollPane.getChildren().add(0, new Fil());
+            case "CONDENSATEUR":
+                rootScrollPane.getChildren().add(0, new Condensateur());
+                Condensateur condensateur = new Condensateur();
+                condensateur.setImage(condensateur.getTabVariante()[1]);
+                condensateur.setDirection(1);
+                rootScrollPane.getChildren().add(1, condensateur);
+                //updateCircuit();
                 break;
-            case "OHMÈTRE":
+            case "OHMMÈTRE":
                 rootScrollPane.getChildren().add(0, new Ohmetre());
                 Ohmetre ohmetre = new Ohmetre();
                 ohmetre.setImage(ohmetre.getTabVariante()[1]);
@@ -253,7 +260,7 @@ public class SandboxController {
                 rootScrollPane.getChildren().add(1, ohmetre);
                 //updateCircuit();
                 break;
-            case "RESISTEUR":
+            case "RÉSISTEUR":
                 rootScrollPane.getChildren().add(0, new Resisteur());
                 Resisteur resisteur = new Resisteur();
                 resisteur.setImage(resisteur.getTabVariante()[1]);
@@ -367,13 +374,21 @@ public class SandboxController {
                     });
                     contextMenu.getItems().addAll(itemTension);
                     break;
-                case "RESISTEUR":
+                case "RÉSISTEUR":
                     MenuItem itemResistance = new MenuItem("Modifier la résistance");
                     itemResistance.setOnAction(event -> {
                         changerValeur(source, "la résistance");
                         updateCircuit();
                     });
                     contextMenu.getItems().add(itemResistance);
+                    break;
+                case "CONDENSATEUR":
+                    MenuItem itemCapacite = new MenuItem("Modifier la capacité");
+                    itemCapacite.setOnAction(event -> {
+                        changerValeur(source, "la capacité");
+                        updateCircuit();
+                    });
+                    contextMenu.getItems().add(itemCapacite);
                     break;
                 case "HAUT-PARLEUR":
                     MenuItem itemMusique = new MenuItem("Modifier la musique");
@@ -537,14 +552,14 @@ public class SandboxController {
                     goBack();
                 }
                 break;
-            case "OHMÈTRE":
+            case "OHMMÈTRE":
                 if (!menuTouteComposantes) {
                     changerMenuComposante(new Ohmetre());
                 } else {
                     goBack();
                 }
                 break;
-            case "RESISTEUR":
+            case "RÉSISTEUR":
                 if (!menuTouteComposantes) {
                     changerMenuComposante(new Resisteur());
                 } else {
@@ -572,9 +587,9 @@ public class SandboxController {
                     goBack();
                 }
                 break;
-            case "MOTEUR":
+            case "CONDENSATEUR":
                 if (!menuTouteComposantes) {
-                    changerMenuComposante(new Moteur());
+                    changerMenuComposante(new Condensateur());
                 } else {
                     goBack();
                 }
@@ -609,10 +624,10 @@ public class SandboxController {
             case "MISE À TERRE":
                 copie = new MiseAterre(new ComposanteSave(source), target.getRow(), target.getCol());
                 break;
-            case "OHMÈTRE":
+            case "OHMMÈTRE":
                 copie = new Ohmetre(new ComposanteSave(source), target.getRow(), target.getCol());
                 break;
-            case "RESISTEUR":
+            case "RÉSISTEUR":
                 copie = new Resisteur(new ComposanteSave(source), target.getRow(), target.getCol());
                 break;
             case "VOLTMÈTRE":
@@ -624,8 +639,8 @@ public class SandboxController {
             case "HAUT-PARLEUR":
                 copie = new HautParleur(new ComposanteSave(source), target.getRow(), target.getCol());
                 break;
-            case "MOTEUR":
-                copie = new Moteur();
+            case "CONDENSATEUR":
+                copie = new Condensateur(new ComposanteSave(source), target.getRow(), target.getCol());
                 break;
         }
         gridPaneSandBox.getChildren().remove(target);
@@ -718,7 +733,6 @@ public class SandboxController {
                     if (!circuits.get(z).isIncomplet()) {
                         creerBranches(z);
                         creerMailles(z);
-                        arrangerBranchesAdjacentes(z);
                     }
                 }
 
@@ -1363,6 +1377,9 @@ public class SandboxController {
                             }else if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof MiseAterre && circuits.get(numeroDeCircuit).getMiseAterre()!=null){
                                 circuits.get(numeroDeCircuit).setmATMultiples(true);
                             }
+                            if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Condensateur){
+                                brancheTemporaire.getCondensateurs().add(((Condensateur) getNodeFromGridPane(gridPaneSandBox, col, row)));
+                            }
                         }
 
 
@@ -1598,16 +1615,16 @@ public class SandboxController {
         System.out.println(" ");
     }
 
-    private static void arrangerBranchesAdjacentes(int numeroDeCircuit) {
-        for (int i = 0; i < circuits.get(numeroDeCircuit).getNoeuds().size(); i++) {
+    public static void arrangerBranchesAdjacentes(Circuit circuit) {
+        for (int i = 0; i < circuit.getNoeuds().size(); i++) {
             ArrayList<Branche> listeTemp = new ArrayList<>();
-            listeTemp.addAll(circuits.get(numeroDeCircuit).getNoeuds().get(i).getBranchesAdjacentes());
-            circuits.get(numeroDeCircuit).getNoeuds().get(i).getBranchesAdjacentes().clear();
+            listeTemp.addAll(circuit.getNoeuds().get(i).getBranchesAdjacentes());
+            circuit.getNoeuds().get(i).getBranchesAdjacentes().clear();
 
-            for (int j = 0; j < circuits.get(numeroDeCircuit).getNoeuds().get(i).getDirections().length; j++) {
-                String dir = circuits.get(numeroDeCircuit).getNoeuds().get(i).getDirections()[j];
-                int row = circuits.get(numeroDeCircuit).getNoeuds().get(i).getComposanteNoeud().getRow();
-                int col = circuits.get(numeroDeCircuit).getNoeuds().get(i).getComposanteNoeud().getCol();
+            for (int j = 0; j < circuit.getNoeuds().get(i).getDirections().length; j++) {
+                String dir = circuit.getNoeuds().get(i).getDirections()[j];
+                int row = circuit.getNoeuds().get(i).getComposanteNoeud().getRow();
+                int col = circuit.getNoeuds().get(i).getComposanteNoeud().getCol();
 
                 switch (dir) {
                     case "N":
@@ -1632,12 +1649,12 @@ public class SandboxController {
 
                         if (composante == listeTemp.get(k).getComposantesBranche().get(l)) {
                             finished = true;
-                            circuits.get(numeroDeCircuit).getNoeuds().get(i).getBranchesAdjacentes().add(listeTemp.get(k));
+                            circuit.getNoeuds().get(i).getBranchesAdjacentes().add(listeTemp.get(k));
                         }
                     }
                 }
-                if (circuits.get(numeroDeCircuit).getNoeuds().get(i).getBranchesAdjacentes().size()==j){
-                    circuits.get(numeroDeCircuit).getNoeuds().get(i).getBranchesAdjacentes().add(null);
+                if (circuit.getNoeuds().get(i).getBranchesAdjacentes().size()==j){
+                    circuit.getNoeuds().get(i).getBranchesAdjacentes().add(null);
                 }
             }
         }
@@ -1700,6 +1717,10 @@ public class SandboxController {
 
                     if (((getNodeFromGridPane(gridPaneSandBox, col, row))) instanceof Diode) {
                         brancheTemporaire.getDiodes().add(((Diode) (getNodeFromGridPane(gridPaneSandBox, col, row))));
+                    }
+
+                    if (((getNodeFromGridPane(gridPaneSandBox, col, row))) instanceof Condensateur) {
+                        brancheTemporaire.getCondensateurs().add(((Condensateur) (getNodeFromGridPane(gridPaneSandBox, col, row))));
                     }
 
                     //Cherche si la composante suivante est rattachée à la précédente et check la prochaine direction
@@ -1956,6 +1977,8 @@ public class SandboxController {
                 composante.setAmperage(Double.parseDouble(valeur));
             else if (string.equals("la tension"))
                 composante.setVolt(Double.parseDouble(valeur));
+            else if (string.equals("la capacité"))
+                composante.setCapacite(Double.parseDouble(valeur));
             else
                 composante.setResistance(Double.parseDouble(valeur));
             composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + df.format(composante.getAmperage()) + "\nTension: " + df.format(composante.getVolt()) + "\nRésistance: " + df.format(composante.getResistance()));
@@ -2026,10 +2049,10 @@ public class SandboxController {
                             case "MISE À TERRE":
                                 placerComposantes(new MiseAterre(gridPaneSave[i][j], i, j), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
                                 break;
-                            case "OHMÈTRE":
+                            case "OHMMÈTRE":
                                 placerComposantes(new Ohmetre(gridPaneSave[i][j], i, j), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
                                 break;
-                            case "RESISTEUR":
+                            case "RÉSISTEUR":
                                 placerComposantes(new Resisteur(gridPaneSave[i][j], i, j), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
                                 break;
                             case "VOLTMÈTRE":
@@ -2041,8 +2064,8 @@ public class SandboxController {
                             case "HAUT-PARLEUR":
                                 placerComposantes(new HautParleur(gridPaneSave[i][j], i, j), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
                                 break;
-                            case "MOTEUR":
-                                //placerComposantes(new Moteur(gridPaneSave[i][j], i, j),(Composante) getNodeFromGridPane(gridPaneSandBox, i,j));
+                            case "CONDENSATEUR":
+                                placerComposantes(new Condensateur(gridPaneSave[i][j], i, j), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
                                 break;
                             case "VIDE":
                                 placerComposantes(new ComposanteVide(), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
@@ -2095,10 +2118,10 @@ public class SandboxController {
                     case "MISE À TERRE":
                         placerComposantes(new MiseAterre(gridPaneSave[i][j], i, j), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
                         break;
-                    case "OHMÈTRE":
+                    case "OHMMÈTRE":
                         placerComposantes(new Ohmetre(gridPaneSave[i][j], i, j), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
                         break;
-                    case "RESISTEUR":
+                    case "RÉSISTEUR":
                         placerComposantes(new Resisteur(gridPaneSave[i][j], i, j), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
                         break;
                     case "VOLTMÈTRE":
@@ -2110,8 +2133,8 @@ public class SandboxController {
                     case "HAUT-PARLEUR":
                         placerComposantes(new HautParleur(gridPaneSave[i][j], i, j), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
                         break;
-                    case "MOTEUR":
-                        //placerComposantes(new Moteur(gridPaneSave[i][j], i, j),(Composante) getNodeFromGridPane(gridPaneSandBox, i,j));
+                    case "CONDENSATEUR":
+                        placerComposantes(new Condensateur(gridPaneSave[i][j], i, j), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));
                         break;
                     case "VIDE":
                         placerComposantes(new ComposanteVide(), (Composante) getNodeFromGridPane(gridPaneSandBox, i, j));

@@ -1,9 +1,6 @@
 package concepts;
 
-import composantes.Composante;
-import composantes.Diode;
-import composantes.Resisteur;
-import composantes.Source;
+import composantes.*;
 
 import java.util.ArrayList;
 
@@ -13,7 +10,9 @@ public class Branche {
     private ArrayList<Source> sources = new ArrayList<>();
     private ArrayList<Noeud> noeudsAdjacents = new ArrayList<>();
     private ArrayList<Diode> diodes = new ArrayList<>();
+    private ArrayList<Condensateur> condensateurs = new ArrayList<>();
     private double intensite;
+    private double capacite = 0;
     private boolean intensiteTrouvee;
     private Noeud noeudDirectionnel;
     private double diviseur;
@@ -49,6 +48,14 @@ public class Branche {
 
     public void setIntensite(double intensite) {
         this.intensite = intensite;
+    }
+
+    public double getCapacite() {
+        return capacite;
+    }
+
+    public void setCapacite(double capacite) {
+        this.capacite = capacite;
     }
 
     public ArrayList<Noeud> getNoeudsAdjacents() {
@@ -89,5 +96,13 @@ public class Branche {
 
     public void setDiodes(ArrayList<Diode> diodes) {
         this.diodes = diodes;
+    }
+
+    public ArrayList<Condensateur> getCondensateurs() {
+        return condensateurs;
+    }
+
+    public void setCondensateurs(ArrayList<Condensateur> condensateurs) {
+        this.condensateurs = condensateurs;
     }
 }

@@ -9,12 +9,14 @@ public class ComposanteSave implements Serializable {
     private int direction;
     private double volt;
     private double resistance;
+    private double capacite;
 
     public ComposanteSave(Composante composante) {
         this.nom = composante.getNom();
         this.direction = composante.getDirection();
         this.volt = composante.getVolt();
         this.resistance = composante.getResistance();
+        this.capacite = composante.getCapacite();
     }
 
     public String getNom() {
@@ -47,5 +49,13 @@ public class ComposanteSave implements Serializable {
 
     public void setResistance(double resistance) {
         this.resistance = resistance;
+    }
+
+    public double getCapacite() {
+        return capacite;
+    }
+
+    public void setCapacite(double capacite) {
+        this.capacite = capacite;
     }
 }
