@@ -35,6 +35,7 @@ public class Source extends ComposanteActivable {
                 "qui convertit l'énergie chimique en énergie électrique.\n" +
                 "Elle fournit une intensité au circuit électrique.";
         tooltip = new Tooltip("Fournit l'intensité au circuit");
+        tooltip.setStyle("-fx-font-size: 20");
         Tooltip.install(this,tooltip);
         nom = "Source";
         initializeImage();

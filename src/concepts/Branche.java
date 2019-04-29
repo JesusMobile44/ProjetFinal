@@ -14,6 +14,7 @@ public class Branche {
     private ArrayList<Noeud> noeudsAdjacents = new ArrayList<>();
     private ArrayList<Diode> diodes = new ArrayList<>();
     private double intensite;
+    private double capacite = 0;
     private boolean intensiteTrouvee;
     private Noeud noeudDirectionnel;
     private double diviseur;
@@ -49,6 +50,14 @@ public class Branche {
 
     public void setIntensite(double intensite) {
         this.intensite = intensite;
+    }
+
+    public double getCapacite() {
+        return capacite;
+    }
+
+    public void setCapacite(double capacite) {
+        this.capacite = capacite;
     }
 
     public ArrayList<Noeud> getNoeudsAdjacents() {

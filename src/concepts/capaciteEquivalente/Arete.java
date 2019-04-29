@@ -9,10 +9,6 @@ public class Arete {
         this.capacite = capacite;
     }
 
-    public Arete(){
-        capacite = 0;
-    }
-
     public double getCapacite() {
         return capacite;
     }

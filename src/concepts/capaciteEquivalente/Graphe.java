@@ -24,6 +24,7 @@ public class Graphe {
                 progress = false;
         }
         capaciteEq = sommets.get(0).getAretes().get(0).getCapacite();
+        System.out.println();
     }
 
     void verifierDoublon(int i) {
@@ -61,15 +62,26 @@ public class Graphe {
     }
 
     void reduction(Sommet sommet) {
-        double capacite = 1 / (1 / sommet.getAretes().get(0).getCapacite() + 1 / sommet.getAretes().get(1).getCapacite());
+        double capacite;
+        if (sommet.getAretes().get(0).getCapacite() != 0 && sommet.getAretes().get(1).getCapacite() != 0)
+            capacite = 1 / (1 / sommet.getAretes().get(0).getCapacite() + 1 / sommet.getAretes().get(1).getCapacite());
+        else if (sommet.getAretes().get(0).getCapacite() == 0)
+            capacite = sommet.getAretes().get(0).getCapacite();
+        else if (sommet.getAretes().get(1).getCapacite() == 0)
+            capacite = sommet.getAretes().get(1).getCapacite();
+        else
+            capacite = 0;
         Arete arete = new Arete(capacite);
         sommet.getSommets().get(0).getSommets().add(sommet.getSommets().get(1));
-        sommet.getSommets().get(1).getSommets().add(sommet.getSommets().get(0));
-        for (int i = sommet.getSommets().size()-1; i > -1; i--) {
+        if (sommet.getSommets().get(0) != sommet.getSommets().get(1))
+            sommet.getSommets().get(1).getSommets().add(sommet.getSommets().get(0));
+        for (int i = sommet.getSommets().size() - 1; i > -1; i--) {
             sommet.getSommets().get(i).getAretes().remove(sommet.getAretes().get(i));
             sommet.getSommets().get(i).getSommets().remove(sommet);
-            sommet.getSommets().get(i).getAretes().add(arete);
         }
+        sommet.getSommets().get(0).getAretes().add(arete);
+        if (sommet.getSommets().get(0) != sommet.getSommets().get(1))
+            sommet.getSommets().get(1).getAretes().add(arete);
         changement = true;
     }
 
@@ -81,7 +93,7 @@ public class Graphe {
         for (int i = 0; i < noeuds.size(); i++)
             this.sommets.add(new Sommet());
         for (int i = 0; i < branches.size(); i++)
-            aretesGraphe.add(new Arete());  //aretesGraphe.add(new Arete(branches.get(i).getCapacite));
+            aretesGraphe.add(new Arete(branches.get(i).getCapacite()));
         for (int i = 0; i < noeuds.size(); i++)
             for (int j = 0; j < noeuds.get(i).getBranchesAdjacentes().size(); j++) {
                 for (int k = 0; k < branches.size(); k++)
@@ -89,8 +101,32 @@ public class Graphe {
                         this.sommets.get(i).getAretes().add(aretesGraphe.get(k));
                 for (int k = 0; k < noeuds.get(i).getBranchesAdjacentes().get(j).getNoeudsAdjacents().size(); k++)
                     for (int l = 0; l < noeuds.size(); l++)
-                        if (noeuds.get(i).getBranchesAdjacentes().get(j).getNoeudsAdjacents().get(k) == noeuds.get(l))
+                        if (noeuds.get(i).getBranchesAdjacentes().get(j).getNoeudsAdjacents().get(k) == noeuds.get(l) && noeuds.get(i).getBranchesAdjacentes().get(j).getNoeudsAdjacents().get(k) != noeuds.get(i))
                             this.sommets.get(i).getSommets().add(this.sommets.get(l));
             }
+    }
+
+    public ArrayList<Sommet> getSommets() {
+        return sommets;
+    }
+
+    public void setSommets(ArrayList<Sommet> sommets) {
+        this.sommets = sommets;
+    }
+
+    public double getCapaciteEq() {
+        return capaciteEq;
+    }
+
+    public void setCapaciteEq(double capaciteEq) {
+        this.capaciteEq = capaciteEq;
+    }
+
+    public boolean isChangement() {
+        return changement;
+    }
+
+    public void setChangement(boolean changement) {
+        this.changement = changement;
     }
 }

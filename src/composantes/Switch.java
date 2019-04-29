@@ -35,6 +35,7 @@ public class Switch extends Composante{
         description = "Une Switch, ou  intérupteur, est une composante\n" +
                 "le passage du flux dans une direction ou dans une autre";
         tooltip = new Tooltip("Cliquer pour changer de direction");
+        tooltip.setStyle("-fx-font-size: 20");
         Tooltip.install(this,tooltip);
         nom = "Switch";
         initializeImage();
