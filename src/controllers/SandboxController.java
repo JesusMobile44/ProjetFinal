@@ -675,17 +675,6 @@ public class SandboxController {
                 }
             }
 
-
-                /*
-        for (int i=0; i < circuits.size(); i++){
-                    Circuit circuit1 = circuits.get(i);
-                    if ((circuit1.getBranches().size() == 0  && circuit1.getNoeuds().size() != 0) || circuit1.getComposantes().size() ==0) {
-                        circuits.remove(circuit1);
-                    }
-        }
-        */
-
-
         for (int z = 0; z < circuits.size(); z++) {
 
 
@@ -944,7 +933,11 @@ public class SandboxController {
             }
         }
 
-        arrangerMailles(numeroDeCircuit);
+
+        if (circuits.get(numeroDeCircuit).getMailles().size()>=2){
+            arrangerMailles(numeroDeCircuit);
+        }
+
         circuits.get(numeroDeCircuit).setIncomplet(false);
         System.out.println("Mailles Complètes");
     }
@@ -1312,6 +1305,7 @@ public class SandboxController {
                 String dir = null;
                 ArrayList<Source> sourcesSeules = new ArrayList<>();
                 ArrayList<Diode> diodesSeules = new ArrayList<>();
+                error = false;
 
                 if (!actuel.getDirectionsAnalysees()[j]) {
 
@@ -1563,11 +1557,6 @@ public class SandboxController {
                             actuel.getBranchesAdjacentes().add(brancheTemporaire);
                             brancheTemporaire.getNoeudsAdjacents().add(actuel);
                         }
-                        /*
-                        } else {
-                            error = true;
-                        }
-                        */
                     }
 
                     if (!error) {
