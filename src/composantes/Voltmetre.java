@@ -27,6 +27,7 @@ public class Voltmetre extends Composante {
         description = "Un Voltmètre est un appareil qui permet de mesurer la tension entre deux points.\n" +
                 "Il doit être branché en parallèle.";
         tooltip = new Tooltip("Mesure la tension");
+        tooltip.setStyle("-fx-font-size: 20");
         Tooltip.install(this,tooltip);
         nom = "Voltmètre";
         initializeImage();

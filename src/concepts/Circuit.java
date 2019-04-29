@@ -1,6 +1,7 @@
 package concepts;
 
 import composantes.*;
+import concepts.capaciteEquivalente.Graphe;
 import controllers.SandboxController;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class Circuit {
     private ArrayList<Source> sources = new ArrayList<>();
     private MiseAterre miseAterre = null;
     private double resistanceEquivalente;
+    private double capaciteEquivalente;
     private boolean enSerie;
     private boolean incomplet;
     private boolean mATMultiples;
@@ -31,12 +33,12 @@ public class Circuit {
             calculSerie();
         } else {
             boolean okDiode = false;
-            while (!okDiode){
+            while (!okDiode) {
                 okDiode = true;
                 calculParallele();
-                for (int i=0; i<this.getBranches().size(); i++){
-                    for (int j=0; j<this.getBranches().get(i).getDiodes().size(); j++){
-                        if (this.getBranches().get(i).getDiodes().get(j).getNoeudDirectionnel() == this.getBranches().get(i).getNoeudDirectionnel()){
+                for (int i = 0; i < this.getBranches().size(); i++) {
+                    for (int j = 0; j < this.getBranches().get(i).getDiodes().size(); j++) {
+                        if (this.getBranches().get(i).getDiodes().get(j).getNoeudDirectionnel() == this.getBranches().get(i).getNoeudDirectionnel()) {
                             retirerBrancheDiode(this.getBranches().get(i));
                             this.getBranches().remove(i);
                             okDiode = false;
@@ -46,30 +48,32 @@ public class Circuit {
             }
         }
 
-        if (this.enSerie && this.getBranches().get(0).getIntensite()==0){
-        }else {
+        if (this.enSerie && this.getBranches().get(0).getIntensite() == 0) {
+        } else {
             determinationSens();
         }
 
-        if (!this.mATMultiples){
+        if (!this.mATMultiples) {
             creationCircuitMAT(this.miseAterre);
         }
+
+        calculCapacite();
 
         reloadTooltip();
     }
 
-    private static void creationCircuitMAT(MiseAterre miseAterre){
-        if (miseAterre == null){
+    private static void creationCircuitMAT(MiseAterre miseAterre) {
+        if (miseAterre == null) {
 
         }
 
 
     }
 
-    private static void retirerBrancheDiode(Branche branche){
-        for (Composante composante:
-             branche.getComposantesBranche()) {
-            if (!(composante instanceof Source)){
+    private static void retirerBrancheDiode(Branche branche) {
+        for (Composante composante :
+                branche.getComposantesBranche()) {
+            if (!(composante instanceof Source)) {
                 composante.setVolt(0);
             }
             composante.setAmperage(0);
@@ -214,7 +218,7 @@ public class Circuit {
             resiteur.setVolt(resiteur.getAmperage() * resiteur.getResistance());
         }
 
-        if (this.getSources().size() == 1){
+        if (this.getSources().size() == 1) {
             this.setResistanceEquivalente(this.getSources().get(0).getVolt() * this.getSources().get(0).getAmperage());
         }
     }
@@ -225,23 +229,22 @@ public class Circuit {
         }
         float tensionTotaleSource = 0;
         for (int i = 0; i < this.getSources().size(); i++) {
-            if (this.getSources().get(i).isInverseEnSerie()){
+            if (this.getSources().get(i).isInverseEnSerie()) {
                 tensionTotaleSource -= this.getSources().get(i).getVolt();
-            }
-            else {
+            } else {
                 tensionTotaleSource += this.getSources().get(i).getVolt();
             }
         }
 
         this.getBranches().get(0).setIntensite((tensionTotaleSource) / (resistanceEquivalente));
 
-        if (this.getBranches().get(0).getIntensite() <0){
-            this.getBranches().get(0).setIntensite(this.getBranches().get(0).getIntensite()*-1);
-            for (Diode diode:
-                 this.getBranches().get(0).getDiodes()) {
-                if (diode.isInverseEnSerie()){
+        if (this.getBranches().get(0).getIntensite() < 0) {
+            this.getBranches().get(0).setIntensite(this.getBranches().get(0).getIntensite() * -1);
+            for (Diode diode :
+                    this.getBranches().get(0).getDiodes()) {
+                if (diode.isInverseEnSerie()) {
                     diode.setInverseEnSerie(false);
-                }else {
+                } else {
                     diode.setInverseEnSerie(true);
                 }
             }
@@ -256,22 +259,43 @@ public class Circuit {
 
         boolean diodeInverse = true;
 
-        if (this.getBranches().get(0).getDiodes().size() != 0){
+        if (this.getBranches().get(0).getDiodes().size() != 0) {
             diodeInverse = false;
-            for (Diode diode:
+            for (Diode diode :
                     this.getBranches().get(0).getDiodes()) {
 
-                if (diode.isInverseEnSerie()){
+                if (diode.isInverseEnSerie()) {
                     diodeInverse = true;
                 }
             }
         }
 
 
-        if (!diodeInverse){
+        if (!diodeInverse) {
             retirerBrancheDiode(this.getBranches().get(0));
             this.getBranches().get(0).setIntensite(0);
         }
+    }
+
+    private void calculCapacite() {
+        if (!enSerie) {
+            for (int i = 0; i < branches.size(); i++) {
+                for (int j = 0; j < branches.get(i).getComposantesBranche().size(); j++)
+                    if (branches.get(i).getComposantesBranche().get(j) instanceof Condensateur)
+                        branches.get(i).setCapacite(branches.get(i).getCapacite() + 1 / branches.get(i).getComposantesBranche().get(j).getCapacite());
+                if (branches.get(i).getCapacite()!=0)
+                    branches.get(i).setCapacite(1 / branches.get(i).getCapacite());
+            }
+            capaciteEquivalente = new Graphe(this).getCapaciteEq();
+        } else {
+            for (int i = 0; i < composantes.size(); i++) {
+                if (composantes.get(i) instanceof Condensateur)
+                    capaciteEquivalente += 1 / composantes.get(i).getCapacite();
+            }
+            if (capaciteEquivalente!=0)
+                capaciteEquivalente = 1 / capaciteEquivalente;
+        }
+        System.out.println(capaciteEquivalente);
     }
 
     private void determinationSens() {
@@ -461,7 +485,7 @@ public class Circuit {
         }
     }
 
-    private void switchSensCourantParallele(String dir, Noeud initial){
+    private void switchSensCourantParallele(String dir, Noeud initial) {
         int row = initial.getComposanteNoeud().getRow();
         int col = initial.getComposanteNoeud().getCol();
 
@@ -486,109 +510,109 @@ public class Circuit {
                 break;
         }
 
-            while (!finished) {
+        while (!finished) {
 
-                Composante composante = ((Composante) SandboxController.getNodeFromGridPane(SandboxController.gridPaneSandBox, col, row));
+            Composante composante = ((Composante) SandboxController.getNodeFromGridPane(SandboxController.gridPaneSandBox, col, row));
 
-                switch (dir.toUpperCase()) {
-                    case "N":
-                        switch (composante.getTabNomVariante()[composante.getDirection()]) {
-                            case "NS":
-                            case "SN":
-                                composante.setSensCourant("↓");
-                                dir = "N";
-                                row++;
-                                break;
-                            case "NE":
-                                composante.setSensCourant("→");
-                                dir = "O";
-                                col++;
-                                break;
-                            case "NO":
-                                composante.setSensCourant("←");
-                                dir = "E";
-                                col--;
-                                break;
-                            default:
-                                composante.setSensCourant("∅");
-                                finished = true;
-                                break;
-                        }
-                        break;
-                    case "E":
-                        switch (composante.getTabNomVariante()[composante.getDirection()]) {
-                            case "NE":
-                                composante.setSensCourant("↑");
-                                dir = "S";
-                                row--;
-                                break;
-                            case "SE":
-                                composante.setSensCourant("↓");
-                                dir = "N";
-                                row++;
-                                break;
-                            case "OE":
-                            case "EO":
-                                composante.setSensCourant("←");
-                                dir = "E";
-                                col--;
-                                break;
-                            default:
-                                composante.setSensCourant("∅");
-                                finished = true;
-                                break;
-                        }
-                        break;
-                    case "S":
-                        switch (composante.getTabNomVariante()[composante.getDirection()]) {
-                            case "NS":
-                            case "SN":
-                                composante.setSensCourant("↑");
-                                dir = "S";
-                                row--;
-                                break;
-                            case "SE":
-                                composante.setSensCourant("→");
-                                dir = "O";
-                                col++;
-                                break;
-                            case "SO":
-                                composante.setSensCourant("←");
-                                dir = "E";
-                                col--;
-                                break;
-                            default:
-                                composante.setSensCourant("∅");
-                                finished = true;
-                                break;
-                        }
-                        break;
-                    case "O":
-                        switch (composante.getTabNomVariante()[composante.getDirection()]) {
-                            case "NO":
-                                composante.setSensCourant("↑");
-                                dir = "S";
-                                row--;
-                                break;
-                            case "SO":
-                                composante.setSensCourant("↓");
-                                dir = "N";
-                                row++;
-                                break;
-                            case "OE":
-                            case "EO":
-                                composante.setSensCourant("→");
-                                dir = "O";
-                                col++;
-                                break;
-                            default:
-                                composante.setSensCourant("∅");
-                                finished = true;
-                                break;
-                        }
-                        break;
-                }
+            switch (dir.toUpperCase()) {
+                case "N":
+                    switch (composante.getTabNomVariante()[composante.getDirection()]) {
+                        case "NS":
+                        case "SN":
+                            composante.setSensCourant("↓");
+                            dir = "N";
+                            row++;
+                            break;
+                        case "NE":
+                            composante.setSensCourant("→");
+                            dir = "O";
+                            col++;
+                            break;
+                        case "NO":
+                            composante.setSensCourant("←");
+                            dir = "E";
+                            col--;
+                            break;
+                        default:
+                            composante.setSensCourant("∅");
+                            finished = true;
+                            break;
+                    }
+                    break;
+                case "E":
+                    switch (composante.getTabNomVariante()[composante.getDirection()]) {
+                        case "NE":
+                            composante.setSensCourant("↑");
+                            dir = "S";
+                            row--;
+                            break;
+                        case "SE":
+                            composante.setSensCourant("↓");
+                            dir = "N";
+                            row++;
+                            break;
+                        case "OE":
+                        case "EO":
+                            composante.setSensCourant("←");
+                            dir = "E";
+                            col--;
+                            break;
+                        default:
+                            composante.setSensCourant("∅");
+                            finished = true;
+                            break;
+                    }
+                    break;
+                case "S":
+                    switch (composante.getTabNomVariante()[composante.getDirection()]) {
+                        case "NS":
+                        case "SN":
+                            composante.setSensCourant("↑");
+                            dir = "S";
+                            row--;
+                            break;
+                        case "SE":
+                            composante.setSensCourant("→");
+                            dir = "O";
+                            col++;
+                            break;
+                        case "SO":
+                            composante.setSensCourant("←");
+                            dir = "E";
+                            col--;
+                            break;
+                        default:
+                            composante.setSensCourant("∅");
+                            finished = true;
+                            break;
+                    }
+                    break;
+                case "O":
+                    switch (composante.getTabNomVariante()[composante.getDirection()]) {
+                        case "NO":
+                            composante.setSensCourant("↑");
+                            dir = "S";
+                            row--;
+                            break;
+                        case "SO":
+                            composante.setSensCourant("↓");
+                            dir = "N";
+                            row++;
+                            break;
+                        case "OE":
+                        case "EO":
+                            composante.setSensCourant("→");
+                            dir = "O";
+                            col++;
+                            break;
+                        default:
+                            composante.setSensCourant("∅");
+                            finished = true;
+                            break;
+                    }
+                    break;
             }
+        }
 
     }
 
@@ -607,9 +631,10 @@ public class Circuit {
                     break;
                 case "SOURCE":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nTension: " + SandboxController.df.format(composante.getVolt()) + "\nSens du courant: " + composante.getSensCourant());
-                    if (this.getResistanceEquivalente() != 0){
-                        composante.getTooltip().setText(composante.getTooltip().getText() + "\nRésistance équivalente : "+ SandboxController.df.format(this.getResistanceEquivalente()));
-                    }
+                    if (this.getResistanceEquivalente() != 0)
+                        composante.getTooltip().setText(composante.getTooltip().getText() + "\nRésistance équivalente : " + SandboxController.df.format(this.getResistanceEquivalente()));
+                    if (this.getCapaciteEquivalente() != 0)
+                        composante.getTooltip().setText(composante.getTooltip().getText() + "\nCapacité équivalente : " + SandboxController.df.format(this.getCapaciteEquivalente()));
                     break;
                 case "DIODE":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant());
@@ -638,8 +663,8 @@ public class Circuit {
                 case "HAUT-PARLEUR":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant());
                     break;
-                case "MOTEUR":
-                    composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant());
+                case "CONDENSATEUR":
+                    composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nCapacité: " + SandboxController.df.format(composante.getCapacite()) + "\nSens du courant: " + composante.getSensCourant());
                     break;
             }
             //composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nTension: " + SandboxController.df.format(composante.getVolt()) + "\nRésistance: " + SandboxController.df.format(composante.getResistance()));
@@ -800,6 +825,14 @@ public class Circuit {
 
     public void setResistanceEquivalente(double resistanceEquivalente) {
         this.resistanceEquivalente = resistanceEquivalente;
+    }
+
+    public double getCapaciteEquivalente() {
+        return capaciteEquivalente;
+    }
+
+    public void setCapaciteEquivalente(double capaciteEquivalente) {
+        this.capaciteEquivalente = capaciteEquivalente;
     }
 
     public boolean isIncomplet() {

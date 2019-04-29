@@ -26,8 +26,9 @@ public class Interrupteur extends ComposanteActivable {
         tabNomVariante[2] = "OE";
         tabNomVariante[3] = "OFF";
         tabVariante = new Image[tabNomVariante.length];
-        description = "";
-        tooltip = new Tooltip("Tooltip Interrupteur");
+        description = "Un interrupteur est un organe permettant d'interrompre ou d'autoriser le passage d'un flux électrique.";
+        tooltip = new Tooltip("Peut alterner entre l'état Ouvert et Fermer");
+        tooltip.setStyle("-fx-font-size: 20");
         Tooltip.install(this,tooltip);
         nom = "Interrupteur";
         initializeImage();

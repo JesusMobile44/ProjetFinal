@@ -34,6 +34,7 @@ public class HautParleur extends ComposanteActivable {
         tabVariante = new Image[tabNomVariante.length];
         description = "Un haut-parleur produit des sons à partir d'un signal électrique.";
         tooltip = new Tooltip("Produit du son");
+        tooltip.setStyle("-fx-font-size: 20");
         Tooltip.install(this,tooltip);
         nom = "Haut-Parleur";
         initializeImage();
