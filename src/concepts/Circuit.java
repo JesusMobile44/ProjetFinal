@@ -1,6 +1,7 @@
 package concepts;
 
 import composantes.*;
+import concepts.capaciteEquivalente.Graphe;
 import controllers.SandboxController;
 
 import java.util.ArrayList;
@@ -54,6 +55,8 @@ public class Circuit {
         if (!this.mATMultiples){
             creationCircuitMAT(this.miseAterre);
         }
+
+        //Graphe graphe = new Graphe(this);
 
         reloadTooltip();
     }
