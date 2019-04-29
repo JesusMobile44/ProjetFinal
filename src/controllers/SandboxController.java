@@ -28,6 +28,7 @@ import main.Main;
 import java.io.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 
 public class SandboxController {
@@ -405,6 +406,7 @@ public class SandboxController {
                     itemMusique.setOnAction(event -> {
                         MediaPlayer mediaPlayer = ((HautParleur) source).getMediaPlayer();
                         FileChooser fc = new FileChooser();
+                        fc.setInitialDirectory(new File("src/autre/musiques"));
                         fc.setTitle("Veuillez sélectionner un fichier");
                         ((HautParleur) source).setMediaPlayer(new MediaPlayer(new Media(fc.showOpenDialog(Main.getStage()).toURI().toString())));
                         if (((ComposanteActivable) source).isActive()) {
@@ -700,17 +702,6 @@ public class SandboxController {
                 }
             }
 
-
-                /*
-        for (int i=0; i < circuits.size(); i++){
-                    Circuit circuit1 = circuits.get(i);
-                    if ((circuit1.getBranches().size() == 0  && circuit1.getNoeuds().size() != 0) || circuit1.getComposantes().size() ==0) {
-                        circuits.remove(circuit1);
-                    }
-        }
-        */
-
-
         for (int z = 0; z < circuits.size(); z++) {
 
 
@@ -865,24 +856,30 @@ public class SandboxController {
                             brancheTemporaire = noeudTemporaire.getBranchesAdjacentes().get(j);
                             noeudTemporaire.getBranchesAnalysees()[j] = true;
 
-                            if (brancheTemporaire.getNoeudsAdjacents().get(0) == noeudTemporaire) {
-                                noeudTemporaire = brancheTemporaire.getNoeudsAdjacents().get(1);
-                            } else {
-                                noeudTemporaire = brancheTemporaire.getNoeudsAdjacents().get(0);
-                            }
+                            //if (brancheTemporaire != null){
+                                if (brancheTemporaire.getNoeudsAdjacents().get(0) == noeudTemporaire) {
+                                    noeudTemporaire = brancheTemporaire.getNoeudsAdjacents().get(1);
+                                } else {
+                                    noeudTemporaire = brancheTemporaire.getNoeudsAdjacents().get(0);
+                                }
 
-                            mailleTemporaire.getBranchesMaille().add(brancheTemporaire);
-                            mailleTemporaire.getNoeudsMaille().add(noeudTemporaire);
+                                mailleTemporaire.getBranchesMaille().add(brancheTemporaire);
+                                mailleTemporaire.getNoeudsMaille().add(noeudTemporaire);
 
-                            for (int k = 0; k < noeudTemporaire.getBranchesAdjacentes().size(); k++) {
-                                for (int l = 0; l < mailleTemporaire.getBranchesMaille().size(); l++) {
-                                    if (noeudTemporaire.getBranchesAdjacentes().get(k) == mailleTemporaire.getBranchesMaille().get(l)
-                                            && noeudTemporaire.getBranchesAdjacentes().get(k) != brancheTemporaire
-                                            && noeudTemporaire.getBranchesAdjacentes().get(k) != brancheInitiale) {
-                                        error = true;
+                                for (int k = 0; k < noeudTemporaire.getBranchesAdjacentes().size(); k++) {
+                                    for (int l = 0; l < mailleTemporaire.getBranchesMaille().size(); l++) {
+                                        if (noeudTemporaire.getBranchesAdjacentes().get(k) == mailleTemporaire.getBranchesMaille().get(l)
+                                                && noeudTemporaire.getBranchesAdjacentes().get(k) != brancheTemporaire
+                                                && noeudTemporaire.getBranchesAdjacentes().get(k) != brancheInitiale) {
+                                            error = true;
+                                        }
                                     }
                                 }
+                                /*
+                            }else {
+                                error = true;
                             }
+                            */
 
                             if (!error) {
                                 for (int k = 0; k < noeudTemporaire.getBranchesAdjacentes().size(); k++) {
@@ -969,7 +966,11 @@ public class SandboxController {
             }
         }
 
-        arrangerMailles(numeroDeCircuit);
+
+        if (circuits.get(numeroDeCircuit).getMailles().size()>=2){
+            arrangerMailles(numeroDeCircuit);
+        }
+
         circuits.get(numeroDeCircuit).setIncomplet(false);
         System.out.println("Mailles Complètes");
     }
@@ -1337,6 +1338,7 @@ public class SandboxController {
                 String dir = null;
                 ArrayList<Source> sourcesSeules = new ArrayList<>();
                 ArrayList<Diode> diodesSeules = new ArrayList<>();
+                error = false;
 
                 if (!actuel.getDirectionsAnalysees()[j]) {
 
@@ -1386,6 +1388,9 @@ public class SandboxController {
                                 circuits.get(numeroDeCircuit).setMiseAterre((MiseAterre) getNodeFromGridPane(gridPaneSandBox, col, row));
                             }else if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof MiseAterre && circuits.get(numeroDeCircuit).getMiseAterre()!=null){
                                 circuits.get(numeroDeCircuit).setmATMultiples(true);
+                            }
+                            if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Condensateur){
+                                brancheTemporaire.getCondensateurs().add(((Condensateur) getNodeFromGridPane(gridPaneSandBox, col, row)));
                             }
                         }
 
@@ -1588,11 +1593,6 @@ public class SandboxController {
                             actuel.getBranchesAdjacentes().add(brancheTemporaire);
                             brancheTemporaire.getNoeudsAdjacents().add(actuel);
                         }
-                        /*
-                        } else {
-                            error = true;
-                        }
-                        */
                     }
 
                     if (!error) {
@@ -1624,20 +1624,19 @@ public class SandboxController {
                 }
             }
         }
-        arrangerBranchesAdjacentes(numeroDeCircuit);
         System.out.println(" ");
     }
 
-    private static void arrangerBranchesAdjacentes(int numeroDeCircuit) {
-        for (int i = 0; i < circuits.get(numeroDeCircuit).getNoeuds().size(); i++) {
+    public static void arrangerBranchesAdjacentes(Circuit circuit) {
+        for (int i = 0; i < circuit.getNoeuds().size(); i++) {
             ArrayList<Branche> listeTemp = new ArrayList<>();
-            listeTemp.addAll(circuits.get(numeroDeCircuit).getNoeuds().get(i).getBranchesAdjacentes());
-            circuits.get(numeroDeCircuit).getNoeuds().get(i).getBranchesAdjacentes().clear();
+            listeTemp.addAll(circuit.getNoeuds().get(i).getBranchesAdjacentes());
+            circuit.getNoeuds().get(i).getBranchesAdjacentes().clear();
 
-            for (int j = 0; j < circuits.get(numeroDeCircuit).getNoeuds().get(i).getDirections().length; j++) {
-                String dir = circuits.get(numeroDeCircuit).getNoeuds().get(i).getDirections()[j];
-                int row = circuits.get(numeroDeCircuit).getNoeuds().get(i).getComposanteNoeud().getRow();
-                int col = circuits.get(numeroDeCircuit).getNoeuds().get(i).getComposanteNoeud().getCol();
+            for (int j = 0; j < circuit.getNoeuds().get(i).getDirections().length; j++) {
+                String dir = circuit.getNoeuds().get(i).getDirections()[j];
+                int row = circuit.getNoeuds().get(i).getComposanteNoeud().getRow();
+                int col = circuit.getNoeuds().get(i).getComposanteNoeud().getCol();
 
                 switch (dir) {
                     case "N":
@@ -1662,12 +1661,16 @@ public class SandboxController {
 
                         if (composante == listeTemp.get(k).getComposantesBranche().get(l)) {
                             finished = true;
-                            circuits.get(numeroDeCircuit).getNoeuds().get(i).getBranchesAdjacentes().add(listeTemp.get(k));
+                            circuit.getNoeuds().get(i).getBranchesAdjacentes().add(listeTemp.get(k));
                         }
                     }
                 }
+                if (circuit.getNoeuds().get(i).getBranchesAdjacentes().size()==j){
+                    circuit.getNoeuds().get(i).getBranchesAdjacentes().add(null);
+                }
             }
         }
+        System.out.println();
     }
 
     private static void creerSerie(int numeroDeCircuit) {
@@ -1726,6 +1729,10 @@ public class SandboxController {
 
                     if (((getNodeFromGridPane(gridPaneSandBox, col, row))) instanceof Diode) {
                         brancheTemporaire.getDiodes().add(((Diode) (getNodeFromGridPane(gridPaneSandBox, col, row))));
+                    }
+
+                    if (((getNodeFromGridPane(gridPaneSandBox, col, row))) instanceof Condensateur) {
+                        brancheTemporaire.getCondensateurs().add(((Condensateur) (getNodeFromGridPane(gridPaneSandBox, col, row))));
                     }
 
                     //Cherche si la composante suivante est rattachée à la précédente et check la prochaine direction
@@ -2001,6 +2008,7 @@ public class SandboxController {
             FileChooser fc = new FileChooser();
             fc.setTitle("Veuillez sélectionner un fichier");
             fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers Zephyr", "*.zep"));
+            fc.setInitialDirectory(new File("src/autre/saves"));
             File fichier = fc.showSaveDialog(Main.getStage());
             ComposanteSave[][] gridPaneSave = new ComposanteSave[20][20];
             for (int i = 0; i < 20; i++)
@@ -2020,6 +2028,7 @@ public class SandboxController {
         try {
             FileChooser fc = new FileChooser();
             fc.setTitle("Veuillez sélectionner un fichier");
+            fc.setInitialDirectory(new File("src/autre/saves"));
             File fichier = fc.showOpenDialog(Main.getStage());
             ObjectInputStream entree = new ObjectInputStream(
                     new BufferedInputStream(

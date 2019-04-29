@@ -44,12 +44,6 @@ public class Graphe {
         sommet.getAretes().remove(j);
         sommet.getAretes().add(arete);
         sommet.getSommets().get(j).getSommets().remove(sommet);
-        /*boolean found=false;
-        for (int l=0;l<sommet.getSommets().get(j).getSommets().size()&&!found;l++)
-            if(sommet==sommet.getSommets().get(j).getSommets().get(l)){
-                sommet.getSommets().get(j).getSommets().remove(l);
-                found=true;
-            }*/
         sommet.getSommets().add(sommet.getSommets().get(j));
         sommet.getSommets().remove(k);
         sommet.getSommets().remove(j);

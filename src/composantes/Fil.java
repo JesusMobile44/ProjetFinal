@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 public class Fil extends Composante {
 
     private boolean noeud;
+    private boolean noeudMAT;
 
     public Fil() {
         initialize();
@@ -21,6 +22,7 @@ public class Fil extends Composante {
         col = j;
         this.setImage(tabVariante[direction]);
         enPlace = true;
+        noeudMAT = false;
     }
 
     private void initialize(){
@@ -52,5 +54,13 @@ public class Fil extends Composante {
 
     public void setNoeud(boolean noeud) {
         this.noeud = noeud;
+    }
+
+    public boolean isNoeudMAT() {
+        return noeudMAT;
+    }
+
+    public void setNoeudMAT(boolean noeudMAT) {
+        this.noeudMAT = noeudMAT;
     }
 }
