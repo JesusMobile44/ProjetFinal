@@ -718,6 +718,7 @@ public class SandboxController {
                     if (!circuits.get(z).isIncomplet()) {
                         creerBranches(z);
                         creerMailles(z);
+                        arrangerBranchesAdjacentes(z);
                     }
                 }
 
@@ -829,24 +830,30 @@ public class SandboxController {
                             brancheTemporaire = noeudTemporaire.getBranchesAdjacentes().get(j);
                             noeudTemporaire.getBranchesAnalysees()[j] = true;
 
-                            if (brancheTemporaire.getNoeudsAdjacents().get(0) == noeudTemporaire) {
-                                noeudTemporaire = brancheTemporaire.getNoeudsAdjacents().get(1);
-                            } else {
-                                noeudTemporaire = brancheTemporaire.getNoeudsAdjacents().get(0);
-                            }
+                            //if (brancheTemporaire != null){
+                                if (brancheTemporaire.getNoeudsAdjacents().get(0) == noeudTemporaire) {
+                                    noeudTemporaire = brancheTemporaire.getNoeudsAdjacents().get(1);
+                                } else {
+                                    noeudTemporaire = brancheTemporaire.getNoeudsAdjacents().get(0);
+                                }
 
-                            mailleTemporaire.getBranchesMaille().add(brancheTemporaire);
-                            mailleTemporaire.getNoeudsMaille().add(noeudTemporaire);
+                                mailleTemporaire.getBranchesMaille().add(brancheTemporaire);
+                                mailleTemporaire.getNoeudsMaille().add(noeudTemporaire);
 
-                            for (int k = 0; k < noeudTemporaire.getBranchesAdjacentes().size(); k++) {
-                                for (int l = 0; l < mailleTemporaire.getBranchesMaille().size(); l++) {
-                                    if (noeudTemporaire.getBranchesAdjacentes().get(k) == mailleTemporaire.getBranchesMaille().get(l)
-                                            && noeudTemporaire.getBranchesAdjacentes().get(k) != brancheTemporaire
-                                            && noeudTemporaire.getBranchesAdjacentes().get(k) != brancheInitiale) {
-                                        error = true;
+                                for (int k = 0; k < noeudTemporaire.getBranchesAdjacentes().size(); k++) {
+                                    for (int l = 0; l < mailleTemporaire.getBranchesMaille().size(); l++) {
+                                        if (noeudTemporaire.getBranchesAdjacentes().get(k) == mailleTemporaire.getBranchesMaille().get(l)
+                                                && noeudTemporaire.getBranchesAdjacentes().get(k) != brancheTemporaire
+                                                && noeudTemporaire.getBranchesAdjacentes().get(k) != brancheInitiale) {
+                                            error = true;
+                                        }
                                     }
                                 }
+                                /*
+                            }else {
+                                error = true;
                             }
+                            */
 
                             if (!error) {
                                 for (int k = 0; k < noeudTemporaire.getBranchesAdjacentes().size(); k++) {
@@ -1588,7 +1595,6 @@ public class SandboxController {
                 }
             }
         }
-        arrangerBranchesAdjacentes(numeroDeCircuit);
         System.out.println(" ");
     }
 
@@ -1630,8 +1636,12 @@ public class SandboxController {
                         }
                     }
                 }
+                if (circuits.get(numeroDeCircuit).getNoeuds().get(i).getBranchesAdjacentes().size()==j){
+                    circuits.get(numeroDeCircuit).getNoeuds().get(i).getBranchesAdjacentes().add(null);
+                }
             }
         }
+        System.out.println();
     }
 
     private static void creerSerie(int numeroDeCircuit) {
