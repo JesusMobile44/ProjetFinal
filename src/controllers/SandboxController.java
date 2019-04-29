@@ -5,6 +5,7 @@ import concepts.Branche;
 import concepts.Circuit;
 import concepts.Noeud;
 import concepts.NouvelleMaille;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -55,6 +56,12 @@ public class SandboxController {
     private Button backButton;
 
     @FXML
+    private SplitPane mySplitPane;
+
+    @FXML
+    private SplitPane mySecondSplitPane;
+
+    @FXML
     public void initialize() {
         scroll.setContent(gridPaneSandBox);
         textDescription.setText("Cliquer sur une composante pour afficher sa description");
@@ -68,6 +75,10 @@ public class SandboxController {
         backButtonStatic.setDisable(true);
         backButtonStatic.setOpacity(0);
         backButtonStatic.setOnAction(event -> goBack());
+
+        mySecondSplitPane.maxWidthProperty().bind(mySplitPane.widthProperty().multiply(0.30));
+        textDescription.wrappingWidthProperty().bind(mySecondSplitPane.widthProperty().multiply(0.90));
+
 
         for (int i = 0; i < 20; i++)
             for (int j = 0; j < 20; j++)

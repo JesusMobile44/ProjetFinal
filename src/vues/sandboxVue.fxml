@@ -25,9 +25,9 @@
         </MenuBar>
     </top>
     <center>
-        <SplitPane fx:id="mySplitPane" dividerPositions="0.6565656565656566" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <SplitPane fx:id="mySplitPane" dividerPositions="0.66" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <ScrollPane fx:id="scroll" prefHeight="200.0" prefWidth="200.0" />
-            <SplitPane dividerPositions="0.25, 0.9249" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+            <SplitPane fx:id="mySecondSplitPane" dividerPositions="0.25, 0.9249" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
                 <HBox id="myHBox" fx:id="myHBox" prefHeight="100.0" prefWidth="200.0" />
                 <ScrollPane fx:id="myScrollPane" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0">
                     <FlowPane prefHeight="200.0" prefWidth="200.0" />
