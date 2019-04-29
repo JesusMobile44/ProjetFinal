@@ -394,6 +394,7 @@ public class SandboxController {
                     itemMusique.setOnAction(event -> {
                         MediaPlayer mediaPlayer = ((HautParleur) source).getMediaPlayer();
                         FileChooser fc = new FileChooser();
+                        fc.setInitialDirectory(new File("src/autre/musiques"));
                         fc.setTitle("Veuillez sélectionner un fichier");
                         ((HautParleur) source).setMediaPlayer(new MediaPlayer(new Media(fc.showOpenDialog(Main.getStage()).toURI().toString())));
                         if (((ComposanteActivable) source).isActive()) {
@@ -1990,6 +1991,7 @@ public class SandboxController {
             FileChooser fc = new FileChooser();
             fc.setTitle("Veuillez sélectionner un fichier");
             fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers Zephyr", "*.zep"));
+            fc.setInitialDirectory(new File("src/autre/saves"));
             File fichier = fc.showSaveDialog(Main.getStage());
             ComposanteSave[][] gridPaneSave = new ComposanteSave[20][20];
             for (int i = 0; i < 20; i++)
@@ -2009,6 +2011,7 @@ public class SandboxController {
         try {
             FileChooser fc = new FileChooser();
             fc.setTitle("Veuillez sélectionner un fichier");
+            fc.setInitialDirectory(new File("src/autre/saves"));
             File fichier = fc.showOpenDialog(Main.getStage());
             ObjectInputStream entree = new ObjectInputStream(
                     new BufferedInputStream(
