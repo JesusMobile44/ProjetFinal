@@ -70,7 +70,7 @@ public class Circuit {
             determinationSens();
         }
 
-        if (!this.mATMultiples){
+        if (!this.mATMultiples && miseAterre != null){
             this.circuitMAT = new CircuitMAT(this);
         }
 
