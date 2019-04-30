@@ -261,7 +261,7 @@ public class Circuit {
 
         for (int i = 0; i < this.getComposantes().size(); i++) {
             this.getComposantes().get(i).setAmperage(this.getBranches().get(0).getIntensite());
-            if (this.getComposantes().get(i).getNom().toUpperCase().equals("RESISTEUR")) {
+            if (this.getComposantes().get(i) instanceof Resisteur) {
                 this.getComposantes().get(i).setVolt(this.getComposantes().get(i).getResistance() * this.getComposantes().get(i).getAmperage());
             }
         }

@@ -78,6 +78,7 @@ public class SandboxController {
         backButtonStatic.setOnAction(event -> goBack());
 
         mySecondSplitPane.maxWidthProperty().bind(mySplitPane.widthProperty().multiply(0.30));
+        myHBox.maxHeightProperty().bind(mySecondSplitPane.heightProperty().multiply(0.25));
         textDescription.wrappingWidthProperty().bind(mySecondSplitPane.widthProperty().multiply(0.90));
 
 
@@ -92,7 +93,7 @@ public class SandboxController {
         myScrollPane.setContent(rootScrollPane);
     }
 
-    private static void goBack() {
+    public static void goBack() {
         textDescription.setText("Cliquer sur une composante pour afficher sa description");
         backButtonStatic.setOpacity(0);
         backButtonStatic.setDisable(true);

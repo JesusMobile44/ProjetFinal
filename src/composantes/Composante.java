@@ -43,7 +43,10 @@ public class Composante extends ImageView {
                 SandboxController.supprimer(this);
             }
             SandboxController.textDescription.setText(this.getDescription());
-            SandboxController.changerMenuComposante(this);
+            if (this instanceof ComposanteVide)
+                SandboxController.goBack();
+            else
+                SandboxController.changerMenuComposante(this);
 
         });
 
