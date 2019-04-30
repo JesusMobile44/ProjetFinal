@@ -28,7 +28,7 @@ public class Voltmetre extends Composante {
                 "Il doit être branché en parallèle.";
         tooltip = new Tooltip("Mesure la tension");
         tooltip.setStyle("-fx-font-size: 20");
-        Tooltip.install(this,tooltip);
+        bindTooltip(this,tooltip);
         nom = "Voltmètre";
         initializeImage();
     }
