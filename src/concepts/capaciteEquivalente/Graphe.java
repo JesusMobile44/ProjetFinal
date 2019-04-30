@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Graphe {
     ArrayList<Sommet> sommets;
-    double capaciteEq;
+    double capaciteEq = 0;
     boolean changement;
 
     public Graphe(Circuit circuit) {
