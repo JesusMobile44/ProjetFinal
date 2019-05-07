@@ -2,12 +2,12 @@ package composantes;
 
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
-import main.Main;
 
 
 public class Fil extends Composante {
 
     private boolean noeud;
+    private boolean noeudMAT;
 
     public Fil() {
         initialize();
@@ -22,6 +22,7 @@ public class Fil extends Composante {
         col = j;
         this.setImage(tabVariante[direction]);
         enPlace = true;
+        noeudMAT = false;
     }
 
     private void initialize(){
@@ -38,10 +39,10 @@ public class Fil extends Composante {
         tabNomVariante[9] = "NEO";
         tabNomVariante[10] = "NSEO";
         tabVariante = new Image[tabNomVariante.length];
-        description = "Un fil électrique est la composante électrique servant au transport de l'électricité\n" +
-                "";
+        description = "Un fil électrique est la composante électrique servant au transport de l'électricité";
         tooltip = new Tooltip("Transporte l'électricité");
-        Tooltip.install(this,tooltip);
+        tooltip.setStyle("-fx-font-size: 20");
+        bindTooltip(this,tooltip);
         nom = "Fil";
         initializeImage();
         this.noeud = false;
@@ -53,5 +54,13 @@ public class Fil extends Composante {
 
     public void setNoeud(boolean noeud) {
         this.noeud = noeud;
+    }
+
+    public boolean isNoeudMAT() {
+        return noeudMAT;
+    }
+
+    public void setNoeudMAT(boolean noeudMAT) {
+        this.noeudMAT = noeudMAT;
     }
 }

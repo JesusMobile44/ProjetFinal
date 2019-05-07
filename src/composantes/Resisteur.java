@@ -2,7 +2,6 @@ package composantes;
 
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
-import main.Main;
 
 public class Resisteur extends Composante {
     public Resisteur() {
@@ -29,8 +28,9 @@ public class Resisteur extends Composante {
                 "dont la principale caractéristique est d'opposer une plus ou moins grande \n" +
                 "résistance (mesurée en ohms) à la circulation du courant électrique.";
         tooltip = new Tooltip("Oppose un résistance à la circulation");
-        Tooltip.install(this,tooltip);
-        nom = "Resisteur";
+        tooltip.setStyle("-fx-font-size: 20");
+        bindTooltip(this,tooltip);
+        nom = "Résisteur";
         initializeImage();
         this.setResistance(100);
     }

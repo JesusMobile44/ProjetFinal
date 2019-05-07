@@ -3,9 +3,14 @@ package composantes;
 import composantes.ComposanteActivable;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
-import main.Main;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
+import java.io.File;
 
 public class HautParleur extends ComposanteActivable {
+    private MediaPlayer mediaPlayer = new MediaPlayer(new Media(new File("src/autre/musiques/default.mp3").toURI().toString()));
+
     public HautParleur() {
         initialize();
     }
@@ -29,8 +34,17 @@ public class HautParleur extends ComposanteActivable {
         tabVariante = new Image[tabNomVariante.length];
         description = "Un haut-parleur produit des sons à partir d'un signal électrique.";
         tooltip = new Tooltip("Produit du son");
-        Tooltip.install(this,tooltip);
+        tooltip.setStyle("-fx-font-size: 20");
+        bindTooltip(this,tooltip);
         nom = "Haut-Parleur";
         initializeImage();
+    }
+
+    public MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
+
+    public void setMediaPlayer(MediaPlayer mediaPlayer) {
+        this.mediaPlayer = mediaPlayer;
     }
 }

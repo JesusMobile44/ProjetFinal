@@ -2,7 +2,6 @@ package composantes;
 
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
-import main.Main;
 
 public class MiseAterre extends Composante {
     public MiseAterre() {
@@ -27,10 +26,11 @@ public class MiseAterre extends Composante {
         tabNomVariante[2] = "SN";
         tabNomVariante[3] = "EO";
         tabVariante = new Image[tabNomVariante.length];
-        description = "Une mise à terre sert à évacuer les courants électriques vers la terre de manière sécuritaire.\n" +
-                "";
+        description = "Une mise à terre sert à évacuer les courants électriques\n" +
+                "vers la terre de manière sécuritaire.";
         tooltip = new Tooltip("Évacue les courants");
-        Tooltip.install(this,tooltip);
+        tooltip.setStyle("-fx-font-size: 20");
+        bindTooltip(this,tooltip);
         nom = "Mise à Terre";
         initializeImage();
     }

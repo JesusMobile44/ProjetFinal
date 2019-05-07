@@ -50,20 +50,20 @@ public class Matrice {
         return pivot;
     }
 
-    public int getM() {
+    private int getM() {
         return m;
     }
 
     public void setM(int m) {
-        m = m;
+        this.m = m;
     }
 
-    public int getN() {
+    private int getN() {
         return n;
     }
 
     public void setN(int n) {
-        n = n;
+        this.n = n;
     }
 
     public double[][] getMatrice() {

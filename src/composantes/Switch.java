@@ -2,7 +2,6 @@ package composantes;
 
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
-import main.Main;
 
 public class Switch extends Composante{
 
@@ -23,12 +22,12 @@ public class Switch extends Composante{
 
     private void initialize(){
         tabNomVariante = new String[8];
-        tabNomVariante[0] = "OS";
-        tabNomVariante[1] = "ON";
+        tabNomVariante[0] = "SO";
+        tabNomVariante[1] = "NO";
         tabNomVariante[2] = "NO";
         tabNomVariante[3] = "NE";
-        tabNomVariante[4] = "EN";
-        tabNomVariante[5] = "ES";
+        tabNomVariante[4] = "NE";
+        tabNomVariante[5] = "SE";
         tabNomVariante[6] = "SE";
         tabNomVariante[7] = "SO";
 
@@ -36,7 +35,8 @@ public class Switch extends Composante{
         description = "Une Switch, ou  intérupteur, est une composante\n" +
                 "le passage du flux dans une direction ou dans une autre";
         tooltip = new Tooltip("Cliquer pour changer de direction");
-        Tooltip.install(this,tooltip);
+        tooltip.setStyle("-fx-font-size: 20");
+        bindTooltip(this,tooltip);
         nom = "Switch";
         initializeImage();
     }

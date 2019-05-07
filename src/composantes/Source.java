@@ -3,11 +3,11 @@ package composantes;
 import concepts.Noeud;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
-import main.Main;
 
 public class Source extends ComposanteActivable {
 
     private Noeud noeudDirectionnel;
+    private boolean inverseEnSerie;
 
     public Source() {
         initialize();
@@ -31,15 +31,18 @@ public class Source extends ComposanteActivable {
         tabNomVariante[2] = "SN";
         tabNomVariante[3] = "EO";
         tabVariante = new Image[tabNomVariante.length];
-        description = "Une pile, batterie ou acccumulateur est un dispositif électrochimique qui convertit l'énergie chimique en énergie électrique.\n" +
+        description = "Une pile, batterie ou acccumulateur est un dispositif électrochimique\n" +
+                "qui convertit l'énergie chimique en énergie électrique.\n" +
                 "Elle fournit une intensité au circuit électrique.";
         tooltip = new Tooltip("Fournit l'intensité au circuit");
-        Tooltip.install(this,tooltip);
+        tooltip.setStyle("-fx-font-size: 20");
+        bindTooltip(this,tooltip);
         nom = "Source";
         initializeImage();
         this.setVolt(10);
         this.setAmperage(1);
         noeudDirectionnel=null;
+        inverseEnSerie = false;
     }
 
     public Noeud getNoeudDirectionnel() {
@@ -48,5 +51,13 @@ public class Source extends ComposanteActivable {
 
     public void setNoeudDirectionnel(Noeud noeudDirectionnel) {
         this.noeudDirectionnel = noeudDirectionnel;
+    }
+
+    public boolean isInverseEnSerie() {
+        return inverseEnSerie;
+    }
+
+    public void setInverseEnSerie(boolean inverseEnSerie) {
+        this.inverseEnSerie = inverseEnSerie;
     }
 }

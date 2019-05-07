@@ -1,8 +1,6 @@
 package concepts;
 
-import composantes.Composante;
-import composantes.Resisteur;
-import composantes.Source;
+import composantes.*;
 
 import java.util.ArrayList;
 
@@ -11,7 +9,10 @@ public class Branche {
     private ArrayList<Resisteur> resisteurs = new ArrayList<>();
     private ArrayList<Source> sources = new ArrayList<>();
     private ArrayList<Noeud> noeudsAdjacents = new ArrayList<>();
-    private double intensité;
+    private ArrayList<Diode> diodes = new ArrayList<>();
+    private ArrayList<Condensateur> condensateurs = new ArrayList<>();
+    private double intensite;
+    private double capacite = 0;
     private boolean intensiteTrouvee;
     private Noeud noeudDirectionnel;
     private double diviseur;
@@ -41,12 +42,20 @@ public class Branche {
         this.sources = sources;
     }
 
-    public double getIntensité() {
-        return intensité;
+    public double getIntensite() {
+        return intensite;
     }
 
-    public void setIntensité(double intensité) {
-        this.intensité = intensité;
+    public void setIntensite(double intensite) {
+        this.intensite = intensite;
+    }
+
+    public double getCapacite() {
+        return capacite;
+    }
+
+    public void setCapacite(double capacite) {
+        this.capacite = capacite;
     }
 
     public ArrayList<Noeud> getNoeudsAdjacents() {
@@ -79,5 +88,21 @@ public class Branche {
 
     public void setDiviseur(double diviseur) {
         this.diviseur = diviseur;
+    }
+
+    public ArrayList<Diode> getDiodes() {
+        return diodes;
+    }
+
+    public void setDiodes(ArrayList<Diode> diodes) {
+        this.diodes = diodes;
+    }
+
+    public ArrayList<Condensateur> getCondensateurs() {
+        return condensateurs;
+    }
+
+    public void setCondensateurs(ArrayList<Condensateur> condensateurs) {
+        this.condensateurs = condensateurs;
     }
 }

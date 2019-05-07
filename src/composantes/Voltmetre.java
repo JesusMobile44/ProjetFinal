@@ -2,7 +2,6 @@ package composantes;
 
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
-import main.Main;
 
 public class Voltmetre extends Composante {
     public Voltmetre() {
@@ -28,7 +27,8 @@ public class Voltmetre extends Composante {
         description = "Un Voltmètre est un appareil qui permet de mesurer la tension entre deux points.\n" +
                 "Il doit être branché en parallèle.";
         tooltip = new Tooltip("Mesure la tension");
-        Tooltip.install(this,tooltip);
+        tooltip.setStyle("-fx-font-size: 20");
+        bindTooltip(this,tooltip);
         nom = "Voltmètre";
         initializeImage();
     }

@@ -1,8 +1,8 @@
 package composantes;
 
+import autre.ImagesContainer;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
-import main.Main;
 
 public class Ampoule extends ComposanteActivable {
     public Ampoule() {
@@ -27,11 +27,11 @@ public class Ampoule extends ComposanteActivable {
         tabVariante = new Image[tabNomVariante.length+2];
         description = "La lampe incandescente est constituée d'un filament électrique enfermé dans une ampoule en verre.\nLorsque l'électricité passe dans le filament électrique, il est porté à incandescence.";
         tooltip = new Tooltip("Produit de la lumière");
-        Tooltip.install(this,tooltip);
+        tooltip.setStyle("-fx-font-size: 20");
+        bindTooltip(this,tooltip);
         nom = "Ampoule";
-        realImage = new Image("file:images/" + nom.toLowerCase() + ".jpg");
         for (int i = 0; i < tabNomVariante.length+2; i++) {
-            tabVariante[i] = Main.getImagesContainer().getHashMapImage().get(nom.toLowerCase() + " (" + (i + 1) + ").png");
+            tabVariante[i] = ImagesContainer.getHashMapImage().get(nom.toLowerCase() + " (" + (i + 1) + ").png");
         }
         this.setImage(tabVariante[0]);
 

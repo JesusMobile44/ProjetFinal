@@ -2,7 +2,6 @@ package composantes;
 
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
-import main.Main;
 
 public class Ohmetre extends Composante {
     public Ohmetre() {
@@ -28,8 +27,9 @@ public class Ohmetre extends Composante {
         description = "Un Ohmmètre est un instrument de mesure qui permet de mesurer la résistance électrique\n" +
                 "d'un composant ou d'un circuit électrique";
         tooltip = new Tooltip("Mesure la résistance équivalente");
-        Tooltip.install(this,tooltip);
-        nom = "Ohmètre";
+        tooltip.setStyle("-fx-font-size: 20");
+        bindTooltip(this,tooltip);
+        nom = "Ohmmètre";
         initializeImage();
     }
 }

@@ -1,6 +1,8 @@
 package concepts;
 
 import composantes.*;
+import concepts.capaciteEquivalente.Graphe;
+import concepts.miseATerre.CircuitMAT;
 import controllers.SandboxController;
 
 import java.util.ArrayList;
@@ -13,26 +15,82 @@ public class Circuit {
     private ArrayList<Branche> branches = new ArrayList<>();
     private ArrayList<Resisteur> resisteurs = new ArrayList<>();
     private ArrayList<Source> sources = new ArrayList<>();
-    private float resistanceEquivalente;
+    private MiseAterre miseAterre = null;
+    private CircuitMAT circuitMAT = null;
+    private double resistanceEquivalente;
+    private double capaciteEquivalente;
     private boolean enSerie;
     private boolean incomplet;
+    private boolean mATMultiples;
+    private double intensite;
 
     public Circuit() {
         this.enSerie = true;
         this.resistanceEquivalente = 0;
         this.incomplet = true;
+        this.mATMultiples = false;
     }
 
     public void calculVariables() {
         if (this.enSerie) {
             calculSerie();
         } else {
-            calculParallele();
+            boolean okDiode = false;
+            while (!okDiode) {
+                okDiode = true;
+                calculParallele();
+                for (int i = 0; i < this.getBranches().size(); i++) {
+                    for (int j = 0; j < this.getBranches().get(i).getDiodes().size(); j++) {
+                        if (this.getBranches().get(i).getDiodes().get(j).getNoeudDirectionnel() == this.getBranches().get(i).getNoeudDirectionnel()) {
+                            retirerBrancheDiode(this.getBranches().get(i));
+                            this.getBranches().remove(i);
+                            okDiode = false;
+                        }
+                    }
+                }
+            }
         }
-        determinationSens();
+
+        boolean condens = false;
+
+        for (Branche branche: this.getBranches()){
+            if (branche.getCondensateurs().size()!=0){
+                condens = true;
+            }
+        }
+
+        if (condens){
+            calculCapacite();
+        }
+
+        SandboxController.arrangerBranchesAdjacentes(this);
+
+        if (this.enSerie && this.getBranches().get(0).getIntensite() == 0) {
+        } else {
+            determinationSens();
+        }
+
+        if (!this.mATMultiples && miseAterre != null){
+            this.circuitMAT = new CircuitMAT(this);
+        }
+
+
+
+        reloadTooltip();
     }
 
-    public void calculParallele() {
+    private static void retirerBrancheDiode(Branche branche) {
+        for (Composante composante :
+                branche.getComposantesBranche()) {
+            if (!(composante instanceof Source)) {
+                composante.setVolt(0);
+            }
+            composante.setAmperage(0);
+            composante.setSensCourant("∅");
+        }
+    }
+
+    private void calculParallele() {
         updateNoeudsDirectionnels();
 
         double[][] matrice = new double[this.getBranches().size() - (this.getNoeuds().size() - 1) + this.getNoeuds().size() - 1][this.getBranches().size() + 1];
@@ -82,18 +140,18 @@ public class Circuit {
                 mailles[i] = this.getMailles().get(numeroMailles[i]);
             }
 
-            for (int i = 0; i < mailles.length; i++) {
-                for (int j = 0; j < mailles[i].getBranchesMaille().size(); j++) {
+            for (NouvelleMaille maille : mailles) {
+                for (int j = 0; j < maille.getBranchesMaille().size(); j++) {
                     for (int k = 0; k < this.getBranches().size(); k++) {
-                        if (mailles[i].getBranchesMaille().get(j) == this.getBranches().get(k)) {
+                        if (maille.getBranchesMaille().get(j) == this.getBranches().get(k)) {
                             brancheFound[k] = true;
                         }
                     }
                 }
             }
 
-            for (int i = 0; i < brancheFound.length; i++) {
-                if (!brancheFound[i]) {
+            for (boolean b : brancheFound) {
+                if (!b) {
                     maillesOK = false;
                 }
             }
@@ -148,57 +206,109 @@ public class Circuit {
         Matrice matrice1 = new Matrice(matrice.length, matrice[0].length, matrice);
         matrice1.triangleSuperieur();
         matrice = matrice1.getMatrice();
-        System.out.println(matrice);
         double[] pivot = matrice1.calculPivot();
-        System.out.println(pivot);
 
         for (int i = 0; i < this.getBranches().size(); i++) {
-            this.getBranches().get(i).setIntensité(pivot[i]);
-            if (this.getBranches().get(i).getIntensité()<0){
-                this.getBranches().get(i).setIntensité(this.getBranches().get(i).getIntensité()*-1);
-                if (this.getBranches().get(i).getNoeudDirectionnel()==this.getBranches().get(i).getNoeudsAdjacents().get(0)){
+            this.getBranches().get(i).setIntensite(pivot[i]);
+            if (this.getBranches().get(i).getIntensite() < 0) {
+                this.getBranches().get(i).setIntensite(this.getBranches().get(i).getIntensite() * -1);
+                if (this.getBranches().get(i).getNoeudDirectionnel() == this.getBranches().get(i).getNoeudsAdjacents().get(0)) {
                     this.getBranches().get(i).setNoeudDirectionnel(this.getBranches().get(i).getNoeudsAdjacents().get(1));
-                }
-                else {
+                } else {
                     this.getBranches().get(i).setNoeudDirectionnel(this.getBranches().get(i).getNoeudsAdjacents().get(0));
                 }
             }
-            for (int j=0; j<this.getBranches().get(i).getComposantesBranche().size(); j++){
-                this.getBranches().get(i).getComposantesBranche().get(j).setAmperage(this.getBranches().get(i).getIntensité());
+            for (int j = 0; j < this.getBranches().get(i).getComposantesBranche().size(); j++) {
+                this.getBranches().get(i).getComposantesBranche().get(j).setAmperage(this.getBranches().get(i).getIntensite());
             }
         }
 
-        for (Resisteur resiteur: this.getResisteurs()) {
+        for (Resisteur resiteur : this.getResisteurs()) {
             resiteur.setVolt(resiteur.getAmperage() * resiteur.getResistance());
         }
 
-        reloadTooltip();
+        if (this.getSources().size() == 1) {
+            this.setResistanceEquivalente(this.getSources().get(0).getVolt() * this.getSources().get(0).getAmperage());
+        }
     }
 
-    public void calculSerie() {
+    private void calculSerie() {
         for (int i = 0; i < this.getResisteurs().size(); i++) {
             resistanceEquivalente += this.getResisteurs().get(i).getResistance();
         }
         float tensionTotaleSource = 0;
         for (int i = 0; i < this.getSources().size(); i++) {
-            tensionTotaleSource += this.getSources().get(i).getVolt();
+            if (this.getSources().get(i).isInverseEnSerie()) {
+                tensionTotaleSource -= this.getSources().get(i).getVolt();
+            } else {
+                tensionTotaleSource += this.getSources().get(i).getVolt();
+            }
         }
 
-        this.getBranches().get(0).setIntensité((tensionTotaleSource) / (resistanceEquivalente));
+        this.getBranches().get(0).setIntensite((tensionTotaleSource) / (resistanceEquivalente));
+
+        if (this.getBranches().get(0).getIntensite() < 0) {
+            this.getBranches().get(0).setIntensite(this.getBranches().get(0).getIntensite() * -1);
+            for (Diode diode :
+                    this.getBranches().get(0).getDiodes()) {
+                if (diode.isInverseEnSerie()) {
+                    diode.setInverseEnSerie(false);
+                } else {
+                    diode.setInverseEnSerie(true);
+                }
+            }
+        }
 
         for (int i = 0; i < this.getComposantes().size(); i++) {
-            this.getComposantes().get(i).setAmperage(this.getBranches().get(0).getIntensité());
-            if (this.getComposantes().get(i).getNom().equals("RESISTEUR")) {
+            this.getComposantes().get(i).setAmperage(this.getBranches().get(0).getIntensite());
+            if (this.getComposantes().get(i) instanceof Resisteur) {
                 this.getComposantes().get(i).setVolt(this.getComposantes().get(i).getResistance() * this.getComposantes().get(i).getAmperage());
             }
         }
 
-        reloadTooltip();
+        boolean diodeInverse = true;
 
+        if (this.getBranches().get(0).getDiodes().size() != 0) {
+            diodeInverse = false;
+            for (Diode diode :
+                    this.getBranches().get(0).getDiodes()) {
+
+                if (diode.isInverseEnSerie()) {
+                    diodeInverse = true;
+                }
+            }
+        }
+
+
+        if (!diodeInverse) {
+            retirerBrancheDiode(this.getBranches().get(0));
+            this.getBranches().get(0).setIntensite(0);
+        }
     }
 
-    public void determinationSens() {
-        if (enSerie) {
+    private void calculCapacite() {
+        if (!enSerie) {
+            for (int i = 0; i < branches.size(); i++) {
+                for (int j = 0; j < branches.get(i).getComposantesBranche().size(); j++)
+                    if (branches.get(i).getComposantesBranche().get(j) instanceof Condensateur)
+                        branches.get(i).setCapacite(branches.get(i).getCapacite() + 1 / branches.get(i).getComposantesBranche().get(j).getCapacite());
+                if (branches.get(i).getCapacite()!=0)
+                    branches.get(i).setCapacite(1 / branches.get(i).getCapacite());
+            }
+            capaciteEquivalente = new Graphe(this).getCapaciteEq();
+        } else {
+            for (int i = 0; i < composantes.size(); i++) {
+                if (composantes.get(i) instanceof Condensateur)
+                    capaciteEquivalente += 1 / composantes.get(i).getCapacite();
+            }
+            if (capaciteEquivalente!=0)
+                capaciteEquivalente = 1 / capaciteEquivalente;
+        }
+        System.out.println(capaciteEquivalente);
+    }
+
+    private void determinationSens() {
+        if (this.enSerie) {
             ArrayList<Source> sources = new ArrayList<>();
             ArrayList<Integer> sourcesPos = new ArrayList<>();
             ArrayList<Source> inverses = new ArrayList<>();
@@ -328,10 +438,8 @@ public class Circuit {
             }
             double vSource = 0;
             double vInverse = 0;
-            for (int i = 0; i < sources.size(); i++)
-                vSource += sources.get(i).getVolt();
-            for (int i = 0; i < inverses.size(); i++)
-                vInverse += inverses.get(i).getVolt();
+            for (Source source : sources) vSource += source.getVolt();
+            for (Source invers : inverses) vInverse += invers.getVolt();
             int start;
             boolean inverse;
             if (vSource > vInverse) {
@@ -357,67 +465,226 @@ public class Circuit {
             }
             if (inverse) {
                 for (int i = start; i > -1; i--) {
-                    dir = switchSensCourant(dir, composantes.get(i));
+                    dir = switchSensCourantSerie(dir, composantes.get(i));
                 }
                 for (int i = composantes.size() - 1; i > start; i--) {
-                    dir = switchSensCourant(dir, composantes.get(i));
+                    dir = switchSensCourantSerie(dir, composantes.get(i));
                 }
             } else {
                 for (int i = start; i < composantes.size(); i++) {
-                    dir = switchSensCourant(dir, composantes.get(i));
+                    dir = switchSensCourantSerie(dir, composantes.get(i));
                 }
                 for (int i = 0; i < start; i++) {
-                    dir = switchSensCourant(dir, composantes.get(i));
+                    dir = switchSensCourantSerie(dir, composantes.get(i));
                 }
             }
 
         } else {
-            for (int i = 0; i < branches.size(); i++) {
+            for (Branche branch : branches) {
                 String dir = null;
-                for (int j = 0; j < branches.get(i).getNoeudDirectionnel().getBranchesAdjacentes().size() && dir == null; j++) {
-                    if (branches.get(i).getNoeudDirectionnel().getBranchesAdjacentes().get(j) == branches.get(i)) {
-                        dir = branches.get(i).getNoeudDirectionnel().getDirections()[j];
+                for (int j = 0; j < branch.getNoeudDirectionnel().getBranchesAdjacentes().size() && dir == null; j++) {
+                    if (branch.getNoeudDirectionnel().getBranchesAdjacentes().get(j) == branch) {
+                        dir = branch.getNoeudDirectionnel().getDirections()[j];
                     }
                 }
-                for (int j = 0; j < branches.get(i).getComposantesBranche().size(); j++) {
-                    switchSensCourant(dir, branches.get(i).getComposantesBranche().get(j));
+                for (int j = 0; j < branch.getComposantesBranche().size(); j++) {
+                    switchSensCourantParallele(dir, branch.getNoeudDirectionnel());
                 }
             }
         }
     }
 
-    public void reloadTooltip() {
+    private void switchSensCourantParallele(String dir, Noeud initial) {
+        int row = initial.getComposanteNoeud().getRow();
+        int col = initial.getComposanteNoeud().getCol();
+
+        boolean finished = false;
+
+        switch (dir) {
+            case "N":
+                dir = "S";
+                row--;
+                break;
+            case "E":
+                dir = "O";
+                col++;
+                break;
+            case "S":
+                dir = "N";
+                row++;
+                break;
+            case "O":
+                dir = "E";
+                col--;
+                break;
+        }
+
+        while (!finished) {
+
+            Composante composante = ((Composante) SandboxController.getNodeFromGridPane(SandboxController.gridPaneSandBox, col, row));
+
+            switch (dir.toUpperCase()) {
+                case "N":
+                    switch (composante.getTabNomVariante()[composante.getDirection()]) {
+                        case "NS":
+                        case "SN":
+                            composante.setSensCourant("↓");
+                            dir = "N";
+                            row++;
+                            break;
+                        case "NE":
+                            composante.setSensCourant("→");
+                            dir = "O";
+                            col++;
+                            break;
+                        case "NO":
+                            composante.setSensCourant("←");
+                            dir = "E";
+                            col--;
+                            break;
+                        default:
+                            composante.setSensCourant("∅");
+                            finished = true;
+                            break;
+                    }
+                    break;
+                case "E":
+                    switch (composante.getTabNomVariante()[composante.getDirection()]) {
+                        case "NE":
+                            composante.setSensCourant("↑");
+                            dir = "S";
+                            row--;
+                            break;
+                        case "SE":
+                            composante.setSensCourant("↓");
+                            dir = "N";
+                            row++;
+                            break;
+                        case "OE":
+                        case "EO":
+                            composante.setSensCourant("←");
+                            dir = "E";
+                            col--;
+                            break;
+                        default:
+                            composante.setSensCourant("∅");
+                            finished = true;
+                            break;
+                    }
+                    break;
+                case "S":
+                    switch (composante.getTabNomVariante()[composante.getDirection()]) {
+                        case "NS":
+                        case "SN":
+                            composante.setSensCourant("↑");
+                            dir = "S";
+                            row--;
+                            break;
+                        case "SE":
+                            composante.setSensCourant("→");
+                            dir = "O";
+                            col++;
+                            break;
+                        case "SO":
+                            composante.setSensCourant("←");
+                            dir = "E";
+                            col--;
+                            break;
+                        default:
+                            composante.setSensCourant("∅");
+                            finished = true;
+                            break;
+                    }
+                    break;
+                case "O":
+                    switch (composante.getTabNomVariante()[composante.getDirection()]) {
+                        case "NO":
+                            composante.setSensCourant("↑");
+                            dir = "S";
+                            row--;
+                            break;
+                        case "SO":
+                            composante.setSensCourant("↓");
+                            dir = "N";
+                            row++;
+                            break;
+                        case "OE":
+                        case "EO":
+                            composante.setSensCourant("→");
+                            dir = "O";
+                            col++;
+                            break;
+                        default:
+                            composante.setSensCourant("∅");
+                            finished = true;
+                            break;
+                    }
+                    break;
+            }
+        }
+
+    }
+
+    private void reloadTooltip() {
         for (int i = 0; i < this.getComposantes().size(); i++) {
             Composante composante = this.getComposantes().get(i);
             switch (composante.getNom().toUpperCase()) {
                 case "FIL":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant());
+                    if (this.getMiseAterre() != null && !this.mATMultiples){
+                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant() + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()));
+                    }
                     break;
-                case "AMPEREMÈTRE":
+                case "AMPÈREMÈTRE":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant());
+                    if (this.getMiseAterre() != null && !this.mATMultiples){
+                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant() + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()));
+                    }
                     break;
                 case "AMPOULE":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant());
+                    if (this.getMiseAterre() != null && !this.mATMultiples){
+                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant() + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()));
+                    }
                     break;
                 case "SOURCE":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nTension: " + SandboxController.df.format(composante.getVolt()) + "\nSens du courant: " + composante.getSensCourant());
+                    if (this.getResistanceEquivalente() != 0)
+                        composante.getTooltip().setText(composante.getTooltip().getText() + "\nRésistance équivalente : " + SandboxController.df.format(this.getResistanceEquivalente()));
+                    if (this.getCapaciteEquivalente() != 0)
+                        composante.getTooltip().setText(composante.getTooltip().getText() + "\nCapacité équivalente : " + SandboxController.df.format(this.getCapaciteEquivalente()));
                     break;
                 case "DIODE":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant());
+                    if (this.getMiseAterre() != null && !this.mATMultiples){
+                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant() + "\nPotentiel: "+ SandboxController.df.format(composante.getVolt()));
+                    }
                     break;
                 case "FUSIBLE":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant());
+                    if (this.getMiseAterre() != null && !this.mATMultiples){
+                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant() + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()));
+                    }
                     break;
                 case "INTERRUPTEUR":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant());
+                    if (this.getMiseAterre() != null && !this.mATMultiples){
+                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant() + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()));
+                    }
                     break;
                 case "MISE À TERRE":
-                    composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + "\nSens du courant: " + composante.getSensCourant());
+                    composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nSens du courant: " + composante.getSensCourant());
+                    if (this.getMiseAterre() != null && !this.mATMultiples){
+                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nSens du courant: " + composante.getSensCourant() + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()));
+                    }
                     break;
-                case "OHMÈTRE":
+                case "OHMMÈTRE":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nRésistance: " + SandboxController.df.format(composante.getVolt()) + "\nSens du courant: " + composante.getSensCourant());
+                    if (this.getMiseAterre() != null && !this.mATMultiples){
+                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant() + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()));
+                    }
                     break;
-                case "RESISTEUR":
+                case "RÉSISTEUR":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nTension: " + SandboxController.df.format(composante.getVolt()) + "\nRésistance: " + SandboxController.df.format(composante.getResistance()) + "\nSens du courant: " + composante.getSensCourant());
                     break;
                 case "VOLTMÈTRE":
@@ -425,26 +692,31 @@ public class Circuit {
                     break;
                 case "SWITCH":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant());
+                    if (this.getMiseAterre() != null && !this.mATMultiples){
+                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant() + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()));
+                    }
                     break;
                 case "HAUT-PARLEUR":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant());
+                    if (this.getMiseAterre() != null && !this.mATMultiples){
+                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant() + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()));
+                    }
                     break;
-                case "MOTEUR":
-                    composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nSens du courant: " + composante.getSensCourant());
+                case "CONDENSATEUR":
+                    composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nCapacité: " + SandboxController.df.format(composante.getCapacite()) + "\nSens du courant: " + composante.getSensCourant());
                     break;
             }
             //composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + "\nTension: " + SandboxController.df.format(composante.getVolt()) + "\nRésistance: " + SandboxController.df.format(composante.getResistance()));
         }
     }
 
-
-    public void updateNoeudsDirectionnels() {
+    private void updateNoeudsDirectionnels() {
         for (int i = 0; i < this.getBranches().size(); i++) {
             this.getBranches().get(i).setNoeudDirectionnel(this.getBranches().get(i).getNoeudsAdjacents().get(0));
         }
     }
 
-    public String switchSensCourant(String dir, Composante composante) {
+    private String switchSensCourantSerie(String dir, Composante composante) {
         switch (dir.toUpperCase()) {
             case "N":
                 switch (composante.getTabNomVariante()[composante.getDirection()]) {
@@ -586,12 +858,20 @@ public class Circuit {
         this.enSerie = enSerie;
     }
 
-    public float getResistanceEquivalente() {
+    public double getResistanceEquivalente() {
         return resistanceEquivalente;
     }
 
-    public void setResistanceEquivalente(float resistanceEquivalente) {
+    public void setResistanceEquivalente(double resistanceEquivalente) {
         this.resistanceEquivalente = resistanceEquivalente;
+    }
+
+    public double getCapaciteEquivalente() {
+        return capaciteEquivalente;
+    }
+
+    public void setCapaciteEquivalente(double capaciteEquivalente) {
+        this.capaciteEquivalente = capaciteEquivalente;
     }
 
     public boolean isIncomplet() {
@@ -600,5 +880,37 @@ public class Circuit {
 
     public void setIncomplet(boolean incomplet) {
         this.incomplet = incomplet;
+    }
+
+    public MiseAterre getMiseAterre() {
+        return miseAterre;
+    }
+
+    public void setMiseAterre(MiseAterre miseAterre) {
+        this.miseAterre = miseAterre;
+    }
+
+    public boolean ismATMultiples() {
+        return mATMultiples;
+    }
+
+    public void setmATMultiples(boolean mATMultiples) {
+        this.mATMultiples = mATMultiples;
+    }
+
+    public CircuitMAT getCircuitMAT() {
+        return circuitMAT;
+    }
+
+    public void setCircuitMAT(CircuitMAT circuitMAT) {
+        this.circuitMAT = circuitMAT;
+    }
+
+    public double getIntensite() {
+        return intensite;
+    }
+
+    public void setIntensite(double intensite) {
+        this.intensite = intensite;
     }
 }
