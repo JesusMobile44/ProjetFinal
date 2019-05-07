@@ -357,7 +357,7 @@ public class SandboxController {
         source.setCol(i);
         source.setRow(j);
         if (!source.getNom().toUpperCase().equals("VIDE")) {
-            source.getTooltip().setText(source.getNom() + " (" + source.getCol() + "," + source.getRow() + ")\nIntensité: " + df.format(source.getAmperage()) + "\nTension: " + df.format(source.getVolt()) + "\nRésistance: " + df.format(source.getResistance()));
+            source.getTooltip().setText(source.getNom() + " (" + source.getCol() + "," + source.getRow() + ")\nIntensité: " + df.format(source.getAmperage()) + " A" + "\nTension: " + df.format(source.getVolt()) + " V" + "\nRésistance: " + df.format(source.getResistance()) + " Ω");
             ContextMenu contextMenu = new ContextMenu();
             MenuItem itemSupprimer = new MenuItem("Supprimer");
             if (!source.getNom().toUpperCase().equals("SWITCH") && !source.getNom().toUpperCase().equals("INTERRUPTEUR")) {
@@ -1997,7 +1997,7 @@ public class SandboxController {
                 composante.setCapacite(Double.parseDouble(valeur));
             else
                 composante.setResistance(Double.parseDouble(valeur));
-            composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + df.format(composante.getAmperage()) + "\nTension: " + df.format(composante.getVolt()) + "\nRésistance: " + df.format(composante.getResistance()));
+            composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + df.format(composante.getAmperage()) + " A" + "\nTension: " + df.format(composante.getVolt()) + " V" + "\nRésistance: " + df.format(composante.getResistance()) + " Ω");
         } catch (Exception e) {
             Alert alerte = new Alert(Alert.AlertType.INFORMATION);
             alerte.setTitle("ERREUR");
