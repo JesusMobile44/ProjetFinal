@@ -632,57 +632,60 @@ public class Circuit {
                 case "FIL":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nSens du courant: " + composante.getSensCourant());
                     if (this.getMiseAterre() != null && !this.mATMultiples){
-                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nSens du courant: " + composante.getSensCourant() + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()));
+                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()) + "\nSens du courant: " + composante.getSensCourant());
                     }
                     break;
                 case "AMPÈREMÈTRE":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nSens du courant: " + composante.getSensCourant());
                     if (this.getMiseAterre() != null && !this.mATMultiples){
-                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nSens du courant: " + composante.getSensCourant() + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()) + " V");
+                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()) + " V" + "\nSens du courant: " + composante.getSensCourant());
                     }
                     break;
                 case "AMPOULE":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nSens du courant: " + composante.getSensCourant());
                     if (this.getMiseAterre() != null && !this.mATMultiples){
-                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nSens du courant: " + composante.getSensCourant() + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()) + " V");
+                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()) + " V" + "\nSens du courant: " + composante.getSensCourant());
                     }
                     break;
                 case "SOURCE":
-                    composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nTension: " + SandboxController.df.format(composante.getVolt()) + " V" +"\nSens du courant: " + composante.getSensCourant());
+                    composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nTension: " + SandboxController.df.format(composante.getVolt()) + " V" );
                     if (this.getResistanceEquivalente() != 0)
                         composante.getTooltip().setText(composante.getTooltip().getText() + "\nRésistance équivalente : " + SandboxController.df.format(this.getResistanceEquivalente()) + " Ω");
                     if (this.getCapaciteEquivalente() != 0)
                         composante.getTooltip().setText(composante.getTooltip().getText() + "\nCapacité équivalente : " + SandboxController.df.format(this.getCapaciteEquivalente()) + " F");
+                    composante.getTooltip().setText(composante.getTooltip().getText() + "\nSens du courant: " + composante.getSensCourant() );
                     break;
                 case "DIODE":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nSens du courant: " + composante.getSensCourant());
                     if (this.getMiseAterre() != null && !this.mATMultiples){
-                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nSens du courant: " + composante.getSensCourant() + "\nPotentiel: "+ SandboxController.df.format(composante.getVolt()) + " V");
+                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nPotentiel: "+ SandboxController.df.format(composante.getVolt()) + " V" + "\nSens du courant: " + composante.getSensCourant() );
                     }
                     break;
                 case "FUSIBLE":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nSens du courant: " + composante.getSensCourant());
                     if (this.getMiseAterre() != null && !this.mATMultiples){
-                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nSens du courant: " + composante.getSensCourant() + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()) + " V");
+                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()) + " V" + "\nSens du courant: " + composante.getSensCourant() );
                     }
                     break;
                 case "INTERRUPTEUR":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nSens du courant: " + composante.getSensCourant());
                     if (this.getMiseAterre() != null && !this.mATMultiples){
-                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nSens du courant: " + composante.getSensCourant() + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()) + " V");
+                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()) + " V" + "\nSens du courant: " + composante.getSensCourant() );
                     }
                     break;
                 case "MISE À TERRE":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nSens du courant: " + composante.getSensCourant());
                     if (this.getMiseAterre() != null && !this.mATMultiples){
-                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nSens du courant: " + composante.getSensCourant() + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()) + " V");
+                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")" + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()) + " V" + "\nSens du courant: " + composante.getSensCourant());
                     }
                     break;
                 case "OHMMÈTRE":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nRésistance: " + SandboxController.df.format(composante.getVolt()) + " Ω" + "\nSens du courant: " + composante.getSensCourant());
                     if (this.getMiseAterre() != null && !this.mATMultiples){
-                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nSens du courant: " + composante.getSensCourant() + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()) + " V");
+                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()) + " V" + "\nSens du courant: " + composante.getSensCourant());
                     }
+                    composante.getTooltip().setText(composante.getTooltip().getText() + "\nSens du courant: " + composante.getSensCourant());
+
                     break;
                 case "RÉSISTEUR":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nTension: " + SandboxController.df.format(composante.getVolt()) + " V" + "\nRésistance: " + SandboxController.df.format(composante.getResistance()) + " Ω" + "\nSens du courant: " + composante.getSensCourant());
@@ -693,13 +696,13 @@ public class Circuit {
                 case "SWITCH":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nSens du courant: " + composante.getSensCourant());
                     if (this.getMiseAterre() != null && !this.mATMultiples){
-                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nSens du courant: " + composante.getSensCourant() + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()) + " V");
+                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()) + " V" + "\nSens du courant: " + composante.getSensCourant());
                     }
                     break;
                 case "HAUT-PARLEUR":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nSens du courant: " + composante.getSensCourant());
                     if (this.getMiseAterre() != null && !this.mATMultiples){
-                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nSens du courant: " + composante.getSensCourant() + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()) + " V");
+                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()) + " V" + "\nSens du courant: " + composante.getSensCourant());
                     }
                     break;
                 case "CONDENSATEUR":

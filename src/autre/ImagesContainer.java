@@ -71,6 +71,7 @@ public class ImagesContainer {
         hashMapImage.put("transparent.png", new Image("autre/images/transparent.png"));
         hashMapImage.put("back (1).png", new Image("autre/images/back (1).png"));
 
+        hashMapImage.put("condensateur formule.png",new Image("autre/images/condensateur formule.png"));
         hashMapImage.put("série.png",new Image("autre/images/série.png"));
         hashMapImage.put("parallèle.png",new Image("autre/images/parallèle.png"));
         hashMapImage.put("loi des mailles de kirchhoff.png",new Image("autre/images/loi des mailles de kirchhoff.png"));
