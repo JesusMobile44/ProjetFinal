@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class Voltmetre extends Composante {
 
     private ArrayList<Composante> composantesAdjacentes = new ArrayList<>();
-    private double diffDePotentiel;
 
     public Voltmetre() {
         initialize();
@@ -24,7 +23,6 @@ public class Voltmetre extends Composante {
         col = j;
         this.setImage(tabVariante[direction]);
         enPlace = true;
-        diffDePotentiel = 0;
     }
 
     private void initialize(){
@@ -38,7 +36,6 @@ public class Voltmetre extends Composante {
         tooltip.setStyle("-fx-font-size: 20");
         bindTooltip(this,tooltip);
         nom = "Voltmètre";
-        diffDePotentiel = 0;
         initializeImage();
     }
 
@@ -98,9 +95,9 @@ public class Voltmetre extends Composante {
             double diffPotentiel = potentiel1 - potentiel2;
 
             if (diffPotentiel<0){
-                this.setDiffDePotentiel(diffPotentiel * -1);
+                this.setVolt(diffPotentiel * -1);
             }else {
-                this.setDiffDePotentiel(diffPotentiel);
+                this.setVolt(diffPotentiel);
             }
         }
     }
@@ -111,13 +108,5 @@ public class Voltmetre extends Composante {
 
     public void setComposantesAdjacentes(ArrayList<Composante> composantesAdjacentes) {
         this.composantesAdjacentes = composantesAdjacentes;
-    }
-
-    public double getDiffDePotentiel() {
-        return diffDePotentiel;
-    }
-
-    public void setDiffDePotentiel(double diffDePotentiel) {
-        this.diffDePotentiel = diffDePotentiel;
     }
 }
