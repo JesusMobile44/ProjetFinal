@@ -36,7 +36,7 @@ public class Source extends ComposanteActivable {
                 "Elle fournit une intensité au circuit électrique.";
         tooltip = new Tooltip("Fournit l'intensité au circuit");
         tooltip.setStyle("-fx-font-size: 20");
-        Tooltip.install(this,tooltip);
+        bindTooltip(this,tooltip);
         nom = "Source";
         initializeImage();
         this.setVolt(10);

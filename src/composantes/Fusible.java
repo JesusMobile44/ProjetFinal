@@ -28,7 +28,7 @@ public class Fusible extends Composante {
                 "le circuit électrique lorsque le courant électrique dans celui-ci atteint un valeur d'intensité donnée.";
         tooltip = new Tooltip("Ferme le circuit si trop de courant passe au travers");
         tooltip.setStyle("-fx-font-size: 20");
-        Tooltip.install(this,tooltip);
+        bindTooltip(this,tooltip);
         nom = "Fusible";
         initializeImage();
     }

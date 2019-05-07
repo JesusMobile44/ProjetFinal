@@ -36,7 +36,7 @@ public class Switch extends Composante{
                 "le passage du flux dans une direction ou dans une autre";
         tooltip = new Tooltip("Cliquer pour changer de direction");
         tooltip.setStyle("-fx-font-size: 20");
-        Tooltip.install(this,tooltip);
+        bindTooltip(this,tooltip);
         nom = "Switch";
         initializeImage();
     }

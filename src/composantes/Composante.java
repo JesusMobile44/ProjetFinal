@@ -2,14 +2,13 @@ package composantes;
 
 import autre.ImagesContainer;
 import controllers.SandboxController;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import main.Main;
 
 public class Composante extends ImageView {
@@ -108,6 +107,24 @@ public class Composante extends ImageView {
         this.setImage(tabVariante[0]);
         this.setFitHeight(100);
         this.setFitWidth(100);
+    }
+
+    public static void bindTooltip(final Node node, final Tooltip tooltip){
+        node.setOnMouseMoved(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                // +15 moves the tooltip 15 pixels below the mouse cursor;
+                // if you don't change the y coordinate of the tooltip, you
+                // will see constant screen flicker
+                tooltip.show(node, event.getScreenX(), event.getScreenY() + 15);
+            }
+        });
+        node.setOnMouseExited(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+                tooltip.hide();
+            }
+        });
     }
 
     public Image[] getTabVariante() {

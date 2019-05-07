@@ -29,7 +29,7 @@ public class Resisteur extends Composante {
                 "résistance (mesurée en ohms) à la circulation du courant électrique.";
         tooltip = new Tooltip("Oppose un résistance à la circulation");
         tooltip.setStyle("-fx-font-size: 20");
-        Tooltip.install(this,tooltip);
+        bindTooltip(this,tooltip);
         nom = "Résisteur";
         initializeImage();
         this.setResistance(100);

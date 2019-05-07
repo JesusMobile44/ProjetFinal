@@ -27,7 +27,7 @@ public class Condensateur extends Composante {
         description = "Dispositif servant à emmagasiner des charges électriques";
         tooltip = new Tooltip("Emmagasine des charges électriques");
         tooltip.setStyle("-fx-font-size: 20");
-        Tooltip.install(this,tooltip);
+        bindTooltip(this,tooltip);
         nom = "Condensateur";
         initializeImage();
         this.setCapacite(100);

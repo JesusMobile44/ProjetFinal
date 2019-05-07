@@ -42,7 +42,7 @@ public class Fil extends Composante {
         description = "Un fil électrique est la composante électrique servant au transport de l'électricité";
         tooltip = new Tooltip("Transporte l'électricité");
         tooltip.setStyle("-fx-font-size: 20");
-        Tooltip.install(this,tooltip);
+        bindTooltip(this,tooltip);
         nom = "Fil";
         initializeImage();
         this.noeud = false;
