@@ -43,6 +43,7 @@ public class SandboxController {
     private static ArrayList<Composante> composantes = new ArrayList<>();
     public static boolean cPressed = false;
     public static boolean xPressed = false;
+    public static boolean zPressed = false;
 
     @FXML
     private HBox myHBox;
