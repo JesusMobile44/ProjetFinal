@@ -1659,7 +1659,7 @@ public class SandboxController {
                 composante.setVolt(Double.parseDouble(valeur));
             else
                 composante.setResistance(Double.parseDouble(valeur));
-            composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + df.format(composante.getAmperage()) + "\nTension: " + df.format(composante.getVolt()) + "\nRésistance: " + df.format(composante.getResistance()));
+            composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + df.format(composante.getAmperage()) + " A" + "\nTension: " + df.format(composante.getVolt()) + " V" + "\nRésistance: " + df.format(composante.getResistance()) + " Ω");
         } catch (Exception e) {
             Alert alerte = new Alert(Alert.AlertType.INFORMATION);
             alerte.setTitle("ERREUR");
