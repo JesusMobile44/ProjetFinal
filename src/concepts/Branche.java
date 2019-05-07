@@ -11,6 +11,7 @@ public class Branche {
     private ArrayList<Noeud> noeudsAdjacents = new ArrayList<>();
     private ArrayList<Diode> diodes = new ArrayList<>();
     private ArrayList<Condensateur> condensateurs = new ArrayList<>();
+    private ArrayList<Voltmetre> voltmetres = new ArrayList<>();
     private double intensite;
     private double capacite = 0;
     private boolean intensiteTrouvee;
@@ -104,5 +105,13 @@ public class Branche {
 
     public void setCondensateurs(ArrayList<Condensateur> condensateurs) {
         this.condensateurs = condensateurs;
+    }
+
+    public ArrayList<Voltmetre> getVoltmetres() {
+        return voltmetres;
+    }
+
+    public void setVoltmetres(ArrayList<Voltmetre> voltmetres) {
+        this.voltmetres = voltmetres;
     }
 }

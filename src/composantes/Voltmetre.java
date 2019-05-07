@@ -1,9 +1,16 @@
 package composantes;
 
+import controllers.SandboxController;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
+
 public class Voltmetre extends Composante {
+
+    private ArrayList<Composante> composantesAdjacentes = new ArrayList<>();
+    private double diffDePotentiel;
+
     public Voltmetre() {
         initialize();
     }
@@ -17,6 +24,7 @@ public class Voltmetre extends Composante {
         col = j;
         this.setImage(tabVariante[direction]);
         enPlace = true;
+        diffDePotentiel = 0;
     }
 
     private void initialize(){
@@ -30,6 +38,86 @@ public class Voltmetre extends Composante {
         tooltip.setStyle("-fx-font-size: 20");
         bindTooltip(this,tooltip);
         nom = "Voltmètre";
+        diffDePotentiel = 0;
         initializeImage();
+    }
+
+    public void calculDiffDePotentiel(){
+
+        boolean comp1Trouvee = false;
+        boolean comp2Trouvee = false;
+        Composante[] composantes = new Composante[2];
+
+        if (this.direction == 0){
+            Composante[] composantes1 = {(Composante) SandboxController.getNodeFromGridPane(SandboxController.gridPaneSandBox,this.getCol(), this.getRow()+1),
+                    (Composante) SandboxController.getNodeFromGridPane(SandboxController.gridPaneSandBox,this.getCol(), this.getRow()-1)};
+
+            String dir = composantes1[0].getTabNomVariante()[composantes1[0].getDirection()];
+                for (int j=0; j<dir.length(); j++){
+                    if (dir.charAt(j) == 'N'){
+                        comp1Trouvee = true;
+                    }
+                }
+
+            dir = composantes1[1].getTabNomVariante()[composantes1[1].getDirection()];
+            for (int j=0; j<dir.length(); j++){
+                if (dir.charAt(j) == 'S'){
+                    comp2Trouvee = true;
+                }
+            }
+
+            composantes = composantes1;
+        }
+
+        if (this.direction == 1){
+            Composante[] composantes1 = {(Composante) SandboxController.getNodeFromGridPane(SandboxController.gridPaneSandBox,this.getCol()+1, this.getRow()),
+                    (Composante) SandboxController.getNodeFromGridPane(SandboxController.gridPaneSandBox,this.getCol()-1, this.getRow())};
+
+            String dir = composantes1[0].getTabNomVariante()[composantes1[0].getDirection()];
+            for (int j=0; j<dir.length(); j++){
+                if (dir.charAt(j) == 'O'){
+                    comp1Trouvee = true;
+                }
+            }
+
+            dir = composantes1[1].getTabNomVariante()[composantes1[1].getDirection()];
+            for (int j=0; j<dir.length(); j++){
+                if (dir.charAt(j) == 'E'){
+                    comp2Trouvee = true;
+                }
+            }
+            composantes = composantes1;
+        }
+
+        if (comp1Trouvee && comp2Trouvee
+                && !(composantes[0] instanceof Source) && !(composantes[0] instanceof Resisteur)
+                && !(composantes[1] instanceof Source) && !(composantes[1] instanceof Resisteur)){
+
+            double potentiel1 = composantes[0].getVolt();
+            double potentiel2 = composantes[1].getVolt();
+            double diffPotentiel = potentiel1 - potentiel2;
+
+            if (diffPotentiel<0){
+                this.setDiffDePotentiel(diffPotentiel * -1);
+            }else {
+                this.setDiffDePotentiel(diffPotentiel);
+            }
+        }
+    }
+
+    public ArrayList<Composante> getComposantesAdjacentes() {
+        return composantesAdjacentes;
+    }
+
+    public void setComposantesAdjacentes(ArrayList<Composante> composantesAdjacentes) {
+        this.composantesAdjacentes = composantesAdjacentes;
+    }
+
+    public double getDiffDePotentiel() {
+        return diffDePotentiel;
+    }
+
+    public void setDiffDePotentiel(double diffDePotentiel) {
+        this.diffDePotentiel = diffDePotentiel;
     }
 }

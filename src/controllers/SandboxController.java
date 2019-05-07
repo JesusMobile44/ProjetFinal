@@ -1393,6 +1393,9 @@ public class SandboxController {
                             if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Condensateur){
                                 brancheTemporaire.getCondensateurs().add(((Condensateur) getNodeFromGridPane(gridPaneSandBox, col, row)));
                             }
+                            if ((getNodeFromGridPane(gridPaneSandBox, col, row)) instanceof Voltmetre){
+                                brancheTemporaire.getVoltmetres().add(((Voltmetre) getNodeFromGridPane(gridPaneSandBox, col, row)));
+                            }
                         }
 
 

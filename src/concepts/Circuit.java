@@ -70,11 +70,14 @@ public class Circuit {
             determinationSens();
         }
 
-        if (!this.mATMultiples && miseAterre != null){
+        //if (!this.mATMultiples && miseAterre != null){
             this.circuitMAT = new CircuitMAT(this);
+        //}
+        for (Branche branche: this.getBranches()){
+            for (Voltmetre voltmetre: branche.getVoltmetres()){
+                voltmetre.calculDiffDePotentiel();
+            }
         }
-
-
 
         reloadTooltip();
     }
