@@ -36,6 +36,7 @@ public class Voltmetre extends Composante {
         tooltip.setStyle("-fx-font-size: 20");
         bindTooltip(this,tooltip);
         nom = "Voltmètre";
+        resistance = Integer.MAX_VALUE;
         initializeImage();
     }
 

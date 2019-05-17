@@ -635,7 +635,7 @@ public class Circuit {
                 case "FIL":
                     composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nSens du courant: " + composante.getSensCourant());
                     if (this.getMiseAterre() != null && !this.mATMultiples){
-                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()) + "\nSens du courant: " + composante.getSensCourant());
+                        composante.getTooltip().setText(composante.getNom() + " (" + composante.getCol() + "," + composante.getRow() + ")\nIntensité: " + SandboxController.df.format(composante.getAmperage()) + " A" + "\nPotentiel: "+SandboxController.df.format(composante.getVolt()) + " V\nSens du courant: " + composante.getSensCourant());
                     }
                     break;
                 case "AMPÈREMÈTRE":
